@@ -12,7 +12,9 @@ import csv
 import datetime as dt
 import math
 import re
+import time
 from collections.abc import Callable, Mapping
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -26,6 +28,28 @@ STEP = 0.1
 FIRST_LON = -179.95
 FIRST_LAT = -89.95
 FIELDS = ["date", "basin_mean_mm", "file"]
+RETRY_ATTEMPTS = 5
+
+
+class TransientError(RuntimeError):
+    """A failure worth retrying: network drop, timeout or server error."""
+
+
+def retry(
+    fetch: Callable[[], float],
+    attempts: int = RETRY_ATTEMPTS,
+    sleep: Callable[[float], None] | None = None,
+) -> float:
+    """Call ``fetch``, waiting 2, 4, 8... seconds between attempts on TransientError."""
+    sleep = sleep or time.sleep
+    for attempt in range(attempts):
+        try:
+            return fetch()
+        except TransientError:
+            if attempt == attempts - 1:
+                raise
+            sleep(2 ** (attempt + 1))
+    raise AssertionError("unreachable")
 
 
 @dataclass(frozen=True)
@@ -113,11 +137,13 @@ def update_store(
     store: Path,
     listing: Mapping[dt.date, str],
     fetch_day: Callable[[dt.date, str], float],
+    workers: int = 1,
 ) -> int:
     """Append the listed days missing from ``store``; return how many were added.
 
-    Each day is written as soon as it is fetched, so an interrupted run resumes
-    where it stopped.
+    Up to ``workers`` days are fetched at once, but rows are written in date
+    order as soon as every earlier day is done, so an interrupted run resumes
+    where it stopped without gaps.
     """
     done = set()
     if store.exists():
@@ -128,13 +154,17 @@ def update_store(
         with store.open("w", newline="", encoding="utf-8") as handle:
             csv.writer(handle).writerow(FIELDS)
 
+    missing = [
+        (day, name) for day, name in sorted(listing.items()) if f"{day:%Y-%m-%d}" not in done
+    ]
     added = 0
-    with store.open("a", newline="", encoding="utf-8") as handle:
+    with (
+        store.open("a", newline="", encoding="utf-8") as handle,
+        ThreadPoolExecutor(max_workers=workers) as pool,
+    ):
         writer = csv.writer(handle)
-        for day, name in sorted(listing.items()):
-            if f"{day:%Y-%m-%d}" in done:
-                continue
-            value = fetch_day(day, name)
+        values = pool.map(lambda item: fetch_day(*item), missing)
+        for (day, name), value in zip(missing, values, strict=True):
             writer.writerow([f"{day:%Y-%m-%d}", "" if math.isnan(value) else round(value, 4), name])
             handle.flush()
             added += 1

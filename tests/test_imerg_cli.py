@@ -129,3 +129,37 @@ def test_rejected_credentials_stop_with_a_hint(tmp_path, capsys):
     assert capsys.readouterr().err == (
         "BDCTB: 2020-11 failed: HTTP 401 (check ~/.netrc and the GES DISC app approval)\n"
     )
+
+
+def test_network_failure_after_retries_stops_with_a_message(tmp_path, capsys, monkeypatch):
+    from riverforecast import imerg
+
+    write_basin(tmp_path / "basins")
+    monkeypatch.setattr(imerg.time, "sleep", lambda seconds: None)
+
+    class Unreachable(FakeEarthdata):
+        def get(self, url, timeout):
+            if "/opendap/" in url:
+                raise requests.ConnectionError("Network is unreachable")
+            return super().get(url, timeout)
+
+    code = imerg_cli.main(
+        [
+            "--basins",
+            str(tmp_path / "basins"),
+            "--root",
+            str(tmp_path / "imerg"),
+            "update",
+            "BDCTB",
+            "--start",
+            "2020-11-01",
+            "--end",
+            "2020-11-30",
+        ],
+        http=Unreachable(),
+    )
+
+    assert code == 1
+    assert capsys.readouterr().err == (
+        "BDCTB: 2020-11 failed: network error after 5 attempts; rerun to resume\n"
+    )

@@ -33,5 +33,10 @@ def glofas_reforecast_summary(code: str, raw: Path = RAW) -> pd.DataFrame:
 
 
 def imerg_basin_rain(code: str, raw: Path = RAW) -> pd.Series:
+    """Daily basin-mean IMERG rainfall (mm), sorted by date (rows are appended unordered)."""
     path = raw / "imerg" / code / "daily.csv"
-    return pd.read_csv(path, index_col="date", parse_dates=True)["basin_mean_mm"]
+    rain = pd.read_csv(path, index_col="date", parse_dates=True)["basin_mean_mm"]
+    duplicated = rain.index[rain.index.duplicated()]
+    if len(duplicated):
+        raise ValueError(f"duplicate dates in {path}: {duplicated[0]:%Y-%m-%d}")
+    return rain.sort_index()

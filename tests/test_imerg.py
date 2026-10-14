@@ -84,3 +84,53 @@ def test_update_fetches_only_missing_days_and_appends_them(tmp_path):
     assert table["date"].tolist() == ["2020-01-01", "2020-01-02", "2020-01-03"]
     assert table["basin_mean_mm"].tolist() == [1.5, 12.0, 13.0]
     assert table["file"].tolist() == ["a.nc4", "b.nc4", "c.nc4"]
+
+
+def test_update_fetches_in_parallel_but_writes_in_date_order(tmp_path):
+    import threading
+    import time
+
+    store = tmp_path / "daily.csv"
+    listing = {dt.date(2020, 1, d): f"{d}.nc4" for d in range(1, 9)}
+    active, peak = [0], [0]
+    lock = threading.Lock()
+
+    def fetch_day(day, name):
+        with lock:
+            active[0] += 1
+            peak[0] = max(peak[0], active[0])
+        time.sleep(0.05 * (9 - day.day))  # later days finish first
+        with lock:
+            active[0] -= 1
+        return float(day.day)
+
+    assert imerg.update_store(store, listing, fetch_day, workers=4) == 8
+
+    table = pd.read_csv(store)
+    assert table["date"].tolist() == [f"2020-01-0{d}" for d in range(1, 9)]
+    assert table["basin_mean_mm"].tolist() == [float(d) for d in range(1, 9)]
+    assert peak[0] == 4
+
+
+def test_retry_waits_longer_after_each_transient_failure():
+    calls, waits = [], []
+
+    def flaky():
+        calls.append(1)
+        if len(calls) < 3:
+            raise imerg.TransientError("network unreachable")
+        return 7.0
+
+    assert imerg.retry(flaky, attempts=5, sleep=waits.append) == 7.0
+    assert waits == [2, 4]
+
+
+def test_retry_raises_the_last_error_after_the_final_attempt():
+    waits = []
+
+    def down():
+        raise imerg.TransientError("network unreachable")
+
+    with pytest.raises(imerg.TransientError, match="network unreachable"):
+        imerg.retry(down, attempts=3, sleep=waits.append)
+    assert waits == [2, 4]

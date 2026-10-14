@@ -47,6 +47,9 @@ def main(argv: list[str] | None = None, http: requests.Session | None = None) ->
     update.add_argument("code")
     update.add_argument("--start", type=dt.date.fromisoformat, default=dt.date(1998, 1, 1))
     update.add_argument("--end", type=dt.date.fromisoformat, default=dt.date.today())
+    update.add_argument(
+        "--workers", type=int, default=2, help="days fetched at once (GES DISC blocks bursts)"
+    )
     args = parser.parse_args(argv)
 
     geometry = gpd.read_file(args.basins / f"{args.code}.geojson").geometry.iloc[0]
@@ -55,10 +58,18 @@ def main(argv: list[str] | None = None, http: requests.Session | None = None) ->
     http = http or session()
     store = args.root / args.code / "daily.csv"
 
-    def fetch_day(day: dt.date, name: str) -> float:
-        answer = http.get(imerg.subset_url(day, name, window), timeout=120)
+    def fetch_once(day: dt.date, name: str) -> float:
+        try:
+            answer = http.get(imerg.subset_url(day, name, window), timeout=120)
+        except (requests.ConnectionError, requests.Timeout) as error:
+            raise imerg.TransientError(str(error)) from None
+        if answer.status_code >= 500:
+            raise imerg.TransientError(f"HTTP {answer.status_code}")
         answer.raise_for_status()
         return imerg.basin_mean(imerg.read_subset(answer.content), mask)
+
+    def fetch_day(day: dt.date, name: str) -> float:
+        return imerg.retry(lambda: fetch_once(day, name))
 
     total = 0
     for year, month in months(args.start, args.end):
@@ -72,7 +83,14 @@ def main(argv: list[str] | None = None, http: requests.Session | None = None) ->
             if args.start <= day <= args.end
         }
         try:
-            added = imerg.update_store(store, listing, fetch_day)
+            added = imerg.update_store(store, listing, fetch_day, workers=args.workers)
+        except imerg.TransientError:
+            print(
+                f"{args.code}: {year}-{month:02d} failed: network error after "
+                f"{imerg.RETRY_ATTEMPTS} attempts; rerun to resume",
+                file=sys.stderr,
+            )
+            return 1
         except requests.HTTPError as error:
             status = error.response.status_code if error.response is not None else "?"
             hint = " (check ~/.netrc and the GES DISC app approval)" if status in (401, 403) else ""
