@@ -1,0 +1,36 @@
+# Tabasco river forecast
+
+Rebuild the river stage forecast from scratch, documented end to end like the flood
+susceptibility map. Start with the Usumacinta at Boca del Cerro (BDCTB), then extend to
+the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks`.
+
+## Specs
+
+- **S1** "la idea es lograr la maxima precision posible con los datos publicos que podemos descargar, y las validaciones que podemos ahcer con medios locales oficiales, ya sea haciendo scrapping o en PDF, puede que sirva el semaforo del nivel del rio si aun existen datos hisoricos diarios, de toods modos no te quedes solo con ese"
+- **S2** "que sea un repo nuevo, privado por ahora, si los otros te sirven mantenlos hasta terminar este nuevo, luego los eliminaremos para no tener basura vieja"
+- **S3** "no se podamos hacer que el pronostico abarque al menos la mayoria de tabasco, quiero decir, no solo las estaciones"
+- **S4** "si ves que es mejor empezarlo de 0 para poder documentar todo el proceso igual que el del mapa me dices, porque igual no estoy 100% convencido del resultado"
+- **S5** Agreed data roles (L5): station levels and station rainfall are used to train and validate, never as forecast inputs; the forecast uses public gridded data (GloFAS, satellite and forecast rainfall). The target is never imputed.
+
+## Tasks
+
+- [x] **T1** (S2) Scaffold private repo `ElGuill3/tabasco-river-forecast` (uv, pytest, ruff, README, this document). Route: inline. Commit: see Log.
+- [ ] **T2** (S1, S5) CONAGUA station data: strict SIH CSV parser (level, discharge, missing marks), download BDCTB, gap report. Route: inline.
+- [ ] **T3** (S1) GloFAS v4 daily discharge for the station river cell (Open-Meteo flood API), with river-cell selection checked against upstream area. Route: inline.
+- [ ] **T4** (S1) Upstream basin (HydroBASINS level 12) and basin-mean satellite rainfall from a source with a near-real-time counterpart; check satellite rain against CONAGUA rain stations. Route: inline.
+- [ ] **T5** (S1, S4) Evaluation protocol and baselines: held-out whole years, climatology, GloFAS-to-stage ceiling; metrics MAE, RMSE, pinball, coverage, high-water skill. Route: inline.
+- [ ] **T6** (S1) Historical GloFAS forecasts (reforecasts/archived forecasts) for h1/h3/h7; reuse data downloaded by the old model repo. Route: inline.
+- [ ] **T7** (S1) Forecast model h1/h3/h7 with q10/q50/q90; each input admitted only if it lowers held-out error. Route: inline.
+- [ ] **T8** (S1) IPCET semáforo scraper and color reader for the Usumacinta row; validate forecasts against it; estimate thresholds only with evidence. Route: inline.
+- [ ] **T9** (S3) Extend to the 14 semáforo rivers (Grijalva needs dam releases if available). Route: TBD.
+- [ ] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: inline.
+- [ ] **T11** (S2) After the user confirms: delete `distributionMapApp-model-research` (local and GitHub). Route: user decision.
+
+## Log
+
+- **L1** (2026-10-14, request) "Bien, por ahora lo dejaremos tal cual, lo que si me gustaria revisar ahora, y este si es un modelo de prediccion, es el del repo hermano, primero quiero que le des una checada, igual fue un proceso de investigacion, y ya practicamente esta el modelo, pero no se si mantenga lo del enfoque de datos publicos, igual si ves que es mejor empezarlo de 0 para poder documentar todo el proceso igual que el del mapa me dices, porque igual no estoy 100% convencido del resultado"
+- **L2** Review of `distributionMapApp-model-research`: the shipped model uses only GloFAS, GEFS and season; final 2017–2019 q50 MAE 0.71/0.71/0.68 m (h1/h3/h7) with ~3 m intervals; persistence on the same period is 0.20/0.45/0.70 m and was never reported. All data are public.
+- **L3** (user) "no, solo tengo el historico, se puede lograr algo con eso? que dicen los trabajos relacionados? mi idea era usar variables como precipitacion, inundaciones, etc, siempre que sirvan claro, pero no se como hacerlo, este proyecto lo comence durante mi residencia y la mayor parte fue de investigacion de variables relacionadas con inundaciones, correlacion y todo eso"
+- **L4** Diagnostics (scripts in `distributionMapApp/.cache/bdctb-forecast`), test 2015–2025, train 1997–2014: climatology MAE 1.21 m; GloFAS v4 as a perfect same-day forecast 0.67 m (ceiling of a GloFAS-only model); ERA5 basin rain + GloFAS 0.63 m; forecast mode with inputs up to the issue day h1 0.64, h3 0.65, h7 0.89 m; adding a hypothetical semaphore category h1 0.47; adding numeric level h1 0.22 (not available live). Open-Meteo GloFAS cell for BDCTB is 17.425, -91.525 (the nearest cell 17.425, -91.475 is not the river). HydroBASINS outlet 7121209020, 49 735 km². SIH BDCTB.csv ends 2025-09-03; `NIVEL_RIOS_DIA.csv` is frozen at 2023-04-12; IPCET semáforo images exist only for 2026 and give colors, not meters; the Usumacinta emergency plan PDF gives inconsistent thresholds (NAMO 12.56 m vs 20.5/21/21.5 m).
+- **L5** (user) "si, tienes razon, entonces, la idea seria utilizar los datos de las estaciones tanto de precipitacion como de nivel como parte del entrenamiento para validar? aunque durante el pronostico como tal usaremos las demas? usariamos alguna tecnica para tratar de completar datos o no se podria dado el perido tan grande que hay?" — answered: yes for training/validation; no target imputation; gridded inputs need no gap filling. User: "Entiendo, entonces trabajremos con lo que tenemos".
+- **L6** (user) Repo name `tabasco-river-forecast`, private, at `/home/guill3/Code/`: "si, me parece bien".
