@@ -117,6 +117,21 @@ uv run python -m riverforecast.imerg_cli update BDCTB --start 1998-01-01
 
 Rerunning fetches only the days missing from `data/raw/imerg/<CODE>/daily.csv`.
 
+### IPCET semáforo (official validation)
+
+The Instituto de Protección Civil del Estado de Tabasco publishes a daily
+*Semáforo Hidrometeorológico* image with the state of 14 rivers yesterday and
+today (emergencia, alerta, precaución, normal, bajo, abajo del mínimo; no stage
+in metres). `riverforecast.semaforo` reads the cell colors at fixed positions
+and refuses any image whose size, table grid or colors do not match.
+
+```bash
+uv run python -m riverforecast.semaforo_cli fetch --start 2026-01-01
+```
+
+Images go to `data/raw/ipcet/images/` and states to `data/raw/ipcet/states.csv`.
+The site keeps images for 2026 only, and not every day.
+
 ## Evaluation
 
 `riverforecast.evaluation` fixes the protocol before any model exists:

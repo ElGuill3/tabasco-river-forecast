@@ -9,6 +9,7 @@ dependencies = [
     "h5py>=3.16.0",
     "numpy",
     "pandas",
+    "pillow>=12.3.0",
     "pyogrio>=0.13.0",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
