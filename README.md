@@ -68,6 +68,22 @@ lead, mean 0.96 times the observed). The nine cells on the main channel score
 (2023-06-01..2025-05-31), the archived day-0 forecasts follow the reanalysis
 closely (correlation 0.966, median difference 3.3%, 90th percentile 11.3%).
 
+### GloFAS reforecasts (forecast error)
+
+Reforecasts are past forecasts issued as GloFAS would have issued them, so they
+carry the forecast error a live model faces. GloFAS v4 reforecasts for the BDCTB
+river cell (Copernicus CEMS `cems-glofas-reforecast`, 11 members, leads of 1, 3
+and 7 days) were downloaded by the first research repository and are imported
+with:
+
+```bash
+uv run python -m riverforecast.reforecast_cli import BDCTB <folder> [<folder> ...]
+```
+
+BDCTB: 2 294 issues from 2004-01-01 to 2023-11-25 (twice a week; 2020-2023 only
+at 1 day). Against the reanalysis, the control run differs by a median of 3.2%
+at 1 day, 4.2% at 3 days and 7.4% at 7 days (correlation 0.986, 0.973, 0.938).
+
 ### Upstream basin
 
 The basin of each station is traced from HydroBASINS level 12 (Lehner & Grill
