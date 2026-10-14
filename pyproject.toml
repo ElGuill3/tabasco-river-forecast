@@ -11,6 +11,7 @@ dependencies = [
     "pandas",
     "pyogrio>=0.13.0",
     "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
     "shapely>=2.2.0",
 ]
 

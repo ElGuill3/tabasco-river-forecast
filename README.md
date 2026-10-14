@@ -117,6 +117,23 @@ uv run python -m riverforecast.imerg_cli update BDCTB --start 1998-01-01
 
 Rerunning fetches only the days missing from `data/raw/imerg/<CODE>/daily.csv`.
 
+## Evaluation
+
+`riverforecast.evaluation` fixes the protocol before any model exists:
+
+- **Development, 1998-2016:** fitting and every modelling choice, scored with
+  folds that hold out four whole years (14-day buffer).
+- **Test, 2017-2025:** used once, at the end, for the reported results.
+- **Metrics:** MAE and RMSE of the median, pinball loss of q10/q50/q90, coverage
+  and width of the q10-q90 interval (nominal 80%), MAE on high-water days, and
+  detection and false-alarm ratio for reaching the high-water threshold (90th
+  percentile of development stage, 17.83 m at BDCTB).
+
+Experiments live in `experiments/` and write their results to `docs/results/`.
+[Experiment 01](docs/results/01-baselines-development.md) sets the references:
+climatology misses by 1.15 m on average, and GloFAS reforecasts read through a
+rating curve by about 0.80 m at 1, 3 and 7 days.
+
 ## Development
 
 ```bash
