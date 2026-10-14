@@ -23,6 +23,29 @@ Tabasco, Mexico, built only from public data.
 The first river is the Usumacinta at Boca del Cerro (station BDCTB, Tenosique).
 The plan then extends to the 14 rivers in the IPCET semáforo.
 
+## Data
+
+### CONAGUA stations (target and validation)
+
+Daily station files come from the CONAGUA Sistema de Información Hidrológica
+(`https://sih.conagua.gob.mx/basedatos/{Hidros,Climas}/<CODE>.csv`). Every file is
+parsed strictly before it is stored under `data/raw/conagua/<kind>/<CODE>.csv`
+(UTF-8); an invalid download never replaces a stored file.
+
+```bash
+uv run python -m riverforecast.conagua_cli download hidros BDCTB
+uv run python -m riverforecast.conagua_cli import hidros BDCTB path/to/BDCTB.csv
+uv run python -m riverforecast.conagua_cli report hidros BDCTB --column level_m --start 1997-01-01
+```
+
+The SIH server sits behind bot protection that temporarily blocks repeated
+downloads (HTTP 302/403). When that happens, save the file from a browser and
+use `import`.
+
+BDCTB (Boca del Cerro) level covers 94.7% of the days from 1997-01-01 to
+2025-09-03. The longest gap, 2011-09-24 to 2011-12-31, falls on the peak of the
+2011 flood, so that event needs other validation sources.
+
 ## Development
 
 ```bash
