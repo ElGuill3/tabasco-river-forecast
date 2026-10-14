@@ -68,6 +68,39 @@ lead, mean 0.96 times the observed). The nine cells on the main channel score
 (2023-06-01..2025-05-31), the archived day-0 forecasts follow the reanalysis
 closely (correlation 0.966, median difference 3.3%, 90th percentile 11.3%).
 
+### Upstream basin
+
+The basin of each station is traced from HydroBASINS level 12 (Lehner & Grill
+2013, `hybas_na_lev12_v1c.zip` from https://data.hydrosheds.org) and versioned
+in `data/basins/<CODE>.geojson`.
+
+```bash
+uv run python -m riverforecast.basin_cli trace BDCTB --lat 17.43 --lon -91.492 \
+    --hydrobasins data/raw/hydrobasins/hybas_na_lev12_v1c.zip
+```
+
+BDCTB drains 51 457 km² (380 sub-basins, outlet 7121209020), mostly in
+Guatemala and Chiapas.
+
+### Satellite rainfall (input)
+
+Daily basin-mean rainfall comes from NASA GPM IMERG Early Run V07 (0.1°,
+available about four hours after real time, from 1998-01-01), so training and
+daily forecasting use the same source. Only the basin's bounding box is
+requested through OPeNDAP (about 30 KB per day instead of 31 MB), and the mean
+covers the cells whose centre lies inside the basin.
+
+It needs a free NASA Earthdata account: put
+`machine urs.earthdata.nasa.gov login <user> password <password>` in
+`~/.netrc` (`chmod 600`) and approve the "NASA GESDISC DATA ARCHIVE"
+application in the Earthdata profile.
+
+```bash
+uv run python -m riverforecast.imerg_cli update BDCTB --start 1998-01-01
+```
+
+Rerunning fetches only the days missing from `data/raw/imerg/<CODE>/daily.csv`.
+
 ## Development
 
 ```bash
