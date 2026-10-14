@@ -46,6 +46,28 @@ BDCTB (Boca del Cerro) level covers 94.7% of the days from 1997-01-01 to
 2025-09-03. The longest gap, 2011-09-24 to 2011-12-31, falls on the peak of the
 2011 flood, so that event needs other validation sources.
 
+### GloFAS discharge (input)
+
+GloFAS v4 daily discharge comes from the Open-Meteo flood API (no key):
+`consolidated_v4` is the reanalysis (1997 to about two months ago) and
+`forecast_v4` keeps the day-0 value of each daily forecast (from 2023-06-01).
+
+```bash
+uv run python -m riverforecast.glofas_cli fetch BDCTB --lat 17.43 --lon -91.492
+```
+
+The command chooses the station's river cell among the 5 x 5 cells around it:
+cells must carry 0.5-2 times the observed mean discharge, are scored by their
+daily correlation with observed discharge allowing a lead of 0-5 days, and the
+nearest cell within 0.005 of the best score wins. The rule and scores are
+written to `data/raw/glofas/<CODE>/cell.json`.
+
+For BDCTB the river cell is 17.425, -91.525 (correlation 0.832 with a 2-day
+lead, mean 0.96 times the observed). The nine cells on the main channel score
+0.831-0.832, so the choice barely matters. Where both sources exist
+(2023-06-01..2025-05-31), the archived day-0 forecasts follow the reanalysis
+closely (correlation 0.966, median difference 3.3%, 90th percentile 11.3%).
+
 ## Development
 
 ```bash
