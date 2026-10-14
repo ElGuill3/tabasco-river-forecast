@@ -134,6 +134,28 @@ Experiments live in `experiments/` and write their results to `docs/results/`.
 climatology misses by 1.15 m on average, and GloFAS reforecasts read through a
 rating curve by about 0.80 m at 1, 3 and 7 days.
 
+## Model
+
+`riverforecast.features` builds, for each GloFAS forecast issue and lead, inputs
+known on the issue day only (a test alters later discharge and checks the
+inputs do not change): the ensemble forecast (log median, mean, control and
+spread), simulated discharge on the issue day and 3 and 7 days earlier, the
+3-day trend, the expected change, and the target day's season.
+
+`riverforecast.model` fits one gradient-boosting regressor per quantile (q10,
+q50, q90; sorted so they never cross). `ConformalQuantileModel` widens q10-q90
+by conformalized quantile regression (Romano et al. 2019) on inner year folds,
+because the raw interval is too narrow.
+
+[Experiment 02](docs/results/02-glofas-model-development.md) (development
+2004-2016, same days for every forecast):
+
+| Lead | GloFAS rating MAE | Model MAE | Model coverage (80% nominal) | Width |
+| --- | --- | --- | --- | --- |
+| 1 day | 0.805 m | 0.684 m | 0.803 | 2.10 m |
+| 3 days | 0.787 m | 0.658 m | 0.808 | 2.10 m |
+| 7 days | 0.803 m | 0.712 m | 0.822 | 2.26 m |
+
 ## Development
 
 ```bash
