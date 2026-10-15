@@ -84,6 +84,20 @@ BDCTB: 2 294 issues from 2004-01-01 to 2023-11-25 (twice a week; 2020-2023 only
 at 1 day). Against the reanalysis, the control run differs by a median of 3.2%
 at 1 day, 4.2% at 3 days and 7.4% at 7 days (correlation 0.986, 0.973, 0.938).
 
+### GloFAS operational forecasts (2023 onwards)
+
+Daily GloFAS v4 forecasts as issued (control plus 50 members) come from the
+Copernicus CEMS Early Warning Data Store (`cems-glofas-forecast`; account in
+`~/.cdsapirc`). Requests queue for about 40 minutes, so each covers one month:
+
+```bash
+uv run python -m riverforecast.cems_cli fetch BDCTB --start 2023-08-01
+```
+
+CEMS and Open-Meteo label the same cells half a grid step apart in longitude:
+the BDCTB river cell is 17.425 / 268.525 in CEMS and 17.425 / -91.525 in
+Open-Meteo.
+
 ### Upstream basin
 
 The basin of each station is traced from HydroBASINS level 12 (Lehner & Grill

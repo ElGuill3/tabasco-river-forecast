@@ -5,7 +5,9 @@ description = "Probabilistic river stage forecasts for Tabasco rivers from publi
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "cdsapi>=0.7.7",
     "geopandas>=1.2.0",
+    "h5netcdf>=1.8.1",
     "h5py>=3.16.0",
     "numpy",
     "pandas",
@@ -14,6 +16,7 @@ dependencies = [
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
     "shapely>=2.2.0",
+    "xarray>=2026.9.0",
 ]
 
 [dependency-groups]
