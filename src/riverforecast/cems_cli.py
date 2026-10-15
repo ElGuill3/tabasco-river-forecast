@@ -1,10 +1,14 @@
-"""Download GloFAS operational forecasts for a station, one request per month.
+"""Download GloFAS operational forecasts for a station in five-day requests.
 
     uv run python -m riverforecast.cems_cli fetch BDCTB --start 2026-01-01
 
-Writes ``<root>/glofas/<CODE>/operational/<YYYY-MM>.csv`` (same columns as the
-reforecast table). A month is skipped when its table already reaches the last
-requested day. Several months wait in the CEMS queue at once (``--parallel``).
+CEMS rejects requests above about 900 fields ("cost limits exceeded"); one
+issue day of the full ensemble is 51 members x 3 leads = 153 fields, so each
+request covers at most five issue days of one month. Writes
+``<root>/glofas/<CODE>/operational/<YYYY-MM-DD>.csv`` (named by the first issue
+day; same columns as the reforecast table). A request is skipped when its table
+already reaches its last day. Several requests wait in the queue at once
+(``--parallel``).
 """
 
 from __future__ import annotations
@@ -21,13 +25,14 @@ import pandas as pd
 from riverforecast import cems
 
 DEFAULT_ROOT = Path("data/raw")
+DAYS_PER_REQUEST = 5
 
 
 def main(argv: list[str] | None = None, client=None) -> int:
     parser = argparse.ArgumentParser(prog="riverforecast.cems_cli")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT)
     commands = parser.add_subparsers(dest="command", required=True)
-    fetch = commands.add_parser("fetch", help="download operational forecasts month by month")
+    fetch = commands.add_parser("fetch", help="download operational forecasts")
     fetch.add_argument("code")
     fetch.add_argument("--start", type=dt.date.fromisoformat, required=True)
     fetch.add_argument(
@@ -47,16 +52,19 @@ def main(argv: list[str] | None = None, client=None) -> int:
     for year, month in cems.months(args.start, args.end):
         first = max(args.start, dt.date(year, month, 1))
         last = min(args.end, (pd.Timestamp(year, month, 1) + pd.offsets.MonthEnd(0)).date())
-        target = folder / f"{year}-{month:02d}.csv"
-        if target.exists() and pd.read_csv(target)["issue"].max() >= f"{last}":
-            skipped += 1
-            continue
         days = list(range(first.day, last.day + 1))
-        pending.append((year, month, days, target))
+        for start in range(0, len(days), DAYS_PER_REQUEST):
+            chunk = days[start : start + DAYS_PER_REQUEST]
+            target = folder / f"{year}-{month:02d}-{chunk[0]:02d}.csv"
+            final = f"{dt.date(year, month, chunk[-1])}"
+            if target.exists() and pd.read_csv(target)["issue"].max() >= final:
+                skipped += 1
+                continue
+            pending.append((year, month, chunk, target))
 
     def fetch_month(job):
         year, month, days, target = job
-        label = f"{year}-{month:02d}"
+        label = f"{year}-{month:02d}-{days[0]:02d}"
         request = cems.forecast_request(year, month, cems.CELL_AREA, days)
         try:
             with tempfile.TemporaryDirectory() as scratch:
@@ -74,7 +82,7 @@ def main(argv: list[str] | None = None, client=None) -> int:
         results = list(pool.map(fetch_month, pending))
     stored, failed = sum(results), len(results) - sum(results)
     note = f" ({skipped} already stored)" if skipped else ""
-    print(f"{stored} months stored, {failed} failed{note}")
+    print(f"{stored} requests stored, {failed} failed{note}")
     return 1 if failed else 0
 
 

@@ -88,7 +88,10 @@ at 1 day, 4.2% at 3 days and 7.4% at 7 days (correlation 0.986, 0.973, 0.938).
 
 Daily GloFAS v4 forecasts as issued (control plus 50 members) come from the
 Copernicus CEMS Early Warning Data Store (`cems-glofas-forecast`; account in
-`~/.cdsapirc`). Requests queue for about 40 minutes, so each covers one month:
+`~/.cdsapirc`). CEMS caps a request at about 900 fields and one issue day of
+the full ensemble is 153 (51 members x 3 leads), so each request covers five
+days; requests queue for about 40 minutes and three run at once. The stored
+tables take about 7.5 KB per issue day (under 10 MB for 2023-2026):
 
 ```bash
 uv run python -m riverforecast.cems_cli fetch BDCTB --start 2023-08-01
