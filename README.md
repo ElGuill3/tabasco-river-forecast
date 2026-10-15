@@ -197,6 +197,23 @@ gauge at Boca del Cerro: monthly correlation 0.69 and similar totals (205 vs
 **not** a model input. GloFAS is itself driven by rainfall, so the satellite
 series adds little and brings its own drift.
 
+### Test result
+
+[Experiment 04](docs/results/04-test.md) scores the frozen model once on target
+days from 2017 (fitted on 2004-2016 only):
+
+| Lead | Climatology MAE | GloFAS rating MAE | Model MAE | Model coverage (80%) | Test period |
+| --- | --- | --- | --- | --- | --- |
+| 1 day | 1.144 m | 0.793 m | **0.594 m** | 0.77 | 2017-2023 (796 issues) |
+| 3 days | 1.074 m | 0.778 m | **0.578 m** | 0.73 | 2017-2019 (337 issues) |
+| 7 days | 1.118 m | 0.771 m | **0.600 m** | 0.76 | 2017-2019 (341 issues) |
+
+The model beats both references in every test year, including the 2020 flood
+(1 day: 1.08 m against 1.18 m for the rating and 2.78 m for climatology). At
+1 day it detects 78% of high-water days (>= 17.83 m) with 18% false alarms.
+The 2017-2019 window holds only 4-5 high-water days at 3 and 7 days, too few to
+judge flood skill there; the 2023-2026 operational forecasts will extend it.
+
 ## Development
 
 ```bash

@@ -1,0 +1,412 @@
+{
+  "high_water_m": 17.83,
+  "rows": [
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "period": "2017-01-02..2023-11-26",
+      "n": 796,
+      "mae": 1.1437688442211056,
+      "rmse": 1.6363487168435638,
+      "pinball_q10": 0.23364874371859295,
+      "pinball_q50": 0.5718844221105528,
+      "pinball_q90": 0.32268856783919597,
+      "coverage_80": 0.7261306532663316,
+      "width_80": 3.74161432160804,
+      "high_water_n": 64,
+      "high_water_mae": 3.561328125,
+      "detection": 0.0,
+      "false_alarm_ratio": NaN
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "period": "2017-01-02..2023-11-26",
+      "n": 796,
+      "mae": 0.7925986773953315,
+      "rmse": 1.0683483527806685,
+      "pinball_q10": 0.20061324903043937,
+      "pinball_q50": 0.39629933869766576,
+      "pinball_q90": 0.2025308081909042,
+      "coverage_80": 0.7412060301507538,
+      "width_80": 2.197382199540489,
+      "high_water_n": 64,
+      "high_water_mae": 1.367001811517756,
+      "detection": 0.75,
+      "false_alarm_ratio": 0.2
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "period": "2017-01-02..2023-11-26",
+      "n": 796,
+      "mae": 0.5935132090272183,
+      "rmse": 0.8036397375635105,
+      "pinball_q10": 0.1332146913851914,
+      "pinball_q50": 0.29675660451360913,
+      "pinball_q90": 0.15389664025598973,
+      "coverage_80": 0.7663316582914573,
+      "width_80": 1.8962170527357893,
+      "high_water_n": 64,
+      "high_water_mae": 0.999599301621398,
+      "detection": 0.78125,
+      "false_alarm_ratio": 0.18032786885245902
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 3,
+      "period": "2017-01-04..2019-12-31",
+      "n": 337,
+      "mae": 1.0738575667655785,
+      "rmse": 1.4421028167660683,
+      "pinball_q10": 0.2388792284866469,
+      "pinball_q50": 0.5369287833827893,
+      "pinball_q90": 0.33669762611275955,
+      "coverage_80": 0.5756676557863502,
+      "width_80": 3.4230385756676562,
+      "high_water_n": 5,
+      "high_water_mae": 4.558999999999999,
+      "detection": 0.0,
+      "false_alarm_ratio": NaN
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 3,
+      "period": "2017-01-04..2019-12-31",
+      "n": 337,
+      "mae": 0.7776623545810999,
+      "rmse": 1.0606995327224995,
+      "pinball_q10": 0.21007911989972616,
+      "pinball_q50": 0.38883117729054995,
+      "pinball_q90": 0.18467350376679623,
+      "coverage_80": 0.7270029673590505,
+      "width_80": 2.1762566137566135,
+      "high_water_n": 5,
+      "high_water_mae": 1.4077417989417984,
+      "detection": 0.8,
+      "false_alarm_ratio": 0.6
+    },
+    {
+      "forecast": "model",
+      "lead_days": 3,
+      "period": "2017-01-04..2019-12-31",
+      "n": 337,
+      "mae": 0.5776950136617615,
+      "rmse": 0.7581082033132122,
+      "pinball_q10": 0.12757970644566974,
+      "pinball_q50": 0.28884750683088073,
+      "pinball_q90": 0.1371583492226285,
+      "coverage_80": 0.7299703264094956,
+      "width_80": 1.6900861299545842,
+      "high_water_n": 5,
+      "high_water_mae": 1.2369462882298223,
+      "detection": 0.2,
+      "false_alarm_ratio": 0.5
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 7,
+      "period": "2017-01-01..2020-01-04",
+      "n": 341,
+      "mae": 1.117683284457478,
+      "rmse": 1.48176521503667,
+      "pinball_q10": 0.25725777126099714,
+      "pinball_q50": 0.558841642228739,
+      "pinball_q90": 0.337349853372434,
+      "coverage_80": 0.5542521994134897,
+      "width_80": 3.424463343108504,
+      "high_water_n": 4,
+      "high_water_mae": 4.757499999999999,
+      "detection": 0.0,
+      "false_alarm_ratio": NaN
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 7,
+      "period": "2017-01-01..2020-01-04",
+      "n": 341,
+      "mae": 0.7705679449724113,
+      "rmse": 1.0509017557805285,
+      "pinball_q10": 0.21826610638934035,
+      "pinball_q50": 0.38528397248620566,
+      "pinball_q90": 0.19171576087887868,
+      "coverage_80": 0.7096774193548387,
+      "width_80": 2.167481814291828,
+      "high_water_n": 4,
+      "high_water_mae": 1.9548266216310566,
+      "detection": 0.25,
+      "false_alarm_ratio": 0.8571428571428571
+    },
+    {
+      "forecast": "model",
+      "lead_days": 7,
+      "period": "2017-01-01..2020-01-04",
+      "n": 341,
+      "mae": 0.5998808889515025,
+      "rmse": 0.8160722562441927,
+      "pinball_q10": 0.1435101946764028,
+      "pinball_q50": 0.29994044447575124,
+      "pinball_q90": 0.14994416761334473,
+      "coverage_80": 0.7565982404692082,
+      "width_80": 1.800336260346097,
+      "high_water_n": 4,
+      "high_water_mae": 2.2388602443892585,
+      "detection": 0.25,
+      "false_alarm_ratio": 0.5
+    }
+  ],
+  "yearly_mae": [
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2017,
+      "mae": 0.8407142857142857
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2018,
+      "mae": 0.9593577981651376
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2019,
+      "mae": 1.3416393442622951
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2020,
+      "mae": 2.783478260869565
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2021,
+      "mae": 1.00571875
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2022,
+      "mae": 1.0024855491329479
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 1,
+      "year": 2023,
+      "mae": 1.1300000000000001
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2017,
+      "mae": 0.6018818374075526
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2018,
+      "mae": 0.5664883277093559
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2019,
+      "mae": 1.0305195845786783
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2020,
+      "mae": 1.1765878404357828
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2021,
+      "mae": 0.8634603933316398
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2022,
+      "mae": 0.7878097024666683
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 1,
+      "year": 2023,
+      "mae": 0.6379327792608693
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2017,
+      "mae": 0.4375257610240389
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2018,
+      "mae": 0.4758325554650929
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2019,
+      "mae": 0.7759404876816298
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2020,
+      "mae": 1.077340153473069
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2021,
+      "mae": 0.6360804857988759
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2022,
+      "mae": 0.5334748597758471
+    },
+    {
+      "forecast": "model",
+      "lead_days": 1,
+      "year": 2023,
+      "mae": 0.44869315933931947
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 3,
+      "year": 2017,
+      "mae": 0.8236666666666668
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 3,
+      "year": 2018,
+      "mae": 0.9749090909090907
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 3,
+      "year": 2019,
+      "mae": 1.3784016393442622
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 3,
+      "year": 2017,
+      "mae": 0.6481384170649185
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 3,
+      "year": 2018,
+      "mae": 0.5671190148641525
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 3,
+      "year": 2019,
+      "mae": 1.0789720333357165
+    },
+    {
+      "forecast": "model",
+      "lead_days": 3,
+      "year": 2017,
+      "mae": 0.46502670164961546
+    },
+    {
+      "forecast": "model",
+      "lead_days": 3,
+      "year": 2018,
+      "mae": 0.4472319079072701
+    },
+    {
+      "forecast": "model",
+      "lead_days": 3,
+      "year": 2019,
+      "mae": 0.7922943119754449
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 7,
+      "year": 2017,
+      "mae": 0.8205963302752294
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 7,
+      "year": 2018,
+      "mae": 1.0302777777777776
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 7,
+      "year": 2019,
+      "mae": 1.455737704918033
+    },
+    {
+      "forecast": "climatology",
+      "lead_days": 7,
+      "year": 2020,
+      "mae": 1.4074999999999998
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 7,
+      "year": 2017,
+      "mae": 0.5872950754381333
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 7,
+      "year": 2018,
+      "mae": 0.6037840346541984
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 7,
+      "year": 2019,
+      "mae": 1.0829975511305265
+    },
+    {
+      "forecast": "GloFAS rating",
+      "lead_days": 7,
+      "year": 2020,
+      "mae": 0.7070645161290319
+    },
+    {
+      "forecast": "model",
+      "lead_days": 7,
+      "year": 2017,
+      "mae": 0.4690204882635183
+    },
+    {
+      "forecast": "model",
+      "lead_days": 7,
+      "year": 2018,
+      "mae": 0.4268962067077365
+    },
+    {
+      "forecast": "model",
+      "lead_days": 7,
+      "year": 2019,
+      "mae": 0.8691374792756147
+    },
+    {
+      "forecast": "model",
+      "lead_days": 7,
+      "year": 2020,
+      "mae": 0.6482935578391524
+    }
+  ]
+}
