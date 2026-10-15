@@ -188,6 +188,15 @@ because the raw interval is too narrow.
 | 3 days | 0.787 m | 0.658 m | 0.808 | 2.10 m |
 | 7 days | 0.803 m | 0.712 m | 0.822 | 2.26 m |
 
+[Experiment 00](docs/results/00-rain-check.md) checks IMERG against the CONAGUA
+gauge at Boca del Cerro: monthly correlation 0.69 and similar totals (205 vs
+191 mm per month), with a mild drift (IMERG/gauge 1.16 up to 2007, 0.99 from
+2015). [Experiment 03](docs/results/03-rain-development.md) adds basin rainfall
+(1-90 day sums) to the model: MAE 0.702 / 0.670 / 0.705 m against 0.684 / 0.658
+/ 0.712 m without it, with lower flood detection at 3 and 7 days, so rainfall is
+**not** a model input. GloFAS is itself driven by rainfall, so the satellite
+series adds little and brings its own drift.
+
 ## Development
 
 ```bash
