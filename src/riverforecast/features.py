@@ -11,6 +11,8 @@ Each row is one forecast issue ``t`` for lead ``h``; its target is the stage on
   which matches it closely.
 - ``fc_vs_now``: how much the forecast expects the discharge to change.
 - ``season_*``: day of year of the target day.
+- ``rain_<n>d`` (optional): basin-mean rainfall summed over the ``n`` days that
+  end on the issue day. Rain falling after the issue is never used.
 """
 
 from __future__ import annotations
@@ -31,14 +33,19 @@ COLUMNS = [
     "season_sin",
     "season_cos",
 ]
+RAIN_WINDOWS = (1, 3, 7, 15, 30, 60, 90)
+RAIN_COLUMNS = [f"rain_{window}d" for window in RAIN_WINDOWS]
 
 
-def build(summary: pd.DataFrame, reanalysis: pd.Series, lead: int) -> pd.DataFrame:
+def build(
+    summary: pd.DataFrame, reanalysis: pd.Series, lead: int, rain: pd.Series | None = None
+) -> pd.DataFrame:
     """Feature table indexed by issue day, with the target day in ``valid``.
 
     ``summary`` is the reforecast ensemble summary (issue, lead_days, valid,
-    control, mean, q10, q50, q90); ``reanalysis`` is daily simulated discharge.
-    Issues missing any past discharge value are dropped.
+    control, mean, q10, q50, q90); ``reanalysis`` is daily simulated discharge;
+    ``rain`` is optional daily basin-mean rainfall. Issues missing any past
+    discharge value, or any day of a rain window, are dropped.
     """
     rows = summary[summary["lead_days"] == lead].set_index("issue").sort_index()
     issues = rows.index
@@ -66,5 +73,12 @@ def build(summary: pd.DataFrame, reanalysis: pd.Series, lead: int) -> pd.DataFra
     angle = 2 * np.pi * valid.dayofyear.to_numpy() / 365.25
     table["season_sin"] = np.sin(angle)
     table["season_cos"] = np.cos(angle)
+    columns = ["valid", *COLUMNS]
+    if rain is not None:
+        daily = rain.sort_index().asfreq("D")
+        for window, column in zip(RAIN_WINDOWS, RAIN_COLUMNS, strict=True):
+            sums = daily.rolling(window, min_periods=window).sum()
+            table[column] = sums.reindex(issues).to_numpy()
+        columns += RAIN_COLUMNS
     table.index.name = "issue"
-    return table.dropna()[["valid", *COLUMNS]]
+    return table.dropna()[columns]

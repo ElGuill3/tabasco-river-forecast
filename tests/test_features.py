@@ -88,3 +88,46 @@ def test_other_leads_are_ignored():
     table = features.build(mixed, reanalysis(), lead=1)
 
     assert list(table["valid"]) == [pd.Timestamp("2004-02-02")]
+
+
+RAIN_DAYS = pd.date_range("2003-10-01", "2004-03-31", freq="D")  # room for 90-day windows
+
+
+def rain(values=None):
+    values = np.ones(len(RAIN_DAYS)) if values is None else values
+    return pd.Series(values, index=RAIN_DAYS)
+
+
+def test_rain_sums_end_on_the_issue_day():
+    daily = rain(np.arange(1, len(RAIN_DAYS) + 1, dtype=float))
+    issue = pd.Timestamp("2004-03-01")
+
+    row = features.build(summary([issue]), reanalysis(), lead=3, rain=daily).iloc[0]
+
+    for window in features.RAIN_WINDOWS:
+        days = pd.date_range(end=issue, periods=window, freq="D")
+        assert row[f"rain_{window}d"] == pytest.approx(daily[days].sum())
+    assert list(features.build(summary([issue]), reanalysis(), lead=3, rain=daily).columns) == [
+        "valid",
+        *features.COLUMNS,
+        *features.RAIN_COLUMNS,
+    ]
+
+
+def test_future_rain_does_not_change_the_features():
+    issue = "2004-03-01"
+    original = features.build(summary([issue]), reanalysis(), lead=3, rain=rain())
+    altered = rain()
+    altered[altered.index > issue] = 500.0
+
+    assert features.build(summary([issue]), reanalysis(), lead=3, rain=altered).equals(original)
+
+
+def test_issues_with_an_incomplete_rain_window_are_dropped():
+    daily = rain()
+    daily[pd.Timestamp("2004-02-20")] = np.nan
+
+    table = features.build(summary(["2004-02-15", "2004-03-01"]), reanalysis(), lead=3, rain=daily)
+
+    # The 30-day window of 1 March contains the missing day; 15 February ends before it.
+    assert list(table.index) == [pd.Timestamp("2004-02-15")]
