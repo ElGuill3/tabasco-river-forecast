@@ -214,6 +214,32 @@ The model beats both references in every test year, including the 2020 flood
 The 2017-2019 window holds only 4-5 high-water days at 3 and 7 days, too few to
 judge flood skill there; the 2023-2026 operational forecasts will extend it.
 
+### Operational test
+
+[Experiment 05](docs/results/05-operational.md) scores the same frozen model,
+unchanged, on the real GloFAS operational forecasts issued 2023-08-01 to
+2026-10-13, as issued: the ensemble is summarized on the 11 reforecast members,
+past discharge comes from the archived day-0 forecasts, and the model was fitted
+once on development data only. Target days are 2023-08-2025-09, where observed
+stage exists:
+
+| Lead | Climatology MAE | GloFAS rating MAE | Model MAE | Model coverage (80%) | High water (n) | Detection / false alarms | Issues |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 day | 1.030 m | 0.816 m | **0.710 m** | 0.80 | 34 | 0.68 / 0.57 | 693 |
+| 3 days | 1.022 m | 0.782 m | **0.697 m** | 0.80 | 32 | 0.69 / 0.50 | 689 |
+| 7 days | 1.020 m | 0.802 m | **0.732 m** | 0.81 | 32 | 0.78 / 0.55 | 687 |
+
+The model still beats the GloFAS rating at every lead, but its MAE (0.70-0.73 m)
+is above the 0.58-0.60 m of the reforecast test: these are real operational
+forecasts with day-0 archived past discharge, and 2023-2025 is a different period.
+Coverage matches the nominal 80%, and feeding all 51 operational members instead
+of the 11 comparable ones changes almost nothing (MAE 0.710/0.696/0.710 m).
+High-water detection is 0.68-0.78 but the false-alarm ratio is 0.50-0.57 (only 34
+high-water days): the model over-warns in operations. The 2026 semáforo check is
+only ordinal: on the two precaución days the predicted stage is 17.8-17.9 m
+against 12.7 m on normal days (rank AUC 0.997 at 1 and 3 days), consistent, but
+two events decide nothing and no threshold was fitted.
+
 ## Development
 
 ```bash
