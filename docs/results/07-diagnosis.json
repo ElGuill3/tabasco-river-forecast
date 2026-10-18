@@ -1,0 +1,989 @@
+{
+  "high_water_m": 17.83,
+  "reanalysis_dev_p90_m3s": 3774.72,
+  "h1_past_source": {
+    "day0_vs_reanalysis": {
+      "overlap": "2023-06-01..2025-05-31",
+      "reanalysis_m3s": {
+        "median": 1928.75,
+        "mean": 1965.717616438356,
+        "tercile_low_high_m3s": [
+          1060.7,
+          2617.18
+        ]
+      },
+      "overall": {
+        "n": 730,
+        "median_ratio": 1.0234125726604488,
+        "mean_ratio": 1.0070012356666567
+      },
+      "by_reanalysis_tercile": {
+        "low": {
+          "n": 244,
+          "median_ratio": 1.0234125726604488,
+          "mean_ratio": 1.0098399516199918
+        },
+        "middle": {
+          "n": 242,
+          "median_ratio": 1.0256708543630448,
+          "mean_ratio": 1.014129073940793
+        },
+        "high": {
+          "n": 244,
+          "median_ratio": 1.0221240627286974,
+          "mean_ratio": 0.9970931063430717
+        }
+      },
+      "high_flows_reanalysis_ge_dev_p90": {
+        "n": 67,
+        "median_ratio": 1.0092548992956276,
+        "mean_ratio": 0.9718753214009113
+      }
+    },
+    "frozen_model_operational": [
+      {
+        "lead_days": 1,
+        "past_source": "day0",
+        "n": 599,
+        "mae": 0.7365447026232984,
+        "high_stage_n": 202,
+        "high_stage_mean_error": 0.37155956260747347
+      },
+      {
+        "lead_days": 1,
+        "past_source": "reanalysis",
+        "n": 599,
+        "mae": 0.7477706098597218,
+        "high_stage_n": 202,
+        "high_stage_mean_error": 0.32999923521485985
+      },
+      {
+        "lead_days": 3,
+        "past_source": "day0",
+        "n": 595,
+        "mae": 0.7188430334584193,
+        "high_stage_n": 199,
+        "high_stage_mean_error": 0.3229180523491071
+      },
+      {
+        "lead_days": 3,
+        "past_source": "reanalysis",
+        "n": 595,
+        "mae": 0.7241780025491189,
+        "high_stage_n": 199,
+        "high_stage_mean_error": 0.3898710075727919
+      },
+      {
+        "lead_days": 7,
+        "past_source": "day0",
+        "n": 593,
+        "mae": 0.7418666177715577,
+        "high_stage_n": 199,
+        "high_stage_mean_error": 0.25721538935638527
+      },
+      {
+        "lead_days": 7,
+        "past_source": "reanalysis",
+        "n": 593,
+        "mae": 0.7319369432612539,
+        "high_stage_n": 199,
+        "high_stage_mean_error": 0.25784977419863875
+      }
+    ]
+  },
+  "h2_ensemble": {
+    "issue_overlap": {
+      "lead_days": 1,
+      "issues": "2023-08-01..2023-11-25",
+      "n": 34,
+      "median_ratio_op_over_reforecast": 1.0095251889116519,
+      "mean_ratio_op_over_reforecast": 1.0135468463911042,
+      "median_abs_difference_m3s": 61.5
+    },
+    "reforecast_2004_2022_vs_reanalysis": [
+      {
+        "lead_days": 1,
+        "n": 2199,
+        "median_ratio": 1.025523803620134,
+        "mean_ratio": 1.0105370056819638,
+        "high_n": 258,
+        "high_median_ratio": 1.0298289391808912,
+        "high_mean_ratio": 1.0091007475023095
+      },
+      {
+        "lead_days": 3,
+        "n": 1802,
+        "median_ratio": 1.0367598848044906,
+        "mean_ratio": 1.0348598624347927,
+        "high_n": 204,
+        "high_median_ratio": 1.0380386020876293,
+        "high_mean_ratio": 1.0098257814369687
+      },
+      {
+        "lead_days": 7,
+        "n": 1802,
+        "median_ratio": 1.0624615273773141,
+        "mean_ratio": 1.063221681593983,
+        "high_n": 200,
+        "high_median_ratio": 0.9760537853397011,
+        "high_mean_ratio": 0.9420027541069182
+      }
+    ],
+    "operational_2023_08_2025_05_vs_reanalysis": [
+      {
+        "lead_days": 1,
+        "n": 669,
+        "median_ratio": 1.0277300292185276,
+        "mean_ratio": 1.0075536798241713,
+        "high_n": 67,
+        "high_median_ratio": 1.0095161751059152,
+        "high_mean_ratio": 0.9728717792055409
+      },
+      {
+        "lead_days": 3,
+        "n": 667,
+        "median_ratio": 1.0366207697412075,
+        "mean_ratio": 1.0275568859946016,
+        "high_n": 67,
+        "high_median_ratio": 0.9567106365159129,
+        "high_mean_ratio": 0.9689251155717852
+      },
+      {
+        "lead_days": 7,
+        "n": 663,
+        "median_ratio": 1.0610579042766866,
+        "mean_ratio": 1.0654041248419586,
+        "high_n": 67,
+        "high_median_ratio": 0.9408235787950151,
+        "high_mean_ratio": 0.9025745711758442
+      }
+    ]
+  },
+  "h3_rating": {
+    "stage_at_fixed_discharge": [
+      {
+        "period": "1998-2016",
+        "discharge_m3s": 1500,
+        "n": 1077,
+        "median_stage_m": 13.28
+      },
+      {
+        "period": "1998-2016",
+        "discharge_m3s": 3000,
+        "n": 511,
+        "median_stage_m": 16.13
+      },
+      {
+        "period": "1998-2016",
+        "discharge_m3s": 4500,
+        "n": 176,
+        "median_stage_m": 18.705
+      },
+      {
+        "period": "1998-2016",
+        "discharge_m3s": 6000,
+        "n": 45,
+        "median_stage_m": 20.3
+      },
+      {
+        "period": "2017-2022",
+        "discharge_m3s": 1500,
+        "n": 398,
+        "median_stage_m": 12.985
+      },
+      {
+        "period": "2017-2022",
+        "discharge_m3s": 3000,
+        "n": 140,
+        "median_stage_m": 15.93
+      },
+      {
+        "period": "2017-2022",
+        "discharge_m3s": 4500,
+        "n": 43,
+        "median_stage_m": 18.04
+      },
+      {
+        "period": "2017-2022",
+        "discharge_m3s": 6000,
+        "n": 21,
+        "median_stage_m": 19.75
+      },
+      {
+        "period": "2023-2025",
+        "discharge_m3s": 1500,
+        "n": 156,
+        "median_stage_m": 13.14
+      },
+      {
+        "period": "2023-2025",
+        "discharge_m3s": 3000,
+        "n": 90,
+        "median_stage_m": 15.99
+      },
+      {
+        "period": "2023-2025",
+        "discharge_m3s": 4500,
+        "n": 14,
+        "median_stage_m": 18.46
+      },
+      {
+        "period": "2023-2025",
+        "discharge_m3s": 6000,
+        "n": 0,
+        "median_stage_m": null
+      }
+    ],
+    "observed_rating_1998_2016_residuals": [
+      {
+        "period": "1998-2016",
+        "n": 6518,
+        "mean_residual_m": 6.97679274143087e-16
+      },
+      {
+        "period": "2017-2022",
+        "n": 2108,
+        "mean_residual_m": -0.27522963380380794
+      },
+      {
+        "period": "2023-2025",
+        "n": 895,
+        "mean_residual_m": -0.13123935208211293
+      }
+    ],
+    "observed_rating_residuals_by_year": [
+      {
+        "year": 1995,
+        "n": 4,
+        "mean_residual_m": -7.391249593231366
+      },
+      {
+        "year": 1996,
+        "n": 107,
+        "mean_residual_m": 1.5739102278923407
+      },
+      {
+        "year": 1997,
+        "n": 347,
+        "mean_residual_m": 0.8618784555959954
+      },
+      {
+        "year": 1998,
+        "n": 335,
+        "mean_residual_m": 0.12025129010047263
+      },
+      {
+        "year": 1999,
+        "n": 337,
+        "mean_residual_m": 0.20521058932943229
+      },
+      {
+        "year": 2000,
+        "n": 330,
+        "mean_residual_m": 0.251740957668157
+      },
+      {
+        "year": 2001,
+        "n": 363,
+        "mean_residual_m": 0.1518852149497664
+      },
+      {
+        "year": 2002,
+        "n": 361,
+        "mean_residual_m": 0.3010606212771127
+      },
+      {
+        "year": 2003,
+        "n": 361,
+        "mean_residual_m": -0.03047958153825691
+      },
+      {
+        "year": 2004,
+        "n": 365,
+        "mean_residual_m": -0.024512056913612433
+      },
+      {
+        "year": 2005,
+        "n": 358,
+        "mean_residual_m": -0.2041074459804491
+      },
+      {
+        "year": 2006,
+        "n": 352,
+        "mean_residual_m": -0.09632782012158335
+      },
+      {
+        "year": 2007,
+        "n": 347,
+        "mean_residual_m": 0.12463794077750628
+      },
+      {
+        "year": 2008,
+        "n": 326,
+        "mean_residual_m": 0.0782827908599854
+      },
+      {
+        "year": 2009,
+        "n": 345,
+        "mean_residual_m": -0.338991188631398
+      },
+      {
+        "year": 2010,
+        "n": 330,
+        "mean_residual_m": -0.139899800697175
+      },
+      {
+        "year": 2011,
+        "n": 230,
+        "mean_residual_m": -0.06707375494994461
+      },
+      {
+        "year": 2012,
+        "n": 356,
+        "mean_residual_m": 0.0076072661422631705
+      },
+      {
+        "year": 2013,
+        "n": 339,
+        "mean_residual_m": -0.008645536554477161
+      },
+      {
+        "year": 2014,
+        "n": 357,
+        "mean_residual_m": -0.29052805560066053
+      },
+      {
+        "year": 2015,
+        "n": 364,
+        "mean_residual_m": 0.012728360252490734
+      },
+      {
+        "year": 2016,
+        "n": 362,
+        "mean_residual_m": -0.05613163131022389
+      },
+      {
+        "year": 2017,
+        "n": 349,
+        "mean_residual_m": -0.38171009914335485
+      },
+      {
+        "year": 2018,
+        "n": 356,
+        "mean_residual_m": -0.17202462373586858
+      },
+      {
+        "year": 2019,
+        "n": 353,
+        "mean_residual_m": -0.5058285083364609
+      },
+      {
+        "year": 2020,
+        "n": 352,
+        "mean_residual_m": -0.19688378010516028
+      },
+      {
+        "year": 2021,
+        "n": 344,
+        "mean_residual_m": -0.10822716969081897
+      },
+      {
+        "year": 2022,
+        "n": 354,
+        "mean_residual_m": -0.28428185591524896
+      },
+      {
+        "year": 2023,
+        "n": 309,
+        "mean_residual_m": -0.03690060229224883
+      },
+      {
+        "year": 2024,
+        "n": 341,
+        "mean_residual_m": -0.07377314187436562
+      },
+      {
+        "year": 2025,
+        "n": 245,
+        "mean_residual_m": -0.33020527602460215
+      }
+    ],
+    "observed_rating_stage_at_6000_m3s_1998_2016": 20.276129032258062,
+    "glofas_rating_1998_2016_residuals_ge_15m": [
+      {
+        "period": "1998-2016",
+        "n": 2128,
+        "mean_residual_m": 7.546177550835651e-16
+      },
+      {
+        "period": "2017-2022",
+        "n": 631,
+        "mean_residual_m": -0.10728038911602214
+      },
+      {
+        "period": "2023-2025",
+        "n": 206,
+        "mean_residual_m": -0.5113597672464286
+      }
+    ],
+    "glofas_rating_residuals_by_year_ge_15m": [
+      {
+        "year": 1997,
+        "n": 157,
+        "mean_residual_m": 0.45250895016413545
+      },
+      {
+        "year": 1998,
+        "n": 110,
+        "mean_residual_m": -0.19768756033682042
+      },
+      {
+        "year": 1999,
+        "n": 123,
+        "mean_residual_m": 0.4515318956960998
+      },
+      {
+        "year": 2000,
+        "n": 138,
+        "mean_residual_m": 0.3814827079640055
+      },
+      {
+        "year": 2001,
+        "n": 133,
+        "mean_residual_m": 0.06606180909858402
+      },
+      {
+        "year": 2002,
+        "n": 92,
+        "mean_residual_m": 0.2234142278361586
+      },
+      {
+        "year": 2003,
+        "n": 104,
+        "mean_residual_m": 0.3037209137835256
+      },
+      {
+        "year": 2004,
+        "n": 67,
+        "mean_residual_m": 0.4949594107928562
+      },
+      {
+        "year": 2005,
+        "n": 115,
+        "mean_residual_m": -0.23157229981103875
+      },
+      {
+        "year": 2006,
+        "n": 186,
+        "mean_residual_m": -0.2028588622166268
+      },
+      {
+        "year": 2007,
+        "n": 93,
+        "mean_residual_m": -0.26528321205528943
+      },
+      {
+        "year": 2008,
+        "n": 145,
+        "mean_residual_m": 0.5046824149741889
+      },
+      {
+        "year": 2009,
+        "n": 35,
+        "mean_residual_m": -0.2614223427641593
+      },
+      {
+        "year": 2010,
+        "n": 139,
+        "mean_residual_m": 0.14043641452676756
+      },
+      {
+        "year": 2011,
+        "n": 58,
+        "mean_residual_m": -0.17697733728880605
+      },
+      {
+        "year": 2012,
+        "n": 102,
+        "mean_residual_m": -0.7302991037999138
+      },
+      {
+        "year": 2013,
+        "n": 162,
+        "mean_residual_m": -0.307051254220756
+      },
+      {
+        "year": 2014,
+        "n": 135,
+        "mean_residual_m": -0.18872504089838837
+      },
+      {
+        "year": 2015,
+        "n": 94,
+        "mean_residual_m": -0.052367935060810764
+      },
+      {
+        "year": 2016,
+        "n": 97,
+        "mean_residual_m": -0.10458716320796783
+      },
+      {
+        "year": 2017,
+        "n": 155,
+        "mean_residual_m": -0.3958166336394409
+      },
+      {
+        "year": 2018,
+        "n": 43,
+        "mean_residual_m": 0.08070436446914128
+      },
+      {
+        "year": 2019,
+        "n": 27,
+        "mean_residual_m": -1.3754142863225267
+      },
+      {
+        "year": 2020,
+        "n": 150,
+        "mean_residual_m": 0.21804068785175632
+      },
+      {
+        "year": 2021,
+        "n": 108,
+        "mean_residual_m": -0.18497629658502396
+      },
+      {
+        "year": 2022,
+        "n": 148,
+        "mean_residual_m": 0.09861410536390304
+      },
+      {
+        "year": 2023,
+        "n": 83,
+        "mean_residual_m": 0.03964837428538416
+      },
+      {
+        "year": 2024,
+        "n": 119,
+        "mean_residual_m": -0.899018282303033
+      },
+      {
+        "year": 2025,
+        "n": 4,
+        "mean_residual_m": -0.41193788109756024
+      }
+    ],
+    "reanalysis_vs_observed_discharge": [
+      {
+        "period": "1998-2016",
+        "n": 6518,
+        "glofas_median_m3s": 1752.88,
+        "obs_median_m3s": 1738.0,
+        "median_ratio": 1.0085615650172612,
+        "glofas_p90_m3s": 3705.81,
+        "obs_p90_m3s": 3901.8590000000004,
+        "p90_ratio": 0.9497549757692422
+      },
+      {
+        "period": "2017-2022",
+        "n": 2108,
+        "glofas_median_m3s": 1643.37,
+        "obs_median_m3s": 1643.895,
+        "median_ratio": 0.999680636537005,
+        "glofas_p90_m3s": 3565.9759999999997,
+        "obs_p90_m3s": 3945.4069999999997,
+        "p90_ratio": 0.903829693615893
+      },
+      {
+        "period": "2023-2025",
+        "n": 800,
+        "glofas_median_m3s": 1239.225,
+        "obs_median_m3s": 1645.9899999999998,
+        "median_ratio": 0.7528751693509682,
+        "glofas_p90_m3s": 3580.786,
+        "obs_p90_m3s": 3221.668,
+        "p90_ratio": 1.1114695865619921
+      }
+    ],
+    "reanalysis_vs_observed_discharge_by_year": [
+      {
+        "year": 1997,
+        "n": 347,
+        "glofas_median_m3s": 1822.9,
+        "obs_median_m3s": 1181.0,
+        "median_ratio": 1.5435224386113464,
+        "glofas_p90_m3s": 3351.996000000003,
+        "obs_p90_m3s": 4028.600000000001,
+        "p90_ratio": 0.832049843618131
+      },
+      {
+        "year": 1998,
+        "n": 335,
+        "glofas_median_m3s": 1806.17,
+        "obs_median_m3s": 1053.0,
+        "median_ratio": 1.715261158594492,
+        "glofas_p90_m3s": 4198.5380000000005,
+        "obs_p90_m3s": 4637.4000000000015,
+        "p90_ratio": 0.9053646439815412
+      },
+      {
+        "year": 1999,
+        "n": 337,
+        "glofas_median_m3s": 1716.91,
+        "obs_median_m3s": 1645.0,
+        "median_ratio": 1.0437142857142858,
+        "glofas_p90_m3s": 3914.6260000000007,
+        "obs_p90_m3s": 4747.400000000002,
+        "p90_ratio": 0.8245831402451865
+      },
+      {
+        "year": 2000,
+        "n": 330,
+        "glofas_median_m3s": 1930.97,
+        "obs_median_m3s": 1919.0,
+        "median_ratio": 1.0062376237623762,
+        "glofas_p90_m3s": 3673.5160000000005,
+        "obs_p90_m3s": 3916.3,
+        "p90_ratio": 0.9380067921252203
+      },
+      {
+        "year": 2001,
+        "n": 363,
+        "glofas_median_m3s": 1720.87,
+        "obs_median_m3s": 1737.0,
+        "median_ratio": 0.9907138744962578,
+        "glofas_p90_m3s": 3317.9840000000004,
+        "obs_p90_m3s": 3507.800000000001,
+        "p90_ratio": 0.945887450823878
+      },
+      {
+        "year": 2002,
+        "n": 361,
+        "glofas_median_m3s": 1591.21,
+        "obs_median_m3s": 1450.0,
+        "median_ratio": 1.0973862068965516,
+        "glofas_p90_m3s": 2765.94,
+        "obs_p90_m3s": 2896.0,
+        "p90_ratio": 0.9550897790055248
+      },
+      {
+        "year": 2003,
+        "n": 361,
+        "glofas_median_m3s": 1848.27,
+        "obs_median_m3s": 1759.0,
+        "median_ratio": 1.0507504263786243,
+        "glofas_p90_m3s": 2734.27,
+        "obs_p90_m3s": 3292.0,
+        "p90_ratio": 0.8305801944106925
+      },
+      {
+        "year": 2004,
+        "n": 365,
+        "glofas_median_m3s": 1670.09,
+        "obs_median_m3s": 1666.0,
+        "median_ratio": 1.002454981992797,
+        "glofas_p90_m3s": 2373.652,
+        "obs_p90_m3s": 3021.6000000000026,
+        "p90_ratio": 0.7855612920307116
+      },
+      {
+        "year": 2005,
+        "n": 358,
+        "glofas_median_m3s": 1493.5149999999999,
+        "obs_median_m3s": 1622.0,
+        "median_ratio": 0.9207860665844635,
+        "glofas_p90_m3s": 3847.5780000000004,
+        "obs_p90_m3s": 4164.2,
+        "p90_ratio": 0.9239657076989579
+      },
+      {
+        "year": 2006,
+        "n": 352,
+        "glofas_median_m3s": 2539.98,
+        "obs_median_m3s": 2426.0,
+        "median_ratio": 1.0469826875515251,
+        "glofas_p90_m3s": 3728.0780000000013,
+        "obs_p90_m3s": 4010.8000000000006,
+        "p90_ratio": 0.9295098234766134
+      },
+      {
+        "year": 2007,
+        "n": 347,
+        "glofas_median_m3s": 1613.36,
+        "obs_median_m3s": 1481.0,
+        "median_ratio": 1.0893720459149223,
+        "glofas_p90_m3s": 3496.8480000000004,
+        "obs_p90_m3s": 3649.4,
+        "p90_ratio": 0.9581980599550612
+      },
+      {
+        "year": 2008,
+        "n": 326,
+        "glofas_median_m3s": 2214.765,
+        "obs_median_m3s": 1762.0,
+        "median_ratio": 1.256960839954597,
+        "glofas_p90_m3s": 4399.505,
+        "obs_p90_m3s": 5608.0,
+        "p90_ratio": 0.7845051711840229
+      },
+      {
+        "year": 2009,
+        "n": 345,
+        "glofas_median_m3s": 1488.36,
+        "obs_median_m3s": 1381.0,
+        "median_ratio": 1.0777407675597392,
+        "glofas_p90_m3s": 2394.544000000001,
+        "obs_p90_m3s": 3087.8,
+        "p90_ratio": 0.7754854589027789
+      },
+      {
+        "year": 2010,
+        "n": 330,
+        "glofas_median_m3s": 2411.685,
+        "obs_median_m3s": 2068.5,
+        "median_ratio": 1.1659100797679478,
+        "glofas_p90_m3s": 5141.812,
+        "obs_p90_m3s": 5317.5,
+        "p90_ratio": 0.9669604137282557
+      },
+      {
+        "year": 2011,
+        "n": 230,
+        "glofas_median_m3s": 966.1700000000001,
+        "obs_median_m3s": 1373.5,
+        "median_ratio": 0.7034364761558064,
+        "glofas_p90_m3s": 3964.527,
+        "obs_p90_m3s": 3963.4999999999995,
+        "p90_ratio": 1.0002591144190742
+      },
+      {
+        "year": 2012,
+        "n": 356,
+        "glofas_median_m3s": 1699.2,
+        "obs_median_m3s": 1867.6100000000001,
+        "median_ratio": 0.9098259272546195,
+        "glofas_p90_m3s": 3234.9449999999997,
+        "obs_p90_m3s": 3219.5,
+        "p90_ratio": 1.0047973287777605
+      },
+      {
+        "year": 2013,
+        "n": 339,
+        "glofas_median_m3s": 2721.7,
+        "obs_median_m3s": 2243.99,
+        "median_ratio": 1.21288419288856,
+        "glofas_p90_m3s": 4534.25,
+        "obs_p90_m3s": 4369.464,
+        "p90_ratio": 1.0377130924983018
+      },
+      {
+        "year": 2014,
+        "n": 357,
+        "glofas_median_m3s": 2093.11,
+        "obs_median_m3s": 2199.0,
+        "median_ratio": 0.9518462937698955,
+        "glofas_p90_m3s": 4338.106000000001,
+        "obs_p90_m3s": 4226.216000000001,
+        "p90_ratio": 1.0264752203862746
+      },
+      {
+        "year": 2015,
+        "n": 364,
+        "glofas_median_m3s": 1598.56,
+        "obs_median_m3s": 1648.85,
+        "median_ratio": 0.969499954513752,
+        "glofas_p90_m3s": 3305.747,
+        "obs_p90_m3s": 3380.1,
+        "p90_ratio": 0.9780027218129641
+      },
+      {
+        "year": 2016,
+        "n": 362,
+        "glofas_median_m3s": 1769.185,
+        "obs_median_m3s": 1547.725,
+        "median_ratio": 1.143087434783311,
+        "glofas_p90_m3s": 2816.7320000000004,
+        "obs_p90_m3s": 3375.2460000000005,
+        "p90_ratio": 0.8345264315549148
+      },
+      {
+        "year": 2017,
+        "n": 349,
+        "glofas_median_m3s": 2031.36,
+        "obs_median_m3s": 1990.97,
+        "median_ratio": 1.0202865939717825,
+        "glofas_p90_m3s": 3963.608,
+        "obs_p90_m3s": 4705.776,
+        "p90_ratio": 0.8422857356576259
+      },
+      {
+        "year": 2018,
+        "n": 356,
+        "glofas_median_m3s": 1523.06,
+        "obs_median_m3s": 1531.355,
+        "median_ratio": 0.9945832285786117,
+        "glofas_p90_m3s": 2505.11,
+        "obs_p90_m3s": 2657.16,
+        "p90_ratio": 0.9427772508994566
+      },
+      {
+        "year": 2019,
+        "n": 353,
+        "glofas_median_m3s": 1269.57,
+        "obs_median_m3s": 1032.47,
+        "median_ratio": 1.2296434763237671,
+        "glofas_p90_m3s": 2614.774,
+        "obs_p90_m3s": 1973.8580000000009,
+        "p90_ratio": 1.3247021822238474
+      },
+      {
+        "year": 2020,
+        "n": 352,
+        "glofas_median_m3s": 2434.02,
+        "obs_median_m3s": 1801.4650000000001,
+        "median_ratio": 1.3511336606595186,
+        "glofas_p90_m3s": 4086.9250000000015,
+        "obs_p90_m3s": 5080.192000000011,
+        "p90_ratio": 0.8044823896419648
+      },
+      {
+        "year": 2021,
+        "n": 344,
+        "glofas_median_m3s": 1846.15,
+        "obs_median_m3s": 1861.56,
+        "median_ratio": 0.991721996604998,
+        "glofas_p90_m3s": 2868.486,
+        "obs_p90_m3s": 3095.2889999999998,
+        "p90_ratio": 0.9267263896844528
+      },
+      {
+        "year": 2022,
+        "n": 354,
+        "glofas_median_m3s": 2029.02,
+        "obs_median_m3s": 2032.5,
+        "median_ratio": 0.9982878228782288,
+        "glofas_p90_m3s": 4119.98,
+        "obs_p90_m3s": 5080.5999999999985,
+        "p90_ratio": 0.8109239066252019
+      },
+      {
+        "year": 2023,
+        "n": 308,
+        "glofas_median_m3s": 1156.445,
+        "obs_median_m3s": 1300.5,
+        "median_ratio": 0.8892310649750096,
+        "glofas_p90_m3s": 3060.2740000000003,
+        "obs_p90_m3s": 3314.222,
+        "p90_ratio": 0.9233762855958352
+      },
+      {
+        "year": 2024,
+        "n": 341,
+        "glofas_median_m3s": 2493.6,
+        "obs_median_m3s": 1874.52,
+        "median_ratio": 1.330260546699955,
+        "glofas_p90_m3s": 4139.0,
+        "obs_p90_m3s": 3314.35,
+        "p90_ratio": 1.2488119842503056
+      },
+      {
+        "year": 2025,
+        "n": 151,
+        "glofas_median_m3s": 821.24,
+        "obs_median_m3s": 1657.0,
+        "median_ratio": 0.4956185878092939,
+        "glofas_p90_m3s": 1773.19,
+        "obs_p90_m3s": 1876.42,
+        "p90_ratio": 0.9449856641903198
+      }
+    ]
+  },
+  "h4_sample": [
+    {
+      "period": "1998-2016",
+      "n_days": 6541,
+      "n_ge_15m": 2128,
+      "n_ge_high_water": 663,
+      "n_events_ge_15m": 137,
+      "mean_event_days": 15.532846715328468,
+      "median_event_days": 6.0,
+      "mean_peak_m": 17.047664233576647
+    },
+    {
+      "period": "2017-2022",
+      "n_days": 2137,
+      "n_ge_15m": 631,
+      "n_ge_high_water": 165,
+      "n_events_ge_15m": 40,
+      "mean_event_days": 15.775,
+      "median_event_days": 8.0,
+      "mean_peak_m": 16.9055
+    },
+    {
+      "period": "2023-2025",
+      "n_days": 896,
+      "n_ge_15m": 222,
+      "n_ge_high_water": 34,
+      "n_events_ge_15m": 24,
+      "mean_event_days": 9.25,
+      "median_event_days": 5.0,
+      "mean_peak_m": 16.593333333333334
+    }
+  ],
+  "h1_high_stage_error_by_year": [
+    {
+      "lead_days": 1,
+      "year": 2023,
+      "mean_error": -0.1375180437102901,
+      "n": 79
+    },
+    {
+      "lead_days": 1,
+      "year": 2024,
+      "mean_error": 0.7738968369730569,
+      "n": 119
+    },
+    {
+      "lead_days": 1,
+      "year": 2025,
+      "mean_error": -1.5436916249928072,
+      "n": 4
+    },
+    {
+      "lead_days": 3,
+      "year": 2023,
+      "mean_error": -0.0830482189117424,
+      "n": 76
+    },
+    {
+      "lead_days": 3,
+      "year": 2024,
+      "mean_error": 0.639112826199731,
+      "n": 119
+    },
+    {
+      "lead_days": 3,
+      "year": 2025,
+      "mean_error": -1.3705173157508175,
+      "n": 4
+    },
+    {
+      "lead_days": 7,
+      "year": 2023,
+      "mean_error": -0.32874522350736857,
+      "n": 76
+    },
+    {
+      "lead_days": 7,
+      "year": 2024,
+      "mean_error": 0.6933695057760727,
+      "n": 119
+    },
+    {
+      "lead_days": 7,
+      "year": 2025,
+      "mean_error": -1.5851179297179923,
+      "n": 4
+    }
+  ]
+}
