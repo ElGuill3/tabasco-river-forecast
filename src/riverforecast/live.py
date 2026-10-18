@@ -12,6 +12,12 @@ which value is actually visible and how old it is. This module provides:
 - ``revealed_values``: the reveal rules of L32 - a table for day ``k`` becomes
   visible on ``k`` itself if ``k`` is Monday-Friday, otherwise on the next
   Monday; a visible table reveals the 06:00 value of ``k`` and of ``k-1``.
+- ``boca_rows`` / ``boca_visible_on``: the real visibility dates of L35 - for
+  each observed day, the earliest date on which a published table carrying it
+  could be seen.
+- ``real_revealed_values``: the L35 rules on an explicit per-day visibility
+  series - a value observed on day ``k`` is usable at issue day ``i`` only when
+  it is visible by ``i``.
 """
 
 from __future__ import annotations
@@ -21,9 +27,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from riverforecast import data
+from riverforecast import data, levels
 
 CENSUS = data.RAW / "ipcet" / "levels_census.csv"
+READER_OUTPUT = data.RAW / "ipcet" / "levels.csv"
 # Days whose level table is only reachable through the direct image URL (L31).
 DIRECT_URL_DAYS = ("2026-01-07", "2026-03-02", "2026-04-29", "2026-08-01")
 # 2026 image names of the form semaforo_DDMMYY.jpeg / .jpg (L31).
@@ -121,3 +128,103 @@ def revealed_values(stage: pd.Series, table_exists: pd.Series) -> pd.DataFrame:
             obs_age[i] = back
             break
     return pd.DataFrame({"obs_last": obs_last, "obs_day": obs_day, "obs_age": obs_age}, index=days)
+
+
+def boca_rows(path: Path | None = None) -> pd.DataFrame:
+    """Boca del Cerro rows of the reader output, with obs_date re-resolved.
+
+    The reader output stores the observation date of an earlier reader
+    version, so it is re-resolved here from the page and printed dates with
+    :func:`riverforecast.levels.obs_date`, exactly as experiment 11 does; the
+    printed date wins over the page date because IPCET reuses image file
+    names (L34). ``latest`` for the resolution is the newest page date in the
+    file, which keeps the result deterministic.
+    """
+    if path is None:
+        path = READER_OUTPUT
+    frame = pd.read_csv(path, parse_dates=["page_date", "table_date"])
+    rows = frame[
+        (frame["kind"] == "station") & frame["station"].astype(str).str.contains("Boca", na=False)
+    ].copy()
+    latest = rows["page_date"].max()
+    resolved = [
+        levels.obs_date(
+            None if pd.isna(page) else page.date(),
+            None if pd.isna(printed) else printed.date(),
+            None if pd.isna(latest) else latest.date(),
+        )
+        for page, printed in zip(rows["page_date"], rows["table_date"], strict=True)
+    ]
+    rows["obs_date"] = pd.to_datetime([day for day, _ in resolved])
+    rows["obs_flag"] = [flag for _, flag in resolved]
+    return rows
+
+
+def boca_visible_on(rows: pd.DataFrame) -> pd.Series:
+    """Earliest date on which each observed day's 06:00 value could be seen (L35).
+
+    ``rows`` holds the Boca del Cerro rows of the reader output with the
+    resolved observation date (:func:`boca_rows`). A table with observation
+    date ``D`` and flag "ok" is visible on ``max(D, page_date)`` (the page
+    cannot be seen before it is uploaded); any other flag is visible on
+    ``D + 1`` - conservative, because those pages do not tell when the table
+    was first online. A table carries ``D`` (hoy, but only when the printed
+    difference is not zero: then the value may be yesterday's copied before
+    the 06:00 reading, L34) and ``D - 1`` (ayer). A day carried by several
+    tables takes the earliest visibility, never earlier than the day itself.
+    Invalid rows and rows without a resolved date carry nothing.
+    """
+    candidates: dict[pd.Timestamp, list[pd.Timestamp]] = {}
+    valid = rows[rows["valid"].astype(str).str.lower() == "true"]
+    for row in valid.itertuples(index=False):
+        if pd.isna(row.obs_date):
+            continue
+        day = pd.Timestamp(row.obs_date)
+        if row.obs_flag == "ok" and not pd.isna(row.page_date):
+            visible = max(day, pd.Timestamp(row.page_date))
+        else:
+            visible = day + pd.Timedelta(days=1)
+        if row.diff is not None and not pd.isna(row.diff) and round(float(row.diff), 2) != 0:
+            candidates.setdefault(day, []).append(visible)
+        if row.ayer is not None and not pd.isna(row.ayer):
+            candidates.setdefault(day - pd.Timedelta(days=1), []).append(visible)
+    return pd.Series({day: max(day, min(when)) for day, when in candidates.items()}).sort_index()
+
+
+def real_revealed_values(
+    series: pd.Series, visible_on: pd.Series, issue_days: pd.DatetimeIndex
+) -> pd.DataFrame:
+    """Latest revealed value on each issue day with explicit visibility dates (L35).
+
+    Like :func:`revealed_values`, but the visibility date of each observed day
+    is given explicitly by ``visible_on`` (indexed like ``series``): a value
+    observed on day ``k`` is usable at issue day ``i`` only when
+    ``visible_on[k] <= i`` and ``k <= i``. The newest usable value within
+    7 days is returned as ``obs_last`` / ``obs_day`` / ``obs_age``; when there
+    is none, all three are NaN and the forecast falls back to the GloFAS-only
+    model.
+    """
+    issue_days = pd.DatetimeIndex(issue_days)
+    ordered = series.sort_index()
+    days = ordered.index
+    values = ordered.to_numpy(dtype=float)
+    stamps = days.to_numpy(dtype="datetime64[ns]")
+    vis = pd.Series(visible_on).reindex(days).to_numpy(dtype="datetime64[ns]")
+    cutoff = np.timedelta64(7, "D")
+    n = len(issue_days)
+    obs_last = np.full(n, np.nan)
+    obs_day = np.full(n, np.datetime64("NaT"), dtype="datetime64[ns]")
+    obs_age = np.full(n, np.nan)
+    for row, issue in enumerate(issue_days):
+        stamp = np.datetime64(issue, "ns")
+        p = int(np.searchsorted(stamps, stamp, side="right")) - 1
+        while p >= 0 and stamp - stamps[p] <= cutoff:
+            if not np.isnan(values[p]) and not np.isnat(vis[p]) and vis[p] <= stamp:
+                obs_day[row] = stamps[p]
+                obs_last[row] = values[p]
+                obs_age[row] = float((stamp - stamps[p]) / np.timedelta64(1, "D"))
+                break
+            p -= 1
+    return pd.DataFrame(
+        {"obs_last": obs_last, "obs_day": obs_day, "obs_age": obs_age}, index=issue_days
+    )

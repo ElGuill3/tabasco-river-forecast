@@ -351,6 +351,38 @@ fitted on them, and one circulating bulletin quotes the same station on an
 older ~12.56 m scale, which was excluded. A fresh SIH import is still needed
 to score the period against observed stage.
 
+### Live stage input (IPCET)
+
+[Experiment 12](docs/results/12-live-test.md) scores the IPCET daily 06:00
+stage as a live input (L35, scored once). Added to the GloFAS model are the
+latest visible IPCET value, its age, and the GloFAS discharge on that day,
+with a GloFAS-only fallback when nothing was published within 7 days:
+
+| Period | Lead | M1 MAE | L1 MAE | L1 coverage (80%) | Fallback share |
+| --- | --- | --- | --- | --- | --- |
+| Test 2017+ (simulated feed) | 1 day | 0.594 m | 0.305 m | 0.80 | 0.0% |
+| Test 2017+ (simulated feed) | 3 days | 0.578 m | 0.360 m | 0.81 | 0.0% |
+| Test 2017+ (simulated feed) | 7 days | 0.600 m | 0.458 m | 0.85 | 0.0% |
+| Operational 2023-08..2025-09 (SIH target) | 1 day | 0.706 m | 0.342 m | 0.82 | 11.5% |
+| Operational 2023-08..2025-09 (SIH target) | 3 days | 0.685 m | 0.457 m | 0.80 | 11.6% |
+| Operational 2023-08..2025-09 (SIH target) | 7 days | 0.717 m | 0.635 m | 0.81 | 11.9% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 1 day | 0.480 m | 0.310 m | 0.75 | 3.6% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 3 days | 0.511 m | 0.458 m | 0.74 | 4.7% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 7 days | 0.629 m | 0.612 m | 0.74 | 5.0% |
+
+A live value at most 2 days old roughly halves the error of the GloFAS-only
+model, and its worth fades by age 3-4 exactly as the development simulation
+predicted; the gain persists on the 2025-26 period that was never scored
+against stage, including the 2024 high-water season that the GloFAS-only model
+missed (lead-1 MAE 0.296 m vs 0.903 m in 2024). Honest caveats: the real
+IPCET feed covers 2021-08 onward, so the deployed L1 was trained with the
+simulated availability recipe of L32/L33 on 1998-2022 targets; 42% of the
+operational rows (all of the independent period and the 2025 tail of the SIH
+period) had no reanalysis value for the obs day, because the reanalysis
+record ends 2025-05, so there that input feature was missing; and the feed
+itself has gaps (fallback to the GloFAS-only model on 4-12% of operational
+rows), which is why the fallback rule stays in place.
+
 ## Development
 
 ```bash
