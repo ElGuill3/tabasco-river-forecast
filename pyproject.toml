@@ -13,6 +13,7 @@ dependencies = [
     "pandas",
     "pillow>=12.3.0",
     "pyogrio>=0.13.0",
+    "pytesseract>=0.3.13",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
     "shapely>=2.2.0",
