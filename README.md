@@ -240,6 +240,44 @@ only ordinal: on the two precaución days the predicted stage is 17.8-17.9 m
 against 12.7 m on normal days (rank AUC 0.997 at 1 and 3 days), consistent, but
 two events decide nothing and no threshold was fitted.
 
+### Warning rule
+
+[Experiment 06](docs/results/06-warning.md) treats the warning as a
+probabilistic forecast problem (Wilks 2011; Jolliffe and Stephenson 2012): the
+frozen model's q10/q50/q90 become an exceedance probability of 17.83 m,
+recalibrated by isotonic regression on development out-of-fold predictions
+(2004-2016, 4-year folds), and the operating point t* is the probability
+threshold whose development warning frequency equals the event frequency
+(0.75 / 0.67 / 0.32 at 1 / 3 / 7 days), plus an EFAS-style rule that requires
+the warning on two consecutive issues. All three rules were fixed on
+development data only and scored once on the test and operational periods:
+
+| Lead | Period | R0 POD / FAR | R1 POD / FAR | R2 POD / FAR | BSS | ROC AUC |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 day | test (2017-2023) | 0.78 / 0.18 | 0.78 / 0.27 | 0.67 / 0.25 | 0.59 | 0.97 |
+| 1 day | operational (2023-2025) | 0.68 / 0.57 | 0.71 / 0.56 | 0.68 / 0.48 | 0.16 | 0.96 |
+| 3 days | test (2017-2019) | 0.20 / 0.50 | 0.40 / 0.67 | 0.20 / 0.00 | 0.47 | 0.98 |
+| 3 days | operational (2023-2025) | 0.69 / 0.50 | 0.75 / 0.61 | 0.69 / 0.57 | 0.20 | 0.97 |
+| 7 days | test (2017-2020) | 0.25 / 0.50 | 0.50 / 0.60 | 0.25 / 0.50 | 0.49 | 0.96 |
+| 7 days | operational (2023-2025) | 0.78 / 0.55 | 0.81 / 0.66 | 0.75 / 0.59 | -0.01 | 0.95 |
+
+R0 is the current rule (q50 >= 17.83), R1 the calibrated probability above t*,
+R2 R1 on two consecutive issues; BSS and ROC AUC describe the calibrated
+probability itself (BSS against the development base rate, ~12%). The honest
+conclusion: the probability forecast is skillful, but recalibration does **not**
+reduce false alarms. R1 warns at the development event rate (~12% of days),
+which in the drier operational period (4.6-4.9% events) means even more
+warnings than R0; on the reforecast test its lead-1 FAR rises from 0.18 to
+0.27. Persistence (R2) is the only rule that lowers the operational false-alarm
+ratio (0.57 to 0.48 at lead 1, with detection unchanged), at the cost of missed
+events elsewhere; h3/h7 test rows have only 5 and 4 events and decide nothing.
+Diagnosis (reported, not corrected): most R0 false alarms are near misses (8 of
+11 test and 11 of 30 operational lead-1 false alarms within 1 m of the
+threshold), and the median error on days with observed stage >= 15 m flips from
+-0.4 to -0.7 m in development and test to +0.1 to +0.3 m operationally, i.e. the
+operational forecasts run systematically high in exactly the situation that
+creates false alarms.
+
 ## Development
 
 ```bash
