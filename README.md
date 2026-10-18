@@ -353,35 +353,39 @@ to score the period against observed stage.
 
 ### Live stage input (IPCET)
 
-[Experiment 12](docs/results/12-live-test.md) scores the IPCET daily 06:00
-stage as a live input (L35, scored once). Added to the GloFAS model are the
-latest visible IPCET value, its age, and the GloFAS discharge on that day,
-with a GloFAS-only fallback when nothing was published within 7 days:
+The IPCET daily 06:00 stage is used as a live input (pre-registered in L35,
+scored once in [experiment 12](docs/results/12-live-test.md)). Added to the
+GloFAS model are the latest visible IPCET value, its age, and the GloFAS
+discharge on that day, with a GloFAS-only fallback when nothing was published
+within 7 days. An audit then found four defects (L39): the past discharge was
+one day older in operation than in training, the obs-day discharge came from
+the reanalysis (not available in real time), table visibility ignored upload
+times, and the live series used later tables. All four were fixed and the
+scoring was repeated once, labelled post-audit
+([experiment 13](docs/results/13-postaudit.md)); these are the current numbers:
 
-| Period | Lead | M1 MAE | L1 MAE | L1 coverage (80%) | Fallback share |
+| Period | Lead | GloFAS-only MAE | Live-input MAE | Live coverage (80%) | Fallback share |
 | --- | --- | --- | --- | --- | --- |
-| Test 2017+ (simulated feed) | 1 day | 0.594 m | 0.305 m | 0.80 | 0.0% |
-| Test 2017+ (simulated feed) | 3 days | 0.578 m | 0.360 m | 0.81 | 0.0% |
-| Test 2017+ (simulated feed) | 7 days | 0.600 m | 0.458 m | 0.85 | 0.0% |
-| Operational 2023-08..2025-09 (SIH target) | 1 day | 0.706 m | 0.342 m | 0.82 | 11.5% |
-| Operational 2023-08..2025-09 (SIH target) | 3 days | 0.685 m | 0.457 m | 0.80 | 11.6% |
-| Operational 2023-08..2025-09 (SIH target) | 7 days | 0.717 m | 0.635 m | 0.81 | 11.9% |
-| Independent 2025-09-04..2026-10-16 (IPCET target) | 1 day | 0.480 m | 0.310 m | 0.75 | 3.6% |
-| Independent 2025-09-04..2026-10-16 (IPCET target) | 3 days | 0.511 m | 0.458 m | 0.74 | 4.7% |
-| Independent 2025-09-04..2026-10-16 (IPCET target) | 7 days | 0.629 m | 0.612 m | 0.74 | 5.0% |
+| Test 2017+ (simulated feed) | 1 day | 0.599 m | 0.293 m | 0.81 | 0% |
+| Test 2017+ (simulated feed) | 3 days | 0.578 m | 0.350 m | 0.82 | 0% |
+| Test 2017+ (simulated feed) | 7 days | 0.590 m | 0.452 m | 0.83 | 0% |
+| Operational 2023-08..2025-09 (SIH target) | 1 day | 0.677 m | 0.367 m | 0.80 | 12.8% |
+| Operational 2023-08..2025-09 (SIH target) | 3 days | 0.669 m | 0.470 m | 0.80 | 13.2% |
+| Operational 2023-08..2025-09 (SIH target) | 7 days | 0.718 m | 0.636 m | 0.80 | 13.1% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 1 day | 0.456 m | 0.326 m | 0.77 | 4.0% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 3 days | 0.522 m | 0.449 m | 0.74 | 5.0% |
+| Independent 2025-09-04..2026-10-16 (IPCET target) | 7 days | 0.619 m | 0.593 m | 0.76 | 5.0% |
 
-A live value at most 2 days old roughly halves the error of the GloFAS-only
-model, and its worth fades by age 3-4 exactly as the development simulation
-predicted; the gain persists on the 2025-26 period that was never scored
-against stage, including the 2024 high-water season that the GloFAS-only model
-missed (lead-1 MAE 0.296 m vs 0.903 m in 2024). Honest caveats: the real
-IPCET feed covers 2021-08 onward, so the deployed L1 was trained with the
-simulated availability recipe of L32/L33 on 1998-2022 targets; 42% of the
-operational rows (all of the independent period and the 2025 tail of the SIH
-period) had no reanalysis value for the obs day, because the reanalysis
-record ends 2025-05, so there that input feature was missing; and the feed
-itself has gaps (fallback to the GloFAS-only model on 4-12% of operational
-rows), which is why the fallback rule stays in place.
+A live value at most a day or two old roughly halves the lead-1 error and cuts
+the lead-1 false-alarm ratio from about 0.5 to 0.13 in the operational period;
+its worth fades by an age of 3-4 days and is small at 7 days, where future
+rain dominates. Caveats: the test row is an upper bound, because the SIH daily
+values used to simulate the feed carry information from after 06:00; in the
+operational row the input comes from IPCET and the target from SIH; the
+deployed model was trained with the simulated availability of L32 on
+1998-2022 targets because the real feed only starts in 2021-08; the intervals
+are slightly narrow against IPCET targets (74-77% instead of 80%); and the feed
+has gaps (fallback on 4-13% of operational issue days).
 
 ## Development
 

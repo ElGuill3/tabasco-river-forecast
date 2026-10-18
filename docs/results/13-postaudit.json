@@ -1,0 +1,1406 @@
+{
+  "pre_registration": "L39",
+  "scored_once": true,
+  "header": "post-audit re-score, pre-registered in L39; scored once",
+  "high_water_m": 17.83,
+  "part_A_test": {
+    "design": "L35 (A) with the L39 fixes: L1 fitted on development targets 1998-2016 on the shifted reanalysis (fix 1, obs_day_q from the same series, fix 2), live values simulated from SIH with the tiled census availability of L32, scored on the 2017+ reforecast target days of experiment 04 next to the frozen model refitted with fix 1, identical rows",
+    "rows": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "n": 796,
+        "mae": 0.5987520238470546,
+        "coverage_80": 0.7801507537688442,
+        "pod": 0.78125,
+        "far": 0.2537313432835821
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "n": 796,
+        "mae": 0.29252561748218686,
+        "coverage_80": 0.8128140703517588,
+        "pod": 0.828125,
+        "far": 0.08620689655172414
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "n": 337,
+        "mae": 0.5779585771476595,
+        "coverage_80": 0.7507418397626113,
+        "pod": 0.2,
+        "far": 0.75
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "n": 337,
+        "mae": 0.3499833209181498,
+        "coverage_80": 0.8219584569732937,
+        "pod": 0.0,
+        "far": 1.0
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "n": 341,
+        "mae": 0.5904592607688742,
+        "coverage_80": 0.750733137829912,
+        "pod": 0.25,
+        "far": 0.5
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "n": 341,
+        "mae": 0.4520912455712061,
+        "coverage_80": 0.8269794721407625,
+        "pod": 0.25,
+        "far": 0.5
+      }
+    ],
+    "mae_by_age": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "0",
+        "n": 433,
+        "mae": 0.6010428067363786
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "1",
+        "n": 152,
+        "mae": 0.6413984296299815
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "2",
+        "n": 125,
+        "mae": 0.5530276224682829
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "3",
+        "n": 42,
+        "mae": 0.5908889284789913
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "4+",
+        "n": 44,
+        "mae": 0.5662892399316674
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "0",
+        "n": 433,
+        "mae": 0.21443013436018238
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "1",
+        "n": 152,
+        "mae": 0.3390439457200401
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "2",
+        "n": 125,
+        "mae": 0.35311552820090986
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "3",
+        "n": 42,
+        "mae": 0.4942297260350897
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "4+",
+        "n": 44,
+        "mae": 0.535690319768823
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "0",
+        "n": 195,
+        "mae": 0.5727854962035362
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "1",
+        "n": 66,
+        "mae": 0.692219955832977
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "2",
+        "n": 46,
+        "mae": 0.56147718763972
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "3",
+        "n": 14,
+        "mae": 0.425148127025707
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "4+",
+        "n": 16,
+        "mae": 0.3507704527692611
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "0",
+        "n": 195,
+        "mae": 0.322601548687256
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "1",
+        "n": 66,
+        "mae": 0.404615705685514
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "2",
+        "n": 46,
+        "mae": 0.3950424926047537
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "3",
+        "n": 14,
+        "mae": 0.48223299090321803
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "4+",
+        "n": 16,
+        "mae": 0.21307650298086966
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "0",
+        "n": 199,
+        "mae": 0.5610102417659991
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "1",
+        "n": 67,
+        "mae": 0.7370901367510301
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "2",
+        "n": 45,
+        "mae": 0.5822839176666611
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "3",
+        "n": 14,
+        "mae": 0.4151627863000295
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "4+",
+        "n": 16,
+        "mae": 0.5190922090770708
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "0",
+        "n": 199,
+        "mae": 0.42205935805060535
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "1",
+        "n": 67,
+        "mae": 0.5486357625623094
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "2",
+        "n": 45,
+        "mae": 0.45902511845855715
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "3",
+        "n": 14,
+        "mae": 0.4102386856359364
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "4+",
+        "n": 16,
+        "mae": 0.4384521541561184
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "age_group": "fallback",
+        "n": 0,
+        "mae": NaN
+      }
+    ],
+    "fallback_share": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "share": 0.0,
+        "n": 0
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "2017-01-02..2023-11-26",
+        "share": 0.0,
+        "n": 0
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "share": 0.0,
+        "n": 0
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "2017-01-04..2019-12-31",
+        "share": 0.0,
+        "n": 0
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "share": 0.0,
+        "n": 0
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "2017-01-01..2020-01-04",
+        "share": 0.0,
+        "n": 0
+      }
+    ]
+  },
+  "part_B_operational": {
+    "design": "L35 (B) with the L39 fixes: L1 refitted on targets 1998-2022 (as M1, L24) with the L32/L33 training recipe on the shifted reanalysis (fix 1) and fed the real IPCET series at scoring time; operational forecasts (11 members) built on the day-0 archive with obs_day_q from day-0 (fix 2), visibility moved to the HTTP Last-Modified upload day when 0-14 days after the page date (fix 3) and the strictly causal live series of tables visible by each issue day (fix 4); targets SIH stage 2023-08-02..2025-09-03 and the IPCET series 2025-09-04..2026-10-16, next to M1 refitted with fix 1 on identical rows",
+    "rows": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "n": 693,
+        "mae": 0.677075192464948,
+        "coverage_80": 0.8326118326118326,
+        "pod": 0.6764705882352942,
+        "far": 0.5306122448979592
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "n": 693,
+        "mae": 0.36666554333531565,
+        "coverage_80": 0.8037518037518038,
+        "pod": 0.7647058823529411,
+        "far": 0.13333333333333333
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "n": 277,
+        "mae": 0.4559247332085016,
+        "coverage_80": 0.8736462093862816,
+        "pod": 0.72,
+        "far": 0.18181818181818182
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "n": 277,
+        "mae": 0.3264820716303238,
+        "coverage_80": 0.7725631768953068,
+        "pod": 0.56,
+        "far": 0.17647058823529413
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "n": 689,
+        "mae": 0.6694066956946227,
+        "coverage_80": 0.8098693759071117,
+        "pod": 0.71875,
+        "far": 0.54
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "n": 689,
+        "mae": 0.46950171423552006,
+        "coverage_80": 0.7997097242380261,
+        "pod": 0.78125,
+        "far": 0.13793103448275862
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "n": 279,
+        "mae": 0.5223801086805305,
+        "coverage_80": 0.8243727598566308,
+        "pod": 0.52,
+        "far": 0.1875
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "n": 279,
+        "mae": 0.4485141636733735,
+        "coverage_80": 0.7419354838709677,
+        "pod": 0.44,
+        "far": 0.3125
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "n": 687,
+        "mae": 0.71763688705111,
+        "coverage_80": 0.8136826783114993,
+        "pod": 0.78125,
+        "far": 0.4318181818181818
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "n": 687,
+        "mae": 0.6358690319649705,
+        "coverage_80": 0.8020378457059679,
+        "pod": 0.78125,
+        "far": 0.3902439024390244
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "n": 279,
+        "mae": 0.6194474952914548,
+        "coverage_80": 0.8315412186379928,
+        "pod": 0.4,
+        "far": 0.16666666666666666
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "n": 279,
+        "mae": 0.5933269438423681,
+        "coverage_80": 0.7562724014336918,
+        "pod": 0.4,
+        "far": 0.23076923076923078
+      }
+    ],
+    "mae_by_age": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 242,
+        "mae": 0.7148297792380855
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 159,
+        "mae": 0.7651836141428522
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 92,
+        "mae": 0.6570313217816165
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 46,
+        "mae": 0.554960428720298
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 65,
+        "mae": 0.6805033459335678
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 89,
+        "mae": 0.4983407679006111
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 242,
+        "mae": 0.22500612638240153
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 159,
+        "mae": 0.33520252835179837
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 92,
+        "mae": 0.39771225648677483
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 46,
+        "mae": 0.5324139185526413
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 65,
+        "mae": 0.629502165315961
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 89,
+        "mae": 0.4983407679006111
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 118,
+        "mae": 0.44769320920981875
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 60,
+        "mae": 0.4384941709291939
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 45,
+        "mae": 0.4320950618166321
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 22,
+        "mae": 0.38674027053563553
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 21,
+        "mae": 0.525410006424252
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 11,
+        "mae": 0.742502571618451
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 118,
+        "mae": 0.216240729885338
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 60,
+        "mae": 0.2728307774214127
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 45,
+        "mae": 0.3186457157898193
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 22,
+        "mae": 0.33838501976106444
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 21,
+        "mae": 0.8856297684169908
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 11,
+        "mae": 0.742502571618451
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 231,
+        "mae": 0.7298205174749964
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 162,
+        "mae": 0.6763933464116022
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 93,
+        "mae": 0.5979887318459687
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 49,
+        "mae": 0.5468681757431437
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 63,
+        "mae": 0.7175735315140012
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 91,
+        "mae": 0.6092343573595627
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 231,
+        "mae": 0.42884074065979644
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 162,
+        "mae": 0.46382140013155404
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 93,
+        "mae": 0.45735074543201776
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 49,
+        "mae": 0.4732670367259438
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 63,
+        "mae": 0.44637099285840454
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 91,
+        "mae": 0.6092343573595627
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 109,
+        "mae": 0.5202459702202007
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 67,
+        "mae": 0.46339532412225465
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 48,
+        "mae": 0.48496388693964637
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 24,
+        "mae": 0.5362404826299979
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 17,
+        "mae": 0.42454633390817487
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 14,
+        "mae": 1.0446019299295086
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 109,
+        "mae": 0.391474645620626
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 67,
+        "mae": 0.36844719075691373
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 48,
+        "mae": 0.4072857942077693
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 24,
+        "mae": 0.5584966918992245
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 17,
+        "mae": 0.6000404567613119
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 14,
+        "mae": 1.0446019299295086
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 246,
+        "mae": 0.7704155053274443
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 161,
+        "mae": 0.7327051941567042
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 90,
+        "mae": 0.6929888783234651
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 44,
+        "mae": 0.6041184685697414
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 56,
+        "mae": 0.7089802845359898
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 90,
+        "mae": 0.631952035934844
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "0",
+        "n": 246,
+        "mae": 0.653705401570664
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "1",
+        "n": 161,
+        "mae": 0.6475703378113538
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "2",
+        "n": 90,
+        "mae": 0.6002088638870829
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "3",
+        "n": 44,
+        "mae": 0.5119727410502924
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "4+",
+        "n": 56,
+        "mae": 0.6848283963524496
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "age_group": "fallback",
+        "n": 90,
+        "mae": 0.631952035934844
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 130,
+        "mae": 0.6138062930066069
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 56,
+        "mae": 0.5264381025607296
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 38,
+        "mae": 0.4910581243524658
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 19,
+        "mae": 0.6169836049441532
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 22,
+        "mae": 0.693206854032834
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 14,
+        "mae": 1.279789381714373
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "0",
+        "n": 130,
+        "mae": 0.5758745354790333
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "1",
+        "n": 56,
+        "mae": 0.528345454761342
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "2",
+        "n": 38,
+        "mae": 0.4481266690458683
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "3",
+        "n": 19,
+        "mae": 0.505904908677132
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "4+",
+        "n": 22,
+        "mae": 0.7513238282046127
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "age_group": "fallback",
+        "n": 14,
+        "mae": 1.279789381714373
+      }
+    ],
+    "mae_by_year": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.6688988776675346
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.8722194205276463
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.40820728785712346
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.5484569485302752
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.35381736961715016
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.30594793705346623
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.4700068189663388
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.4488071572548121
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.4115391661042896
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.2834912575755477
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.7355520835134908
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.8081294720525384
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.44822294438061594
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.6103644058454354
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.49280552854900217
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.37832661611542917
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.5623287287488179
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.5024057986463868
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.5716638708544115
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.38693931008285437
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.8964560980001971
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.8158629666149305
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.5075338653950473
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2023,
+        "mae": 0.9024767176329054
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2024,
+        "mae": 0.6558690736982907
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "year": 2025,
+        "mae": 0.499131142823791
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.8272687709472946
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.5155368574635352
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "year": 2025,
+        "mae": 0.7790631399060698
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "year": 2026,
+        "mae": 0.5004588458105172
+      }
+    ],
+    "fallback_share": [
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "share": 0.12842712842712842,
+        "n": 89
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "SIH target",
+        "share": 0.12842712842712842,
+        "n": 89
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "share": 0.039711191335740074,
+        "n": 11
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 1,
+        "period": "IPCET target",
+        "share": 0.039711191335740074,
+        "n": 11
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "share": 0.1320754716981132,
+        "n": 91
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "SIH target",
+        "share": 0.1320754716981132,
+        "n": 91
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "share": 0.05017921146953405,
+        "n": 14
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 3,
+        "period": "IPCET target",
+        "share": 0.05017921146953405,
+        "n": 14
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "share": 0.13100436681222707,
+        "n": 90
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "SIH target",
+        "share": 0.13100436681222707,
+        "n": 90
+      },
+      {
+        "forecast": "M1 (GloFAS only)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "share": 0.05017921146953405,
+        "n": 14
+      },
+      {
+        "forecast": "L1 (IPCET live input)",
+        "lead_days": 7,
+        "period": "IPCET target",
+        "share": 0.05017921146953405,
+        "n": 14
+      }
+    ]
+  }
+}
