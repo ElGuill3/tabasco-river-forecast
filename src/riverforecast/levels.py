@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import pytesseract
 from PIL import Image
 
@@ -226,12 +227,14 @@ def _semaforo_column(
     return best[0], best[1], best[2], best[3]
 
 
-def _fit_rows(bands: list[tuple[int, int]]) -> list[tuple[int, int]]:
-    """Keep the station-row block, fill a single missing row, snap to 14.
+def _fit_rows(bands: list[tuple[int, int]], lines: list[int]) -> list[tuple[int, int]]:
+    """Keep the station-row block, rebuild it from the grid lines, snap to 14.
 
     Fragments above the table (the coloured forecast box or header cell) form
     their own block and are dropped; the station rows form one contiguous
-    block, bridging a row whose cell text dipped below the colour threshold.
+    block. Rows whose semáforo cell is empty (S/D) or a very light grey may
+    be missed by the colour fill, so the chosen block is rebuilt from the
+    horizontal grid lines, which still cross those rows.
     """
     blocks: list[list[tuple[int, int]]] = []
     for band in bands:
@@ -240,6 +243,7 @@ def _fit_rows(bands: list[tuple[int, int]]) -> list[tuple[int, int]]:
         else:
             blocks.append([band])
     bands = max(blocks, key=len)
+    bands = _rebuild_from_lines(bands, lines)
     if len(bands) == 13:
         gaps = [b[0] - a[1] for a, b in zip(bands, bands[1:], strict=False)]
         i = int(np.argmax(gaps))
@@ -255,10 +259,46 @@ def _fit_rows(bands: list[tuple[int, int]]) -> list[tuple[int, int]]:
     return list(bands)
 
 
-def _find_fecha(gray: np.ndarray) -> tuple[dt.date | None, int | None]:
-    """Parse the FECHA line; return (date, y of the FECHA word)."""
-    h = gray.shape[0]
-    strip = gray[: h // 3, :]
+def _rebuild_from_lines(bands: list[tuple[int, int]], lines: list[int]) -> list[tuple[int, int]]:
+    """Rebuild a 12-13 row station block from its grid lines.
+
+    The block boundaries are grid lines themselves; the interior lines give
+    every row edge, including rows the colour fill missed. One extra line
+    above or below the block is tried when the rebuild is short, because a
+    missed first row shifts the whole block one line down.
+    """
+    if not 12 <= len(bands) <= 13:
+        return bands
+
+    def edges_of(top: int, bot: int) -> list[tuple[int, int]]:
+        edges = [top] + _dedupe([x for x in lines if top < x < bot], 3) + [bot]
+        return [(a, b) for a, b in zip(edges, edges[1:], strict=False) if 10 <= b - a <= 30]
+
+    rebuilt = edges_of(bands[0][0], bands[-1][1])
+    if len(rebuilt) == 14:
+        return rebuilt
+    for shift in (-1, 1):
+        neighbours = (
+            [x for x in lines if x < bands[0][0] - 2]
+            if shift < 0
+            else [x for x in lines if x > bands[-1][1] + 2]
+        )
+        if not neighbours:
+            continue
+        edge = neighbours[-1] if shift < 0 else neighbours[0]
+        gap = bands[0][0] - edge if shift < 0 else edge - bands[-1][1]
+        if not 10 <= gap <= 30:
+            continue
+        top, bot = (edge, bands[-1][1]) if shift < 0 else (bands[0][0], edge)
+        if len(edges_of(top, bot)) == 14:
+            return edges_of(top, bot)
+    return bands
+
+
+def _fecha_words(strip: np.ndarray, invert: bool) -> tuple[list[tuple[str, int]], int | None]:
+    """OCR words of the top strip; return (words, y of the FECHA word)."""
+    if invert:
+        strip = 255 - strip
     im = Image.fromarray(strip)
     im = im.resize((im.width * 2, im.height * 2), Image.LANCZOS)
     data = pytesseract.image_to_data(im, config="--psm 6", output_type=pytesseract.Output.DICT)
@@ -273,10 +313,94 @@ def _find_fecha(gray: np.ndarray) -> tuple[dt.date | None, int | None]:
         words.append((normed, y))
         if normed.startswith("fecha") and fecha_y is None:
             fecha_y = y
+    return words, fecha_y
+
+
+def _rows_from_lines(
+    rgb: np.ndarray, gray: np.ndarray, lines: list[int], y_lo: int, y_hi: int
+) -> list[tuple[int, int]] | None:
+    """Fallback station rows: the best 15-line window over the grid.
+
+    When the colour fill misses several rows (light grey or empty semáforo
+    cells), the station rows are rebuilt from the horizontal grid lines: 15
+    consecutive lines spaced 10-30 px give 14 rows. Among the candidate
+    windows the one with the most coloured (or grey) mass inside the
+    semáforo column wins; the column is the x-run with the most colour in
+    the search band.
+    """
+    if len(lines) < 15:
+        return None
+    red, grn, blu = rgb[..., 0].astype(int), rgb[..., 1].astype(int), rgb[..., 2].astype(int)
+    sat = np.maximum(np.maximum(red, grn), blu) - np.minimum(np.minimum(red, grn), blu)
+    grey = (sat < 40) & (gray > 110) & (gray < 200)
+    coloured = (sat > 60) | grey
+    prof = coloured[y_lo:y_hi].mean(axis=0)
+    runs = _runs_1d(prof > 0.4, 15, 90)
+    if not runs:
+        return None
+    x0, x1 = max(runs, key=lambda rn: float(prof[rn[0] : rn[1]].sum()))
+    best: tuple[float, list[tuple[int, int]]] | None = None
+    for i in range(len(lines) - 14):
+        window = lines[i : i + 15]
+        if window[0] < y_lo or window[-1] > y_hi:
+            continue
+        if not all(10 <= b - a <= 30 for a, b in zip(window, window[1:], strict=False)):
+            continue
+        score = sum(
+            float(coloured[a:b, x0:x1].mean()) for a, b in zip(window, window[1:], strict=False)
+        )
+        if best is None or score > best[0]:
+            best = (score, list(zip(window, window[1:], strict=False)))
+    return best[1] if best else None
+
+
+def _find_fecha(gray: np.ndarray) -> tuple[dt.date | None, int | None]:
+    """Parse the FECHA line; return (date, y of the FECHA word).
+
+    Most layouts print FECHA in dark text on the page background, but some
+    (2024 and a few 2021-2025 tables) print it in white on a black bar, so
+    the inverted strip is tried too.
+    """
+    h = gray.shape[0]
+    strip = gray[: h // 3, :]
+    words, fecha_y = _fecha_words(strip, invert=False)
     if fecha_y is None:
-        return None, None
+        words, fecha_y = _fecha_words(strip, invert=True)
+    if fecha_y is None:
+        return _fecha_from_bars(gray)
     line = " ".join(t for t, y in words if abs(y - fecha_y) < 25)
     return _parse_fecha(line), fecha_y
+
+
+def _fecha_from_bars(gray: np.ndarray) -> tuple[dt.date | None, int | None]:
+    """FECHA printed in white on a black bar (2024 and some 2021-2025 pages).
+
+    The dark full-width bars of the top third are inverted and OCRd one by
+    one; the first bar whose text names FECHA and parses as a date wins.
+    """
+    h = gray.shape[0]
+    mask = (gray[: h // 3, :] < 90).mean(axis=1) > 0.5
+    mask = _close_gaps(mask, 8)
+    for a, b in _runs_1d(mask, 12, 220):
+        im = Image.fromarray(255 - gray[a : b + 1, :])
+        im = im.resize((im.width * 3, im.height * 3), Image.LANCZOS)
+        text = pytesseract.image_to_string(im, config="--psm 6").strip()
+        if "fecha" not in _norm(text):
+            continue
+        date = _parse_fecha(_norm(text))
+        if date is not None:
+            return date, (a + b) // 2
+    return None, None
+
+
+def _close_gaps(mask: np.ndarray, gap: int) -> np.ndarray:
+    """Fill short False gaps in a 1-D mask (text rows split a dark bar)."""
+    out = mask.copy()
+    runs = _runs_1d(~mask, 1, gap)
+    for a, b in runs:
+        if 0 < a and b < len(out) - 1:
+            out[a : b + 1] = True
+    return out
 
 
 def _parse_fecha(text: str) -> dt.date | None:
@@ -285,7 +409,10 @@ def _parse_fecha(text: str) -> dt.date | None:
         text,
     )
     if m:
-        return dt.date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1)))
+        try:
+            return dt.date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1)))
+        except ValueError:  # OCR slip, e.g. 31 DE FEBRERO
+            return None
     m = re.search(r"(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})", text)
     if m:
         d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
@@ -453,6 +580,24 @@ def _parse_tokens(text: str) -> list[float | None]:
     return [_parse_num(t) for t in re.findall(r"-?\d+(?:\.\d+)?", text.replace(",", ""))]
 
 
+def _parse_pair(text: str) -> tuple[float | None, float | None] | None:
+    """Split a merged two-value cell whose separator line was dropped.
+
+    The second value always prints with two decimals, so the split falls
+    where its trailing ``-d.dd`` run starts: "16.840.21" is 16.84 and 0.21,
+    never 16.840 and 21. Single short digits without a decimal point are not
+    a first value (a lone "14.90" must not split).
+    """
+    m = re.match(r"^\s*(-?\d[\d.,]*?)\s*(-?\d\.\d{2})\s*$", text)
+    if not m or re.fullmatch(r"-?\d", m.group(1)):
+        return None
+    first = _parse_num(m.group(1))
+    if first is None:
+        points = _point_candidates(m.group(1))
+        first = points[0] if len(points) == 1 else None
+    return first, _parse_num(m.group(2))
+
+
 def _residuals(row: StationRow | DamRow) -> tuple[float, float]:
     """|printed diff - (hoy - ayer)| and |capacity - (namo - hoy)|."""
     if row.ayer is None or row.hoy is None or row.diff is None:
@@ -511,19 +656,33 @@ def read_table(path: str | Path) -> LevelTable:
         raise UnreadableTable("no FECHA line found")
     lines = _merge_lines([_h_lines(gray, 100), _h_lines(gray, 150)])
     sem_left, _, fill, bands = _semaforo_column(rgb, gray, lines, fecha_y + 5, fecha_y + 420)
-    bands = _fit_rows(bands)
+    try:
+        bands = _fit_rows(bands, lines)
+    except UnreadableTable:
+        # the colour fill missed several station rows (light grey or empty
+        # cells); the grid lines still cross them
+        bands = _rows_from_lines(rgb, gray, lines, fecha_y + 5, fecha_y + 420)
+        if bands is None:
+            raise
     y0, y1 = bands[0][0], bands[-1][1]
 
-    vlines = _v_lines(gray, y0 - 1, y1 + 2)
+    # some layouts print the NAMO/NAMINO separators fainter than the rest of
+    # the grid, so the vertical lines are searched at two darkness levels
+    vlines = _merge_lines([_v_lines(gray, y0 - 1, y1 + 2), _v_lines(gray, y0 - 1, y1 + 2, 170)])
     vlines = _dedupe(vlines, 14)
     # true left edge of the coloured column: the saturation run holding the window
     red, grn, blu = rgb[..., 0].astype(int), rgb[..., 1].astype(int), rgb[..., 2].astype(int)
     sat = np.maximum(np.maximum(red, grn), blu) - np.minimum(np.minimum(red, grn), blu)
-    prof = (sat[y0:y1] > 60).mean(axis=0)
-    holder = [rn for rn in _runs_1d(prof > 0.5, 15, 90) if rn[0] <= sem_left <= rn[1]]
+    grey = (sat < 40) & (gray > 110) & (gray < 200)
+    coloured = (sat > 60) | grey
+    prof = coloured[y0:y1].mean(axis=0)
+    # the white cell text lowers the profile of narrow cells well below 0.5
+    runs = _runs_1d(prof > 0.5, 15, 90) or _runs_1d(prof > 0.4, 15, 90)
+    # the search window may start a few pixels left of the coloured cells
+    holder = [rn for rn in runs if rn[0] < sem_left + 60 and rn[1] > sem_left]
     if not holder:
         raise UnreadableTable("semáforo column edge not found in the colour profile")
-    sem_edge = holder[0][0]
+    sem_edge = max(holder, key=lambda rn: float(prof[rn[0] : rn[1]].sum()))[0]
     left = [x for x in vlines if x < sem_edge - 3]
     if len(left) < 7:
         raise UnreadableTable(f"only {len(left)} vertical lines left of the semáforo column")
@@ -563,13 +722,22 @@ def read_table(path: str | Path) -> LevelTable:
     raw_by_field = {
         name: _ocr_column(gray, bands, x0, x1) for name, (x0, x1, _) in field_cols.items()
     }
+    # fields that share one interval (a dropped separator line) are parsed as
+    # a printed two-decimal pair, e.g. "16.840.21" = 16.84 | 0.21
+    shared: dict[tuple[int, int], int] = Counter()
+    for x0, x1, _ in field_cols.values():
+        shared[(x0, x1)] += 1
     columns: dict[str, list[float | None]] = {name: [] for name in fields}
-    for name, (_, _, token) in field_cols.items():
+    for name, (x0, x1, token) in field_cols.items():
+        paired = shared[(x0, x1)] > 1
         for k in range(len(bands)):
-            tokens = _parse_tokens(raw_by_field[name][k])
-            value = tokens[token] if len(tokens) > token else None
+            raw = raw_by_field[name][k]
+            value = _parse_pair(raw)[token] if paired else None
+            if value is None:
+                tokens = _parse_tokens(raw)
+                value = tokens[token] if len(tokens) > token else None
             if value is None and token == 0 and name != "namino":
-                points = _point_candidates(raw_by_field[name][k])
+                points = _point_candidates(raw)
                 value = points[0] if len(points) == 1 else None
             columns[name].append(value)
 
@@ -626,9 +794,18 @@ def _cell_candidates(
         channels = (gray, blue) if name == "diff" else (gray,)
         crops = [
             (x0, x1, max(0, a), b, channel, thr)
-            for a, b in ((top, bot), (top + 1, bot), (top + 2, bot - 1), (top + 1, bot - 2))
+            for a, b in (
+                (top, bot),
+                (top + 1, bot),
+                (top + 2, bot - 1),
+                (top + 1, bot - 2),
+                # some layouts set the digits tight against the lower grid
+                # line, so the crop is extended below it too
+                (top, bot + 2),
+                (max(0, top - 1), bot + 2),
+            )
             for channel in channels
-            for thr in (None, 150)
+            for thr in (None, 150, 90)
         ]
         raws.extend(_ocr_variants(gray, crops))
         seen: list[float | None] = []
@@ -747,3 +924,89 @@ def row_problems(row: StationRow | DamRow, namo_mode: float | None) -> list[str]
 def _page_date(path: str | Path) -> dt.date | None:
     m = re.search(r"(\d{4}-\d{2}-\d{2})", Path(path).stem)
     return dt.date.fromisoformat(m.group(1)) if m else None
+
+
+FIRST_TABLE = dt.date(2021, 8, 1)
+TRUSTED_FLAGS = ("ok", "printed", "printed_other")
+
+
+def obs_date(
+    page: dt.date | None, table: dt.date | None, latest: dt.date | None = None
+) -> tuple[dt.date | None, str]:
+    """Resolved observation date of a table and its flag.
+
+    IPCET reuses image file names every year, so a page can serve a table
+    from another day or year (a 2023 page showing a 2021 table, or an old
+    page whose file was overwritten later). The printed FECHA is therefore
+    the observation date whenever it is possible (between 2021-08-01, the
+    first table, and ``latest``, the download date): flag "ok" when it is
+    within 3 days of the page date, "printed_other" otherwise. A printed date
+    outside that range is an OCR misread: its day and month are kept with
+    the page year when they fall within 3 days of the page date ("ok", with
+    the Dec/Jan wrap handled), else the page date is returned as "far_off".
+    An unreadable FECHA gives the page date as "no_fecha". Flags other than
+    "ok", "printed" and "printed_other" need confirmation by another table
+    before their values are used (:func:`station_series`).
+    """
+    latest = latest or dt.date.today()
+    if table is None:
+        return page, "no_fecha"
+    if page is None:
+        return table, "printed"
+    if FIRST_TABLE <= table <= latest:
+        return table, ("ok" if abs((table - page).days) <= 3 else "printed_other")
+
+    def with_year(year: int) -> dt.date | None:
+        try:
+            return dt.date(year, table.month, table.day)
+        except ValueError:
+            return None
+
+    candidate = with_year(page.year)
+    if candidate is not None and (candidate - page).days > 180:
+        candidate = with_year(page.year - 1)
+    elif candidate is not None and (candidate - page).days < -180:
+        candidate = with_year(page.year + 1)
+    if candidate is not None and abs((candidate - page).days) <= 3:
+        return candidate, "ok"
+    return page, "far_off"
+
+
+def station_series(rows: pd.DataFrame, agree: float = 0.05) -> pd.DataFrame:
+    """Daily stage of one station from its table rows.
+
+    ``rows`` has obs_date, obs_flag, valid, ayer, hoy and diff. Each valid
+    table gives yesterday's value to obs_date - 1 and today's value to
+    obs_date, except when the printed difference is zero: then today's value
+    may be yesterday's copied before the 06:00 reading and is not used.
+    Tables with an untrusted date (no_fecha, far_off) count only when one of
+    their values equals, to the cent, a value of a trusted table for the
+    same day. A day whose values disagree by more than ``agree`` metres is
+    dropped. Returns stage_m (median of the agreeing values) and n_sources,
+    indexed by date.
+    """
+    valid = rows[rows["valid"].astype(bool)]
+    items = []
+    for number, row in enumerate(valid.itertuples(index=False)):
+        day = pd.Timestamp(row.obs_date)
+        trusted = row.obs_flag in TRUSTED_FLAGS
+        items.append((day - pd.Timedelta(days=1), float(row.ayer), trusted, number))
+        if round(float(row.diff), 2) != 0:
+            items.append((day, float(row.hoy), trusted, number))
+    values = pd.DataFrame(items, columns=["date", "stage_m", "trusted", "table"])
+    if values.empty:
+        return pd.DataFrame(columns=["stage_m", "n_sources"]).rename_axis("date")
+    trusted = values[values["trusted"]]
+    confirmed = set()
+    for table, part in values[~values["trusted"]].groupby("table"):
+        for item in part.itertuples(index=False):
+            same = trusted.loc[trusted["date"] == item.date, "stage_m"]
+            if ((same - item.stage_m).abs() < 0.005).any():
+                confirmed.add(table)
+    used = values[values["trusted"] | values["table"].isin(confirmed)]
+    out = []
+    for day, part in used.groupby("date"):
+        if part["stage_m"].max() - part["stage_m"].min() > agree:
+            continue
+        out.append((day, round(float(part["stage_m"].median()), 2), len(part)))
+    return pd.DataFrame(out, columns=["date", "stage_m", "n_sources"]).set_index("date")

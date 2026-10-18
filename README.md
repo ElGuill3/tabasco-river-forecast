@@ -134,6 +134,31 @@ uv run python -m riverforecast.imerg_cli update BDCTB --start 1998-01-01
 
 Rerunning fetches only the days missing from `data/raw/imerg/<CODE>/daily.csv`.
 
+### IPCET daily level tables (live stage)
+
+Every day IPCET (Tabasco civil protection) publishes, next to the colour semáforo,
+a table with the 06:00 stage of 16 stations on the 14 semáforo rivers and the levels
+of the four Grijalva dams; the stated source is CONAGUA's Tabasco office. Boca del
+Cerro uses the same gauge datum as the SIH series (NAMO 19.21 m).
+
+```bash
+uv run python -m riverforecast.levels_cli read data/raw/ipcet/levels --out data/raw/ipcet/levels.csv --workers 4
+uv run python experiments/11_levels_check.py
+```
+
+- Coverage: the first table is from 2021-08-03; tables exist on 73-83% of days per
+  year (61% so far in 2026), mostly missing on weekends and holidays. Each table also
+  prints yesterday's value, so 77-91% of days are eventually published. Tables are
+  usually uploaded between 07:00 and 11:00 local time.
+- Reader: `riverforecast.levels` reads each cell with tesseract across the 2021-22,
+  2024-25 and 2026 layouts and refuses images that are not level tables (1366 of
+  1414 images read). The printed date wins over the page date because IPCET reuses
+  file names across years. Today's value is ignored when the printed difference is
+  zero (it can be yesterday's value copied before the reading).
+- Checks (experiment 11): consecutive tables agree on 903 of 911 days; against the
+  SIH series on 1071 common days the mean absolute difference is 0.035 m and 94% of
+  days are within 0.05 m (13 days differ by more than 0.5 m).
+
 ### IPCET semáforo (official validation)
 
 The Instituto de Protección Civil del Estado de Tabasco publishes a daily

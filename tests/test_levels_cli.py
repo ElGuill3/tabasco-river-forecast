@@ -33,6 +33,8 @@ def test_read_writes_long_csv(root: Path, tmp_path: Path, capsys) -> None:
     assert list(rows[0]) == [
         "page_date",
         "table_date",
+        "obs_date",
+        "obs_flag",
         "kind",
         "river",
         "station",
@@ -49,6 +51,8 @@ def test_read_writes_long_csv(root: Path, tmp_path: Path, capsys) -> None:
     assert len(boca) == 2
     day = next(r for r in boca if r["page_date"] == "2025-10-20")
     assert day["table_date"] == "2025-10-20"
+    assert day["obs_date"] == "2025-10-20"
+    assert day["obs_flag"] == "ok"
     assert (day["namo"], day["ayer"], day["hoy"]) == ("19.21", "17.97", "17.65")
     assert day["valid"] == "True"
     assert day["reason"] == ""

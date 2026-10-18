@@ -1,0 +1,124 @@
+{
+  "readability": {
+    "per_year": {
+      "2021": {
+        "tables_read": 124,
+        "bdc_valid": 124,
+        "refused": 6
+      },
+      "2022": {
+        "tables_read": 280,
+        "bdc_valid": 279,
+        "refused": 11
+      },
+      "2023": {
+        "tables_read": 266,
+        "bdc_valid": 265,
+        "refused": 12
+      },
+      "2024": {
+        "tables_read": 260,
+        "bdc_valid": 260,
+        "refused": 10
+      },
+      "2025": {
+        "tables_read": 264,
+        "bdc_valid": 261,
+        "refused": 5
+      },
+      "2026": {
+        "tables_read": 172,
+        "bdc_valid": 159,
+        "refused": 4
+      }
+    },
+    "bdc_rows": 1366,
+    "bdc_valid": 1348,
+    "obs_flag": {
+      "ok": 1141,
+      "no_fecha": 176,
+      "printed_other": 49
+    },
+    "continuity_pairs": 911,
+    "continuity_exact": 903,
+    "continuity_within_005": 907,
+    "continuity_worst": {
+      "2021-08-26": 1.33,
+      "2026-06-03": 0.94,
+      "2022-04-17": 0.23,
+      "2024-07-09": 0.2,
+      "2022-03-16": 0.04,
+      "2024-05-06": 0.04,
+      "2025-12-16": 0.04,
+      "2024-03-05": 0.01,
+      "2024-07-31": 0.0,
+      "2024-07-30": 0.0
+    }
+  },
+  "fidelity": {
+    "n": 1071,
+    "period": [
+      "2021-08-03",
+      "2025-09-03"
+    ],
+    "mae": 0.0349,
+    "bias": 0.004,
+    "share_within_005": 0.939,
+    "share_exact": 0.356,
+    "worst": {
+      "2024-06-22": {
+        "ipcet": 15.97,
+        "sih": 12.81
+      },
+      "2024-06-23": {
+        "ipcet": 15.27,
+        "sih": 12.93
+      },
+      "2024-06-19": {
+        "ipcet": 14.61,
+        "sih": 16.62
+      },
+      "2021-12-19": {
+        "ipcet": 12.89,
+        "sih": 14.9
+      },
+      "2022-07-09": {
+        "ipcet": 12.62,
+        "sih": 14.54
+      },
+      "2024-07-17": {
+        "ipcet": 16.45,
+        "sih": 14.96
+      },
+      "2025-06-30": {
+        "ipcet": 15.21,
+        "sih": 16.5
+      },
+      "2021-11-17": {
+        "ipcet": 14.19,
+        "sih": 15.39
+      },
+      "2022-12-06": {
+        "ipcet": 15.21,
+        "sih": 16.23
+      },
+      "2024-07-03": {
+        "ipcet": 16.03,
+        "sih": 15.05
+      }
+    }
+  },
+  "series_days_per_year": {
+    "2021": 130,
+    "2022": 295,
+    "2023": 247,
+    "2024": 286,
+    "2025": 259,
+    "2026": 186
+  },
+  "series_last_date": "2026-10-16",
+  "refusal_reasons": {
+    "no FECHA line found": 38,
+    "no sem\u00e1foro column with N-N station rows found": 10
+  }
+}

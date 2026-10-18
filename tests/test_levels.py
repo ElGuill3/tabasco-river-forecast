@@ -7,6 +7,7 @@ table; single Boca del Cerro rows for the other years).
 import datetime as dt
 from pathlib import Path
 
+import pandas as pd
 import pytest
 
 from riverforecast import levels
@@ -78,9 +79,177 @@ def test_read_table_boca_del_cerro_other_years(name: str, ayer: float, hoy: floa
     assert (row.ayer, row.hoy) == (ayer, hoy)
 
 
+def test_read_table_fecha_on_dark_bar_2024() -> None:
+    """The 2024 layout prints FECHA in white on a black bar (L28 failure group)."""
+    table = levels.read_table(FIXTURES / "levels_2024-03-17.jpg")
+    assert table.table_date == dt.date(2024, 3, 17)
+    row = boca(table)
+    assert abs(row.namo - 19.21) <= levels.TOLERANCE
+    assert (row.ayer, row.hoy) == (11.58, 11.57)
+
+
+def test_read_table_2025_sd_row_keeps_fourteen_rows() -> None:
+    """A station row whose semáforo cell is empty (S/D) must not shrink the
+    station block below 14 rows (2025-03-05 read only 12 rows)."""
+    table = levels.read_table(FIXTURES / "levels_2025-03-05.jpg")
+    assert len(table.stations) == 14
+    row = boca(table)
+    assert (row.ayer, row.hoy) == (13.49, 13.24)
+
+
+def test_read_table_2026_light_sem_cell() -> None:
+    """A light-grey 'A LA BAJA' cell must not drop the first station row
+    (2026-01-19 read 13 rows and misplaced the block)."""
+    table = levels.read_table(FIXTURES / "levels_2026-01-19.jpg")
+    assert len(table.stations) == 14
+    row = boca(table)
+    assert (row.ayer, row.hoy) == (13.73, 13.77)
+
+
+@pytest.mark.parametrize(
+    "name, ayer, hoy, diff",
+    [
+        ("levels_2026-02-18.jpg", 12.05, 12.05, 0.00),
+        ("levels_2026-05-14.jpg", 11.41, 11.36, -0.05),
+    ],
+)
+def test_read_table_faint_vertical_lines(name: str, ayer: float, hoy: float, diff: float) -> None:
+    """Some 2026 images print the NAMO/NAMINO separators fainter, so the
+    vertical lines must be searched at more than one darkness threshold."""
+    row = boca(levels.read_table(FIXTURES / name))
+    assert (row.ayer, row.hoy, row.diff) == (ayer, hoy, diff)
+
+
+def test_read_table_2024_diff_capacity_separators() -> None:
+    """The 2024 layout separates DIFERENCIA from CAPACIDAD with a fainter
+    line; without it the two columns merge and the layout is refused."""
+    row = boca(levels.read_table(FIXTURES / "levels_2024-10-20.jpg"))
+    assert (row.ayer, row.hoy, row.diff) == (14.19, 15.03, 0.84)
+
+
+@pytest.mark.parametrize(
+    "name, ayer, hoy, diff",
+    [
+        ("levels_2022-10-10.jpg", 16.63, 16.84, 0.21),
+        ("levels_2022-12-29.jpg", 15.21, 15.45, 0.24),
+    ],
+)
+def test_read_table_merged_hoy_diff_pair(name: str, ayer: float, hoy: float, diff: float) -> None:
+    """In the 2021-2022 layouts HOY and DIFERENCIA share one column without
+    a separator; the concatenated OCR text (e.g. "16.840.21") must be split
+    into the printed two-decimal pair, never misread as 21.0."""
+    row = boca(levels.read_table(FIXTURES / name))
+    assert (row.ayer, row.hoy, row.diff) == (ayer, hoy, diff)
+    assert levels.row_problems(row, 19.21) == []
+
+
+def test_read_table_still_refuses_colour_semaforo_map_2022() -> None:
+    """The 2022 colour semáforo map (a frequent refusal in the failure list)
+    must stay refused after the reader fixes."""
+    with pytest.raises(levels.UnreadableTable):
+        levels.read_table(FIXTURES / "levels_map_2022-03-12.jpg")
+
+
+def test_parse_fecha_rejects_impossible_day() -> None:
+    """An OCR slip like 31 DE FEBRERO must yield no date, not a crash."""
+    assert levels._parse_fecha("FECHA: 31 DE FEBRERO DE 2024 06:00 hrs.") is None
+
+
 def test_read_table_dates() -> None:
     assert levels.read_table(FIXTURES / "levels_2026-01-13.jpg").table_date == dt.date(2026, 1, 13)
     assert levels.read_table(FIXTURES / "levels_2022-06-15.jpg").table_date == dt.date(2022, 6, 15)
+
+
+LATEST = dt.date(2026, 10, 17)
+
+
+def test_obs_date_trusts_a_printed_date_from_another_year() -> None:
+    # image file names repeat every year, so a 2023 page can serve a 2021
+    # table; the printed date (year included) is the observation date
+    day, flag = levels.obs_date(dt.date(2023, 11, 23), dt.date(2021, 11, 23), LATEST)
+    assert (day, flag) == (dt.date(2021, 11, 23), "printed_other")
+
+
+def test_obs_date_trusts_a_printed_date_after_the_page() -> None:
+    # a file overwritten in a later year: still the printed date
+    day, flag = levels.obs_date(dt.date(2021, 8, 3), dt.date(2022, 8, 4), LATEST)
+    assert (day, flag) == (dt.date(2022, 8, 4), "printed_other")
+
+
+def test_obs_date_printed_near_page_is_ok() -> None:
+    day, flag = levels.obs_date(dt.date(2024, 3, 17), dt.date(2024, 3, 16), LATEST)
+    assert (day, flag) == (dt.date(2024, 3, 16), "ok")
+
+
+def test_obs_date_falls_back_to_page_when_unreadable() -> None:
+    day, flag = levels.obs_date(dt.date(2024, 3, 17), None, LATEST)
+    assert (day, flag) == (dt.date(2024, 3, 17), "no_fecha")
+
+
+def test_obs_date_impossible_year_keeps_day_month_near_page() -> None:
+    # a misread year outside 2021-08-01..latest: day and month near the page
+    day, flag = levels.obs_date(dt.date(2024, 3, 17), dt.date(2031, 3, 18), LATEST)
+    assert (day, flag) == (dt.date(2024, 3, 18), "ok")
+    day, flag = levels.obs_date(dt.date(2022, 1, 2), dt.date(2019, 12, 31), LATEST)
+    assert (day, flag) == (dt.date(2021, 12, 31), "ok")
+
+
+def test_obs_date_flags_impossible_far_off_date() -> None:
+    day, flag = levels.obs_date(dt.date(2024, 3, 17), dt.date(2019, 4, 10), LATEST)
+    assert (day, flag) == (dt.date(2024, 3, 17), "far_off")
+
+
+def test_obs_date_without_page_uses_table_date() -> None:
+    day, flag = levels.obs_date(None, dt.date(2024, 3, 17), LATEST)
+    assert (day, flag) == (dt.date(2024, 3, 17), "printed")
+
+
+def _rows(*rows: tuple) -> pd.DataFrame:
+    cols = ["obs_date", "obs_flag", "valid", "ayer", "hoy", "diff"]
+    frame = pd.DataFrame(rows, columns=cols)
+    frame["obs_date"] = pd.to_datetime(frame["obs_date"])
+    return frame
+
+
+def test_station_series_uses_today_and_yesterday() -> None:
+    out = levels.station_series(_rows(("2025-10-20", "ok", True, 17.97, 17.65, -0.32)))
+    assert out["stage_m"].to_dict() == {
+        pd.Timestamp("2025-10-19"): 17.97,
+        pd.Timestamp("2025-10-20"): 17.65,
+    }
+
+
+def test_station_series_ignores_today_when_difference_is_zero() -> None:
+    # a zero difference can be yesterday's value copied before the reading
+    out = levels.station_series(_rows(("2025-10-20", "ok", True, 17.97, 17.97, 0.0)))
+    assert list(out.index) == [pd.Timestamp("2025-10-19")]
+
+
+def test_station_series_ignores_invalid_rows() -> None:
+    out = levels.station_series(_rows(("2025-10-20", "ok", False, 17.97, 17.65, -0.32)))
+    assert out.empty
+
+
+def test_station_series_needs_confirmation_for_undated_tables() -> None:
+    lonely = _rows(("2025-10-22", "no_fecha", True, 17.10, 16.90, -0.20))
+    assert levels.station_series(lonely).empty
+    confirmed = _rows(
+        ("2025-10-21", "ok", True, 17.40, 17.10, -0.30),
+        ("2025-10-22", "no_fecha", True, 17.10, 16.90, -0.20),
+    )
+    out = levels.station_series(confirmed)
+    assert out.loc[pd.Timestamp("2025-10-22"), "stage_m"] == 16.90
+
+
+def test_station_series_drops_conflicting_days() -> None:
+    out = levels.station_series(
+        _rows(
+            ("2025-10-20", "ok", True, 17.97, 17.65, -0.32),
+            ("2025-10-21", "ok", True, 17.20, 17.00, -0.20),
+        )
+    )
+    assert pd.Timestamp("2025-10-20") not in out.index
+    assert out.loc[pd.Timestamp("2025-10-21"), "stage_m"] == 17.00
 
 
 def test_read_table_refuses_colour_semaforo_map() -> None:

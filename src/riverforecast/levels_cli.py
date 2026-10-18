@@ -5,9 +5,12 @@
 
 Every image in the directory is classified and read (OCR); images that are
 not level tables are refused. Rows carry the page date (file name), the
-table date (FECHA line), the parsed values and their validation against the
-table's own arithmetic and the station's modal NAMO. Values are never
-repaired.
+table date (FECHA line), the resolved observation date (the OCR day and
+month when they are within 3 days of the page date, with the year from the
+page date; the page date when FECHA is unreadable; flagged "far_off" when
+the OCR date is further away) and the parsed values with their validation
+against the table's own arithmetic and the station's modal NAMO. Values are
+never repaired.
 
     uv run python -m riverforecast.levels_cli report data/raw/ipcet/levels \
         --csv data/raw/ipcet/levels.csv
@@ -22,6 +25,7 @@ import argparse
 import csv
 import datetime as dt
 import hashlib
+import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
@@ -30,6 +34,8 @@ from riverforecast import levels
 FIELDS = [
     "page_date",
     "table_date",
+    "obs_date",
+    "obs_flag",
     "kind",
     "river",
     "station",
@@ -62,6 +68,7 @@ def _rows(
     table: levels.LevelTable, modes: dict[tuple[str, str], float], sha256: str
 ) -> list[list[str]]:
     out = []
+    obs, flag = levels.obs_date(table.page_date, table.table_date)
     for kind, rows in (("station", table.stations), ("dam", table.dams)):
         for row in rows:
             name = row.station if kind == "station" else row.name
@@ -71,6 +78,8 @@ def _rows(
                 [
                     _fmt_date(table.page_date),
                     _fmt_date(table.table_date),
+                    _fmt_date(obs),
+                    flag,
                     kind,
                     river,
                     name,
@@ -97,7 +106,10 @@ def cmd_read(root: Path, out: Path, workers: int) -> int:
     refused: list[str] = []
     tables: list[levels.LevelTable] = []
     digests: dict[str, str] = {}
-    with ProcessPoolExecutor(max_workers=workers) as pool:
+    # spawn instead of fork: forked workers hang sporadically around the OCR
+    # subprocesses, and the re-import cost is negligible against ~13 s/image
+    ctx = multiprocessing.get_context("spawn")
+    with ProcessPoolExecutor(max_workers=workers, mp_context=ctx) as pool:
         for path, table, error in pool.map(_read_one, [str(p) for p in paths]):
             page = Path(path).stem
             digests[page] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
