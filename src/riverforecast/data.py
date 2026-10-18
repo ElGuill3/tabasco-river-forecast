@@ -42,6 +42,20 @@ def glofas_day0(code: str, raw: Path = RAW) -> pd.Series:
     return pd.read_csv(path, index_col="date", parse_dates=True)["discharge_m3s"].dropna()
 
 
+def glofas_training_past(code: str, raw: Path = RAW) -> pd.Series:
+    """Training past discharge (m3/s): the reanalysis shifted one day forward.
+
+    The reanalysis and the day-0 archive label the same daily mean one day
+    apart (D3, L39): on their 730-day overlap, ``day0[d]`` matches
+    ``reanalysis[d-1]`` with a median |log difference| of 0.0115, against
+    0.0323 for ``reanalysis[d]``. Features built on the reanalysis must
+    therefore be shifted so that their labels match the day-0 series used in
+    operation: ``past[d] = reanalysis[d-1]``. Fit every deployment model on
+    this series; build operational features on :func:`glofas_day0`.
+    """
+    return glofas_reanalysis(code, raw).sort_index().shift(1, freq="D")
+
+
 def glofas_operational_summary(
     code: str, raw: Path = RAW, members: list[str] | None = None
 ) -> pd.DataFrame:

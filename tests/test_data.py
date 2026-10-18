@@ -95,3 +95,24 @@ def test_glofas_day0_reads_the_forecast_archive_like_the_reanalysis(tmp_path):
 
     assert series.index.tolist() == [pd.Timestamp("2023-06-01"), pd.Timestamp("2023-06-03")]
     assert series.tolist() == [1000.0, 1200.0]
+
+
+def test_glofas_training_past_is_the_reanalysis_shifted_one_day(tmp_path):
+    # The day-0 archive labels a daily mean one day later than the reanalysis
+    # (D3, L39): past[d] must be reanalysis[d-1] so that training labels match
+    # the day-0 series used in operation.
+    path = tmp_path / "glofas" / "BDCTB" / "consolidated_v4.csv"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        "date,discharge_m3s\n2020-01-01,100.0\n2020-01-02,200.0\n2020-01-04,400.0\n",
+        encoding="utf-8",
+    )
+
+    past = data.glofas_training_past("BDCTB", raw=tmp_path)
+
+    assert past.index.tolist() == [
+        pd.Timestamp("2020-01-02"),
+        pd.Timestamp("2020-01-03"),
+        pd.Timestamp("2020-01-05"),
+    ]
+    assert past.tolist() == [100.0, 200.0, 400.0]

@@ -7,8 +7,10 @@ Each row is one forecast issue ``t`` for lead ``h``; its target is the stage on
   discharge of the median, mean and control run, and the log 10-90% spread).
 - ``past_*``: GloFAS simulated discharge up to ``t`` (log values on ``t``,
   ``t - 3`` and ``t - 7``, and the three-day trend). Operationally these come
-  from the day-0 value of each daily forecast; in training from the reanalysis,
-  which matches it closely.
+  from the day-0 value of each daily forecast; in training from the reanalysis
+  shifted one day (``data.glofas_training_past``): the two sources label the
+  same daily mean one day apart (D3, L39), and the shift makes the training
+  labels match the day-0 archive.
 - ``fc_vs_now``: how much the forecast expects the discharge to change.
 - ``season_*``: day of year of the target day.
 - ``rain_<n>d`` (optional): basin-mean rainfall summed over the ``n`` days that
