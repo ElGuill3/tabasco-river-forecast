@@ -309,6 +309,23 @@ the L23/L24 finding: the 2023-2025 error is year-specific GloFAS behaviour
 that no correction estimated before 2023 can remove; only live observations
 (the independent verification of T15) can detect and one day correct it.
 
+### Independent verification (2025-26)
+
+[Experiment 09](docs/results/09-independent.md) applies the pre-registered
+design of L26 to evidence that was never scored against stage: M1, unchanged,
+on forecasts valid 2025-09-04..2026-10-14. Against the ten press-quoted Boca
+del Cerro levels (19.21 m NAMO datum, same as the training stage), lead-1 MAE
+is 0.80 m (bias -0.53 m, coverage 0.80) and lead-3 MAE 0.83 m (bias -0.75 m,
+coverage 0.60); the model now runs slightly low where it ran high in 2024.
+Four of the six dated high-water/alert reports with a forecast within +-1 day
+were warned by R2 at lead 1 (R0: three), including the IPCET alerts of
+2025-09-24 and the October 2026 rise (the semáforo's first precaución days are
+ranked above the normal days, rank AUC 0.981/0.994 at leads 1/3, n=2).
+These are press-quoted values on a small sample: no threshold or model was
+fitted on them, and one circulating bulletin quotes the same station on an
+older ~12.56 m scale, which was excluded. A fresh SIH import is still needed
+to score the period against observed stage.
+
 ## Development
 
 ```bash
