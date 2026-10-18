@@ -1,0 +1,744 @@
+{
+  "pre_registration": "L32",
+  "period": "development only, target days 1998-2016 (reforecast issues 2004-2016)",
+  "high_water_m": 17.83,
+  "census": "data/raw/ipcet/levels_census.csv tiled 2021-08-03..2026-10-17 over 1997-01-01..2016-12-31 aligned on weekday",
+  "fallback_rows_by_lead": {
+    "1": 24,
+    "3": 25,
+    "7": 29
+  },
+  "rows": [
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "n": 1336,
+      "mae": 0.6839806047319816,
+      "coverage_80": 0.8031437125748503,
+      "pod": 0.7212121212121212,
+      "far": 0.2222222222222222
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "n": 1336,
+      "mae": 0.351331612435307,
+      "coverage_80": 0.8151197604790419,
+      "pod": 0.8545454545454545,
+      "far": 0.08441558441558442
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "n": 1336,
+      "mae": 0.2514986417066639,
+      "coverage_80": 0.8158682634730539,
+      "pod": 0.9030303030303031,
+      "far": 0.032467532467532464
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "n": 1336,
+      "mae": 0.39832987802092507,
+      "coverage_80": 0.040419161676646706,
+      "pod": 0.8363636363636363,
+      "far": 0.17857142857142858
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "n": 1343,
+      "mae": 0.657913469451933,
+      "coverage_80": 0.8078927773641102,
+      "pod": 0.696969696969697,
+      "far": 0.25806451612903225
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "n": 1343,
+      "mae": 0.47711813025198485,
+      "coverage_80": 0.8346984363365599,
+      "pod": 0.8363636363636363,
+      "far": 0.19767441860465115
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "n": 1343,
+      "mae": 0.43459836853803563,
+      "coverage_80": 0.8116157855547282,
+      "pod": 0.8484848484848485,
+      "far": 0.14634146341463414
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "n": 1343,
+      "mae": 0.6925948431093352,
+      "coverage_80": 0.0193596425912137,
+      "pod": 0.7333333333333333,
+      "far": 0.2754491017964072
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "n": 1338,
+      "mae": 0.7115733834650393,
+      "coverage_80": 0.8221225710014948,
+      "pod": 0.46540880503144655,
+      "far": 0.24489795918367346
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "n": 1338,
+      "mae": 0.6405345511276634,
+      "coverage_80": 0.827354260089686,
+      "pod": 0.41509433962264153,
+      "far": 0.23255813953488372
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "n": 1338,
+      "mae": 0.6217581427652001,
+      "coverage_80": 0.8340807174887892,
+      "pod": 0.39622641509433965,
+      "far": 0.25
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "n": 1338,
+      "mae": 0.9799018960547592,
+      "coverage_80": 0.021674140508221227,
+      "pod": 0.610062893081761,
+      "far": 0.4012345679012346
+    }
+  ],
+  "mae_by_age": [
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "0",
+      "n": 724,
+      "mae": 0.7119983562084163
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "1",
+      "n": 223,
+      "mae": 0.6077119979656859
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "2",
+      "n": 230,
+      "mae": 0.7149069119426839
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "3",
+      "n": 70,
+      "mae": 0.6127379973748817
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "4+",
+      "n": 65,
+      "mae": 0.5621928597180138
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 1,
+      "age_group": "fallback",
+      "n": 24,
+      "mae": 0.7886965431648308
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "0",
+      "n": 724,
+      "mae": 0.27444815139011136
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "1",
+      "n": 223,
+      "mae": 0.31807715810326886
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "2",
+      "n": 230,
+      "mae": 0.43749615356183186
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "3",
+      "n": 70,
+      "mae": 0.5503936951271535
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "4+",
+      "n": 65,
+      "mae": 0.6410303897849622
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 1,
+      "age_group": "fallback",
+      "n": 24,
+      "mae": 0.7886965431648308
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "0",
+      "n": 724,
+      "mae": 0.23878447058228888
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "1",
+      "n": 223,
+      "mae": 0.2911219679913319
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "2",
+      "n": 230,
+      "mae": 0.2676152787294237
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "3",
+      "n": 70,
+      "mae": 0.23014822909889046
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "4+",
+      "n": 65,
+      "mae": 0.20540127092165306
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 1,
+      "age_group": "fallback",
+      "n": 24,
+      "mae": 0.29954404174423127
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "0",
+      "n": 724,
+      "mae": 0.25852209944751375
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "1",
+      "n": 223,
+      "mae": 0.4078923766816143
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "2",
+      "n": 230,
+      "mae": 0.5607391304347825
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "3",
+      "n": 70,
+      "mae": 0.7014285714285715
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "4+",
+      "n": 65,
+      "mae": 0.8775384615384612
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 1,
+      "age_group": "fallback",
+      "n": 24,
+      "mae": 0.7886965431648308
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "0",
+      "n": 728,
+      "mae": 0.6843194984680906
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "1",
+      "n": 230,
+      "mae": 0.6025631945841504
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "2",
+      "n": 226,
+      "mae": 0.6614619750286483
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.6380587588397317
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "4+",
+      "n": 67,
+      "mae": 0.5438573483619094
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 3,
+      "age_group": "fallback",
+      "n": 25,
+      "mae": 0.7249949718334835
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "0",
+      "n": 728,
+      "mae": 0.4628801806767371
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "1",
+      "n": 230,
+      "mae": 0.4397932400120844
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "2",
+      "n": 226,
+      "mae": 0.5021371264317773
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.5129856945318929
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "4+",
+      "n": 67,
+      "mae": 0.5472018774614354
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 3,
+      "age_group": "fallback",
+      "n": 25,
+      "mae": 0.7249949718334835
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "0",
+      "n": 728,
+      "mae": 0.44156310647712504
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "1",
+      "n": 230,
+      "mae": 0.42737272900146517
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "2",
+      "n": 226,
+      "mae": 0.44544211206766676
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.4384465646866428
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "4+",
+      "n": 67,
+      "mae": 0.3263729687313989
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 3,
+      "age_group": "fallback",
+      "n": 25,
+      "mae": 0.47996454778385245
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "0",
+      "n": 728,
+      "mae": 0.6038186813186813
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "1",
+      "n": 230,
+      "mae": 0.7044347826086955
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "2",
+      "n": 226,
+      "mae": 0.8155309734513272
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.8786567164179103
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "4+",
+      "n": 67,
+      "mae": 1.0037313432835822
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 3,
+      "age_group": "fallback",
+      "n": 25,
+      "mae": 0.7249949718334835
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "0",
+      "n": 729,
+      "mae": 0.7314711511127668
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "1",
+      "n": 221,
+      "mae": 0.6427397109149177
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "2",
+      "n": 219,
+      "mae": 0.7289518697233616
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.6389258852622182
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "4+",
+      "n": 73,
+      "mae": 0.660137138350219
+    },
+    {
+      "forecast": "M1 (GloFAS only)",
+      "lead_days": 7,
+      "age_group": "fallback",
+      "n": 29,
+      "mae": 0.9020254110782052
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "0",
+      "n": 729,
+      "mae": 0.6453299834874646
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "1",
+      "n": 221,
+      "mae": 0.574039255832844
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "2",
+      "n": 219,
+      "mae": 0.6619083835642958
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.6183518172343606
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "4+",
+      "n": 73,
+      "mae": 0.6463116606964717
+    },
+    {
+      "forecast": "L1 (simulated availability)",
+      "lead_days": 7,
+      "age_group": "fallback",
+      "n": 29,
+      "mae": 0.9020254110782052
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "0",
+      "n": 729,
+      "mae": 0.6337712733757256
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "1",
+      "n": 221,
+      "mae": 0.577524198519313
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "2",
+      "n": 219,
+      "mae": 0.6508931406086431
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "3",
+      "n": 67,
+      "mae": 0.5670109038364242
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "4+",
+      "n": 73,
+      "mae": 0.5642195744958444
+    },
+    {
+      "forecast": "L1 (full availability)",
+      "lead_days": 7,
+      "age_group": "fallback",
+      "n": 29,
+      "mae": 0.7081700540564004
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "0",
+      "n": 729,
+      "mae": 0.9458573388203018
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "1",
+      "n": 221,
+      "mae": 0.8995475113122172
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "2",
+      "n": 219,
+      "mae": 1.0193150684931507
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "3",
+      "n": 67,
+      "mae": 1.151641791044776
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "4+",
+      "n": 73,
+      "mae": 1.3182191780821917
+    },
+    {
+      "forecast": "persistence of obs_last",
+      "lead_days": 7,
+      "age_group": "fallback",
+      "n": 29,
+      "mae": 0.9020254110782052
+    }
+  ],
+  "age_share": [
+    {
+      "lead_days": 1,
+      "age_group": "0",
+      "n": 724,
+      "share": 0.5419161676646707
+    },
+    {
+      "lead_days": 1,
+      "age_group": "1",
+      "n": 223,
+      "share": 0.16691616766467066
+    },
+    {
+      "lead_days": 1,
+      "age_group": "2",
+      "n": 230,
+      "share": 0.1721556886227545
+    },
+    {
+      "lead_days": 1,
+      "age_group": "3",
+      "n": 70,
+      "share": 0.05239520958083832
+    },
+    {
+      "lead_days": 1,
+      "age_group": "4+",
+      "n": 65,
+      "share": 0.048652694610778445
+    },
+    {
+      "lead_days": 1,
+      "age_group": "fallback",
+      "n": 24,
+      "share": 0.017964071856287425
+    },
+    {
+      "lead_days": 3,
+      "age_group": "0",
+      "n": 728,
+      "share": 0.5420699925539836
+    },
+    {
+      "lead_days": 3,
+      "age_group": "1",
+      "n": 230,
+      "share": 0.1712583767684289
+    },
+    {
+      "lead_days": 3,
+      "age_group": "2",
+      "n": 226,
+      "share": 0.16827997021593447
+    },
+    {
+      "lead_days": 3,
+      "age_group": "3",
+      "n": 67,
+      "share": 0.04988830975428146
+    },
+    {
+      "lead_days": 3,
+      "age_group": "4+",
+      "n": 67,
+      "share": 0.04988830975428146
+    },
+    {
+      "lead_days": 3,
+      "age_group": "fallback",
+      "n": 25,
+      "share": 0.018615040953090096
+    },
+    {
+      "lead_days": 7,
+      "age_group": "0",
+      "n": 729,
+      "share": 0.5448430493273543
+    },
+    {
+      "lead_days": 7,
+      "age_group": "1",
+      "n": 221,
+      "share": 0.16517189835575485
+    },
+    {
+      "lead_days": 7,
+      "age_group": "2",
+      "n": 219,
+      "share": 0.16367713004484305
+    },
+    {
+      "lead_days": 7,
+      "age_group": "3",
+      "n": 67,
+      "share": 0.05007473841554559
+    },
+    {
+      "lead_days": 7,
+      "age_group": "4+",
+      "n": 73,
+      "share": 0.05455904334828102
+    },
+    {
+      "lead_days": 7,
+      "age_group": "fallback",
+      "n": 29,
+      "share": 0.021674140508221227
+    }
+  ],
+  "decision": {
+    "lead_1_mae_m1": 0.6839806047319816,
+    "lead_1_mae_l1_simulated": 0.351331612435307,
+    "improvement_m": 0.33264899229667466,
+    "required_m": 0.1,
+    "passes": true
+  }
+}
