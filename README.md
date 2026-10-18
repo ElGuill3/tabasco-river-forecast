@@ -278,6 +278,37 @@ threshold), and the median error on days with observed stage >= 15 m flips from
 operational forecasts run systematically high in exactly the situation that
 creates false alarms.
 
+Experiment 07 (diagnosis only) traced that operational over-forecast to its
+mechanism: the mean model error on days with observed stage >= 15 m flips
+year by year (-0.14 m in 2023, +0.77 m in 2024, -1.54 m in 2025 at 1 day),
+tracking a year-specific GloFAS discharge error against the gauge (+25-33% in
+2024), while the gauge rating, the past-discharge source and the ensemble
+system are minor effects.
+
+### Post-diagnosis re-score
+
+Following the pre-registration in the task log (L24), [experiment
+08](docs/results/08-rescore.md) re-scores once, treating 2023-2025 as what it
+now is: a consulted period. The only change is the standard final refit: model
+M1 is the same conformal quantile model refitted with target days 1998-2022
+(the frozen model used 1998-2016), and the whole warning chain (isotonic
+calibrator, t*, R0/R1/R2) is re-derived on 1998-2022 out-of-fold predictions
+only. High water stays 17.83 m. On the same operational target days:
+
+| Lead | Frozen MAE | M1 MAE | M1 coverage (80%) | Best M1 rule (by Peirce) POD / FAR |
+| --- | --- | --- | --- | --- |
+| 1 day | 0.710 m | 0.706 m | 0.79 | R1: 0.79 / 0.58 |
+| 3 days | 0.697 m | 0.685 m | 0.80 | R1: 0.78 / 0.56 |
+| 7 days | 0.732 m | 0.717 m | 0.81 | R0: 0.78 / 0.48 |
+
+The honest reading: the refit helps a little (MAE down 0.004-0.015 m) but far
+less than the ~0.1 m hoped for at high stage, and the lead-1 high-stage bias
+even rises slightly. The 2024 GloFAS error remains (+0.6-0.8 m on high-stage
+days at every lead), and 2025 gets no better at 3 and 7 days. This confirms
+the L23/L24 finding: the 2023-2025 error is year-specific GloFAS behaviour
+that no correction estimated before 2023 can remove; only live observations
+(the independent verification of T15) can detect and one day correct it.
+
 ## Development
 
 ```bash
