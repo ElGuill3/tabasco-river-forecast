@@ -21,6 +21,7 @@ KINDS = {"hidros": "Hidros", "climas": "Climas"}
 COLUMNS = {
     "Nivel(m)": "level_m",
     "Gasto(m³/s)": "discharge_m3s",
+    "Gasto en Rio(m3/s)": "discharge_m3s",
     "Precipitación(mm)": "precip_mm",
     "Temperatura Ambiente(ºC)": "temp_mean_c",
     "Temperatura Máxima(ºC)": "temp_max_c",
@@ -83,16 +84,31 @@ def download_station(kind: str, code: str, timeout: float = 120) -> str:
 def parse_sih_csv(text: str) -> Station:
     """Parse a SIH station file into metadata and a daily DataFrame.
 
+    Two layouts exist: ``Fecha, ...`` with ``YYYY/MM/DD`` dates, and (some
+    Chiapas stations) ``Estacion,Fecha,...`` with ISO dates and a leading
+    station key that must equal the ``Clave`` metadata on every row.
+
     Raises StationFileError, naming the line, on any malformed content: wrong
-    field count, invalid date or number, duplicate or out-of-order dates, or an
-    unknown column.
+    field count, invalid date or number, duplicate or out-of-order dates, a
+    foreign station key, or an unknown column.
     """
     lines = text.splitlines()
+
+    def first_fields(line: str) -> list[str]:
+        return [field.strip() for field in line.split(",")[:2]]
+
     header_at = next(
-        (i for i, line in enumerate(lines) if line.split(",")[0].strip() == "Fecha"), None
+        (
+            i
+            for i, line in enumerate(lines)
+            if first_fields(line)[0] == "Fecha" or first_fields(line) == ["Estacion", "Fecha"]
+        ),
+        None,
     )
     if header_at is None:
         raise StationFileError("no 'Fecha' column header")
+    keyed = first_fields(lines[header_at])[0] == "Estacion"
+    date_format = "%Y-%m-%d" if keyed else "%Y/%m/%d"
 
     metadata = {}
     for line in lines[:header_at]:
@@ -100,7 +116,7 @@ def parse_sih_csv(text: str) -> Station:
         if sep:
             metadata[key.strip()] = value.strip()
 
-    names = [name.strip() for name in lines[header_at].split(",")[1:]]
+    names = [name.strip() for name in lines[header_at].split(",")[1 + keyed :]]
     for name in names:
         if name not in COLUMNS:
             raise StationFileError(f"unknown column {name!r}")
@@ -111,12 +127,18 @@ def parse_sih_csv(text: str) -> Station:
         if not line.strip():
             continue
         fields = [field.strip() for field in line.split(",")]
+        if keyed:
+            if fields[0] != metadata.get("Clave"):
+                raise StationFileError(
+                    f"line {number}: station {fields[0]!r} is not {metadata.get('Clave')!r}"
+                )
+            fields = fields[1:]
         if len(fields) != len(columns) + 1:
             raise StationFileError(
                 f"line {number}: expected {len(columns) + 1} fields, got {len(fields)}"
             )
         try:
-            date = datetime.strptime(fields[0], "%Y/%m/%d")
+            date = datetime.strptime(fields[0], date_format)
         except ValueError:
             raise StationFileError(f"line {number}: invalid date {fields[0]!r}") from None
         if dates and date <= dates[-1]:

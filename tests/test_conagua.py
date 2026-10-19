@@ -92,6 +92,40 @@ def test_rejects_unknown_columns():
         parse_sih_csv(text)
 
 
+HIDRO_KEYED = """Comisión Nacional del Agua
+Subdirección General Técnica
+Estación: San Joaquín, Chis.
+Clave: SJOCP
+Estado: Chiapas
+Municipio: Pichucalco
+
+Estacion,Fecha,Nivel(m),Gasto en Rio(m3/s)
+SJOCP,2002-09-18,19.84,28.0
+SJOCP,2004-05-04,23.94,
+"""
+
+
+def test_parses_files_with_a_station_key_column_and_iso_dates():
+    station = parse_sih_csv(HIDRO_KEYED)
+
+    assert station.metadata["Clave"] == "SJOCP"
+    assert list(station.data.columns) == ["level_m", "discharge_m3s"]
+    assert list(station.data.index) == list(pd.to_datetime(["2002-09-18", "2004-05-04"]))
+    assert station.data.loc["2002-09-18", "level_m"] == 19.84
+    assert station.data.loc["2002-09-18", "discharge_m3s"] == 28.0
+    assert math.isnan(station.data.loc["2004-05-04", "discharge_m3s"])
+
+
+def test_rejects_a_station_key_that_differs_from_the_metadata():
+    with pytest.raises(StationFileError, match="line 11: station 'SAACP' is not 'SJOCP'"):
+        parse_sih_csv(HIDRO_KEYED + "SAACP,2004-05-05,21.30,96.0\n")
+
+
+def test_keeps_the_original_date_format_strict():
+    with pytest.raises(StationFileError, match="line 12: invalid date '1995-01-05'"):
+        parse_sih_csv(HIDRO + "1995-01-05,2.80,-\n")
+
+
 def test_gap_summary_reports_coverage_and_longest_gaps():
     index = pd.date_range("2000-01-01", "2000-01-10", freq="D")
     values = [1.0, None, None, 1.0, 1.0, None, 1.0, 1.0, 1.0, 1.0]
