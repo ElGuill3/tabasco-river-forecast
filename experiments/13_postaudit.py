@@ -49,6 +49,7 @@ import pandas as pd
 from riverforecast import data, features, live
 from riverforecast import evaluation as ev
 from riverforecast.model import ConformalQuantileModel
+from riverforecast.publish import L1_COLUMNS, fit_l1
 
 CODE = "BDCTB"
 OUT = Path("docs/results")
@@ -60,7 +61,6 @@ CENSUS_START, CENSUS_END = "2021-08-03", "2026-10-17"
 TILE_START = "1997-01-01"
 TILE_END_A = "2023-12-31"  # part (A): reforecast test issues end 2023
 AGE_GROUPS = ("0", "1", "2", "3", "4+", "fallback")
-L1_COLUMNS = [*features.COLUMNS, "obs_last", "obs_age", "obs_day_q"]
 MEMBERS_11 = ["control", *[f"perturbed_{i:02d}" for i in range(1, 11)]]
 PERIODS_B = (
     ("SIH target", "2023-08-02", "2025-09-03"),
@@ -97,25 +97,6 @@ def manifest_last_modified(path: Path | None = None) -> pd.Series:
     stamps = pd.to_datetime(manifest["last_modified"])
     frame = pd.DataFrame({"sha256": manifest["sha256"], "last_modified": stamps})
     return frame.groupby("sha256")["last_modified"].min()
-
-
-def fit_l1(
-    train: pd.DataFrame,
-    stage: pd.Series,
-    revealed: pd.DataFrame,
-    past: pd.Series,
-) -> ConformalQuantileModel:
-    """L1 fitted on ``train`` rows (indexed by issue) with the given live inputs.
-
-    Training rows without a live input are excluded, as in experiment 10.
-    ``obs_day_q`` comes from ``past``, the same shifted-reanalysis series the
-    ``past_*`` features are built on (L39 fix 2).
-    """
-    sim = train.join(revealed)
-    sim["obs_day_q"] = live.obs_day_discharge(sim, past)
-    trainable = sim["obs_last"].notna().to_numpy()
-    days = pd.DatetimeIndex(sim.loc[trainable, "valid"])
-    return ConformalQuantileModel.fit(sim.loc[trainable, L1_COLUMNS], stage.loc[days], days)
 
 
 def score_rows(

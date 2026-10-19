@@ -1,0 +1,75 @@
+{
+  "model_version": "bdctb-L1-postaudit-v1",
+  "training_period": [
+    "1998-01-01",
+    "2022-12-31"
+  ],
+  "training_rows": {
+    "h1": {
+      "start": "2004-01-02",
+      "end": "2022-12-29",
+      "rows": 2051
+    },
+    "h3": {
+      "start": "2004-01-04",
+      "end": "2019-12-31",
+      "rows": 1680
+    },
+    "h7": {
+      "start": "2004-01-08",
+      "end": "2020-01-04",
+      "rows": 1679
+    }
+  },
+  "features": {
+    "live": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos",
+      "obs_last",
+      "obs_age",
+      "obs_day_q"
+    ],
+    "glofas_only": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos"
+    ]
+  },
+  "conformal_margins": {
+    "live": {
+      "h1": 0.09935526838252251,
+      "h3": 0.20531360703304635,
+      "h7": 0.2619974353717982
+    },
+    "glofas_only": {
+      "h1": 0.3081253402944686,
+      "h3": 0.34069271371878784,
+      "h7": 0.38069894343849775
+    }
+  },
+  "sklearn_version": "1.9.1",
+  "git_commit": "081c2d89395db3bd2cd350c4ff370a6b6aeb6f5c",
+  "namo_m": 19.21,
+  "station": {
+    "code": "BDCTB",
+    "name": "Boca del Cerro"
+  },
+  "recipe": "experiment 13 / L39; shifted training past; simulated census availability"
+}

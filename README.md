@@ -9,12 +9,12 @@ Tabasco, Mexico, built only from public data.
 
 ## Approach
 
-- **Target (training and validation only):** daily stage from CONAGUA
-  hydrometric stations (SIH/BANDAS). No live gauge feed exists, so observed
-  stage is never a model input.
-- **Inputs (available every day):** GloFAS discharge forecasts and recent
-  simulated discharge, satellite rainfall over the upstream basin, forecast
-  rainfall, and season.
+- **Target:** daily stage from CONAGUA hydrometric stations (SIH/BANDAS),
+  never imputed. The validated IPCET daily 06:00 stage is also a live input
+  when available, with a GloFAS-only fallback.
+- **Inputs:** GloFAS discharge forecasts, recent simulated discharge, season,
+  and the latest causally visible IPCET value and its age. Rainfall was tested
+  but not admitted as a separate model input (see Model).
 - **Baselines first:** every model is compared with climatology and with GloFAS
   converted to stage, on whole years the model never saw.
 - **Official validation:** CONAGUA records and the daily IPCET
@@ -445,6 +445,32 @@ deployed model was trained with the simulated availability of L32 on
 1998-2022 targets because the real feed only starts in 2021-08; the intervals
 are slightly narrow against IPCET targets (74-77% instead of 80%); and the feed
 has gaps (fallback on 4-13% of operational issue days).
+
+## Frozen BDCTB publishing
+
+Freeze the post-audit L1 live-input model and M1 fallback once, offline, using
+local research data. Daily publishing then requires only the versioned artifact
+and stored serving inputs, **not training data or a model fit**:
+
+```bash
+uv run python -m riverforecast.publish_cli freeze
+uv run python -m riverforecast.publish_cli publish --issue 2026-10-13 \
+  --ipcet .cache/t20/ipcet.csv --raw data/raw \
+  --out .cache/t20/forecast.json
+```
+
+The caller maintains the IPCET CSV (`date,stage_m,table_last_modified`), using
+validated, causally available values and UTC upload timestamps. Header-only CSV
+selects GloFAS-only fallback. Issue time is 11:00 Mexico City; output contains
+h1/h3/h7 q10/q50/q90, distance to NAMO 19.21 m, and live-input provenance.
+See the [v2 JSON schema and input contract](docs/forecast-schema.md).
+
+`models/bdctb/` holds the trusted joblib models and versioned training metadata.
+Serving requires scikit-learn 1.9.1 (the artifact's version) and joblib, but no
+OCR/tesseract; image ingestion separately needs the existing `levels` reader and
+tesseract. The current provider reads the stored CEMS operational CSVs and day-0
+archive only, without network calls. Open-Meteo is an explicit unimplemented
+stub pending T19 validation; acquisition and daily scheduling remain T19/T21.
 
 ## Development
 

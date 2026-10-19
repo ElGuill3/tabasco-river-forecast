@@ -1,0 +1,62 @@
+"""Freeze offline deployment models, or publish from stored inputs without training."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+from riverforecast.publish import CemsArchiveProvider, forecast, freeze, read_observations
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+    fit = sub.add_parser("freeze", help="fit final post-audit L1 and M1 from local training data")
+    fit.add_argument("--artifact", type=Path, default=Path("models/bdctb"))
+    fit.add_argument("--version", default="bdctb-L1-postaudit-v1")
+    serve = sub.add_parser(
+        "publish", help="write v2 JSON from a trusted frozen artifact; never train"
+    )
+    serve.add_argument("--artifact", type=Path, default=Path("models/bdctb"))
+    serve.add_argument("--issue", required=True, help="issue date YYYY-MM-DD; 11:00 Mexico City")
+    serve.add_argument(
+        "--ipcet",
+        type=Path,
+        required=True,
+        help="validated CSV: date,stage_m,table_last_modified (UTC timestamp)",
+    )
+    serve.add_argument(
+        "--raw",
+        type=Path,
+        default=Path("data/raw"),
+        help="stored CEMS operational CSVs and archived day-0 inputs (no training data)",
+    )
+    serve.add_argument("--out", type=Path, required=True, help="output JSON path")
+    serve.add_argument(
+        "--generated-at", help="explicit generation timestamp; default is issue_time"
+    )
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "freeze":
+            print(json.dumps(freeze(args.artifact, args.version), ensure_ascii=False))
+        else:
+            result = forecast(
+                args.artifact,
+                args.issue,
+                read_observations(args.ipcet),
+                CemsArchiveProvider(args.raw),
+                args.generated_at,
+            )
+            payload = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+            args.out.parent.mkdir(parents=True, exist_ok=True)
+            args.out.write_text(payload, encoding="utf-8")
+    except (ValueError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
