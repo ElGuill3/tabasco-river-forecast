@@ -1,0 +1,32 @@
+# Manual fetch of the Open-Meteo GloFAS ensemble for the BDCTB cell (T19).
+# Runs on a GitHub-hosted runner so it does not use the local IP quota; the
+# raw JSON is kept as a workflow artifact for the offline comparison.
+name: fetch-open-meteo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch forecast_v4 ensemble with past days
+        run: |
+          mkdir -p out
+          base="https://flood-api.open-meteo.com/v1/flood?latitude=17.425&longitude=-91.525&daily=river_discharge"
+          curl -sS --fail --max-time 60 -o out/ensemble.json \
+            "$base&models=forecast_v4&ensemble=true&past_days=7&forecast_days=30"
+          sleep 2
+          curl -sS --fail --max-time 60 -o out/control.json \
+            "$base&models=forecast_v4&past_days=7&forecast_days=30"
+          date -u +%Y-%m-%dT%H:%M:%SZ > out/fetched_at.txt
+          python3 -c "import json; d=json.load(open('out/ensemble.json'))['daily']; print(d['time'][0], d['time'][-1], len(d) - 1, 'series')"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: open-meteo-bdctb
+          path: out/
+          retention-days: 30
