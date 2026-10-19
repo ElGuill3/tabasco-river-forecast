@@ -1,0 +1,35 @@
+# Manual probe (T18): can a GitHub-hosted runner reach the live inputs?
+# Prints the HTTP status and size of each source; it stores nothing.
+name: probe-sources
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: IPCET pages and level tables (last 4 days)
+        run: |
+          ua="tabasco-river-forecast/0.1 (+https://github.com/ElGuill3/tabasco-river-forecast)"
+          probe() {
+            out=$(curl -sS -A "$ua" -o /tmp/body -w '%{http_code} %{size_download}' --max-time 30 "$1" || echo "curl-error")
+            echo "$out $1"
+            sleep 1
+          }
+          for back in 0 1 2 3; do
+            d=$(TZ=America/Mexico_City date -d "-$back day" +%d%m%Y)
+            s=$(TZ=America/Mexico_City date -d "-$back day" +%d%m%y)
+            probe "https://tabasco.gob.mx/noticias/semaforo-hidrometeorologico-y-niveles-de-rios-$d"
+            probe "https://tabasco.gob.mx/noticias/semaforo-hidrometereologico-y-niveles-de-rios-$d"
+            probe "https://tabasco.gob.mx/sites/default/files/users/useripcettabasco/semaforo_$s.jpeg"
+          done
+      - name: Open-Meteo flood ensemble (BDCTB cell)
+        run: |
+          url="https://flood-api.open-meteo.com/v1/flood?latitude=17.425&longitude=-91.525&daily=river_discharge&models=forecast_v4&ensemble=true&forecast_days=8"
+          curl -sS -o /tmp/flood.json -w '%{http_code} %{size_download}\n' --max-time 30 "$url"
+          python3 -c "import json; d=json.load(open('/tmp/flood.json'))['daily']; print(len(d['time']), 'days,', sum(k.startswith('river_discharge') for k in d), 'series')"
