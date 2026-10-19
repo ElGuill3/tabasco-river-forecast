@@ -107,6 +107,20 @@ def test_rejects_missing_discharge():
         cems.read_archive(buffer.getvalue(), cell=(17.425, 268.525))
 
 
+def test_read_cell_accepts_zip_nc_and_negative_longitude(tmp_path):
+    path = tmp_path / "answer.zip"
+    path.write_bytes(archive())
+    expected = cems.read_archive(archive(), cems.BDCTB_CELL)
+    pd.testing.assert_frame_equal(cems.read_cell(path, 17.425, -91.475), expected)
+    path = tmp_path / "control.nc"
+    path.write_bytes(netcdf(np.ones((3, 1, 3, 3)), ["2026-10-01"]))
+    table = cems.read_cell(path, 17.425, -91.475)
+    assert table.issue.tolist() == ["2026-10-01"] * 3
+    assert table.valid.tolist() == ["2026-10-02", "2026-10-04", "2026-10-08"]
+    assert table.member.tolist() == ["control"] * 3
+    assert table.discharge_m3s.tolist() == [1.0] * 3
+
+
 def test_months_between_two_dates():
     assert list(cems.months(dt.date(2025, 11, 20), dt.date(2026, 2, 3))) == [
         (2025, 11),

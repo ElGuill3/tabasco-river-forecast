@@ -39,7 +39,40 @@ def main(argv: list[str] | None = None, client=None) -> int:
         "--end", type=dt.date.fromisoformat, default=dt.date.today() - dt.timedelta(days=1)
     )
     fetch.add_argument("--parallel", type=int, default=3)
+    raw = commands.add_parser(
+        "fetch-raw", help="retain five-day Tabasco ZIP answers atomically; rerun to resume"
+    )
+    raw.add_argument("--area", choices=["tabasco"], required=True)
+    raw.add_argument("--start", type=dt.date.fromisoformat, required=True)
+    raw.add_argument(
+        "--end", type=dt.date.fromisoformat, default=dt.date.today() - dt.timedelta(days=1)
+    )
+    raw.add_argument("--out", type=Path, required=True)
+    raw.add_argument(
+        "--parallel",
+        type=int,
+        default=3,
+        help="concurrent requests (default: 3); stop on cost limits",
+    )
     args = parser.parse_args(argv)
+
+    if args.command == "fetch-raw":
+        if args.start > args.end or args.parallel < 1:
+            parser.error("start must not exceed end and parallel must be positive")
+        jobs = []
+        for year, month in cems.months(args.start, args.end):
+            first = max(args.start, dt.date(year, month, 1))
+            last = min(args.end, (pd.Timestamp(year, month, 1) + pd.offsets.MonthEnd(0)).date())
+            days = list(range(first.day, last.day + 1))
+            for offset in range(0, len(days), DAYS_PER_REQUEST):
+                chunk = days[offset : offset + DAYS_PER_REQUEST]
+                jobs.append(
+                    (
+                        f"{year}-{month:02d}-{chunk[0]:02d}",
+                        cems.forecast_request(year, month, cems.AREA_TABASCO, chunk),
+                    )
+                )
+        return cems.fetch_raw(jobs, cems.DATASET, args.out, args.parallel, client)
 
     if client is None:
         import cdsapi

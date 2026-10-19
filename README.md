@@ -101,6 +101,65 @@ CEMS and Open-Meteo label the same cells half a grid step apart in longitude:
 the BDCTB river cell is 17.425 / 268.525 in CEMS and 17.425 / -91.525 in
 Open-Meteo.
 
+### Retained CEMS archives for all station cells
+
+Use **raw mode** when downloading for the 14 stations: it retains every cell in
+`[18.3, -93.6, 17.1, -90.9]` (north, west, south, east), rather than discarding
+the NetCDFs after extracting BDCTB. The existing per-cell `fetch` command is unchanged.
+Both downloaders request leads 24, 72 and 168 hours.
+
+```bash
+uv run python -m riverforecast.cems_cli fetch-raw --area tabasco \
+    --start 2023-08-01 --end 2026-10-13 \
+    --out data/raw/glofas/cems/operational --parallel 3
+uv run python -m riverforecast.cems_reforecast_cli plan
+uv run python -m riverforecast.cems_reforecast_cli fetch-raw --area tabasco \
+    --out data/raw/glofas/cems/reforecast --parallel 3
+```
+
+| Archive | Requests and coverage | Storage and indicative queue time |
+| --- | --- | --- |
+| Operational | 51 members; at most five days within one month (765 fields); ZIP named by first issue day | Validation: 1,966,003 bytes for five days, 396 s. Roughly 0.45 GB for the requested period; about 9 h at three concurrent requests if that queue time holds. |
+| Reforecast | v4 (`version_4_0` / `lisflood`), both products, 11 members; 3,500 issues from 2003-03-27 through 2023-11-25 | 201 requests, 115,500 fields; 571.0 MiB float32 payload before metadata/compression. Validation: one issue, 105,842 bytes, 757 s. Roughly 0.4–0.6 GB; about 14–45 h at concurrency three if requests take 13–40 min. |
+
+These are planning estimates, not service guarantees: queue time and compression vary.
+The operational estimate excludes NetCDF overhead; reserve at least 1 GB for both archives.
+The raw size estimate assumes 24 × 54 cells on the 0.05-degree grid.
+
+The committed EWDS snapshot, `data/glofas/reforecast-constraints.json`, is the
+source of truth for reforecast dates. Only its v4 rows are used (not older
+`htessel_lisflood` versions). Calendars differ across years: requests group one
+month and an identical day set, then slice years so each contains at most 27
+issues (891 fields). Every requested date and product is checked against the
+snapshot. Group filenames show their first and last issue dates; dates within
+those bounds are not necessarily daily. For a minimal service probe, use
+`fetch-raw --area tabasco --out <folder> --issue 2003-04-03` (one issue, 33 fields).
+Keep probes in a separate folder from bulk archives if avoiding duplicate issue
+coverage matters.
+
+Both modes skip ZIPs only after checking CRCs and exact issue, lead and member
+coverage. Downloads are validated at a temporary name on the same filesystem
+and atomically renamed; invalid or partial replies never replace a stored ZIP.
+Failures are printed to stderr and give a nonzero exit; rerun the same command
+to retry. A cost-limit rejection stops new submissions for the entire run;
+already-running service requests may finish. `--parallel` defaults to 3 and must
+be positive. Each production worker uses its own CDS client.
+
+Extract additional station cells later without requesting CEMS again:
+
+```python
+from riverforecast.cems import read_cell  # also available in cems_reforecast
+
+rows = read_cell("data/raw/glofas/cems/operational/2026-10-01.zip", 17.425, -91.475)
+# Columns: issue, valid, lead_days, member, discharge_m3s
+```
+
+`read_cell` accepts ZIP or NetCDF paths and either longitude convention, but
+requires an exact grid cell (no spatial interpolation). Use CEMS labels: BDCTB
+is 17.425 / 268.525 (−91.475), not the half-step-offset Open-Meteo longitude.
+The October 1–5, 2026 raw validation matched all 765 existing BDCTB CSV rows
+exactly; the April 3, 2003 reforecast probe opened as 33 rows / 11 members.
+
 ### Upstream basin
 
 The basin of each station is traced from HydroBASINS level 12 (Lehner & Grill

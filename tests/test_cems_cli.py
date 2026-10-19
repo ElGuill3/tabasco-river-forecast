@@ -1,7 +1,31 @@
+import zipfile
+
+import numpy as np
 import pandas as pd
 
-from riverforecast import cems_cli
+from riverforecast import cems, cems_cli
 from tests.test_cems import archive
+
+
+class RawClient:
+    def __init__(self, error=None):
+        self.calls = []
+        self.error = error
+
+    def retrieve(self, dataset, request, target):
+        self.calls.append((dataset, request))
+        if self.error:
+            raise RuntimeError(self.error)
+        from tests.test_cems import netcdf
+
+        issues = cems.request_dates(request)
+        count = 50 if dataset == cems.DATASET else 10
+        with zipfile.ZipFile(target, "w") as zipped:
+            zipped.writestr("control.nc", netcdf(np.ones((3, len(issues), 3, 3)), issues))
+            zipped.writestr(
+                "ensemble.nc",
+                netcdf(np.ones((count, 3, len(issues), 3, 3)), issues, list(range(1, count + 1))),
+            )
 
 
 class FakeClient:
@@ -59,6 +83,102 @@ def test_fetch_splits_months_into_five_day_requests_and_skips_done_ones(tmp_path
     assert "2026-09-01: 45 records, 5 issues" in out
     assert "9 requests stored, 0 failed" in out
     assert "0 requests stored, 0 failed (9 already stored)" in out
+
+
+def test_raw_atomic_resume_and_invalid_archive_retry(tmp_path, capsys):
+    args = [
+        "fetch-raw",
+        "--area",
+        "tabasco",
+        "--start",
+        "2026-10-01",
+        "--end",
+        "2026-10-06",
+        "--out",
+        str(tmp_path),
+        "--parallel",
+        "1",
+    ]
+    client = RawClient()
+    assert cems_cli.main(args, client=client) == 0
+    assert cems_cli.main(args, client=client) == 0
+    assert len(client.calls) == 2
+    assert client.calls[0][1]["area"] == [18.3, -93.6, 17.1, -90.9]
+    assert client.calls[0][1]["day"] == ["01", "02", "03", "04", "05"]
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["2026-10-01.zip", "2026-10-06.zip"]
+    (tmp_path / "2026-10-01.zip").write_bytes(archive(["2026-09-01"]))
+    assert cems_cli.main(args, client=client) == 0
+    assert len(client.calls) == 3
+    captured = capsys.readouterr()
+    assert captured.err == ""
+    assert captured.out == (
+        "2026-10-01: stored\n2026-10-06: stored\n2 requests stored, 0 failed\n0 requests stored, 0 failed (2 already stored)\n2026-10-01: stored\n1 requests stored, 0 failed (1 already stored)\n"
+    )
+
+
+def test_raw_cost_limit_stops_submissions_and_is_retryable(tmp_path, capsys):
+    args = [
+        "fetch-raw",
+        "--area",
+        "tabasco",
+        "--start",
+        "2026-10-01",
+        "--end",
+        "2026-10-20",
+        "--out",
+        str(tmp_path),
+        "--parallel",
+        "1",
+    ]
+    client = RawClient("cost limits exceeded")
+    assert cems_cli.main(args, client=client) == 1
+    assert len(client.calls) == 1
+    assert not list(tmp_path.glob("*.zip"))
+    captured = capsys.readouterr()
+    assert captured.err == "2026-10-01: failed (RuntimeError: cost limits exceeded)\n"
+    assert captured.out == "0 requests stored, 1 failed\n"
+    client.error = "queue rejected"
+    assert cems_cli.main(args, client=client) == 1
+    assert len(client.calls) == 5
+    assert not list(tmp_path.glob("*.zip"))
+    client.error = None
+    assert cems_cli.main(args, client=client) == 0
+    assert len(list(tmp_path.glob("*.zip"))) == 4
+
+
+def test_raw_invalid_reply_never_replaces_stored_file(tmp_path, capsys):
+    target = tmp_path / "2026-10-01.zip"
+    previous = archive(["2026-09-01"])
+    target.write_bytes(previous)
+
+    class IncompleteClient:
+        def retrieve(self, dataset, request, output):
+            from pathlib import Path
+
+            assert Path(output) != target
+            assert target.read_bytes() == previous
+            Path(output).write_bytes(archive(["2026-10-01"]))
+
+    args = [
+        "fetch-raw",
+        "--area",
+        "tabasco",
+        "--start",
+        "2026-10-01",
+        "--end",
+        "2026-10-05",
+        "--out",
+        str(tmp_path),
+    ]
+    assert cems_cli.main(args, client=IncompleteClient()) == 1
+    assert target.read_bytes() == previous
+    assert list(tmp_path.iterdir()) == [target]
+    captured = capsys.readouterr()
+    assert captured.out == "0 requests stored, 1 failed\n"
+    assert (
+        captured.err
+        == "2026-10-01: failed (CemsError: answer has incomplete issue/lead/member coverage)\n"
+    )
 
 
 def test_one_request_stays_under_the_cems_field_limit():
