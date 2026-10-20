@@ -3,11 +3,6 @@
   "stations": {
     "SAMTB": [
       {
-        "date": "2026-09-01",
-        "hoy": 11.4,
-        "semaforo": null
-      },
-      {
         "date": "2026-09-02",
         "hoy": 11.4,
         "semaforo": null
@@ -151,14 +146,14 @@
         "date": "2026-10-19",
         "hoy": 12.46,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 12.37,
+        "semaforo": "NORMAL"
       }
     ],
     "GONTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 3.45,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 3.44,
@@ -303,14 +298,14 @@
         "date": "2026-10-19",
         "hoy": 3.33,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 3.85,
+        "semaforo": "NORMAL"
       }
     ],
     "OXOTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 33.88,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 33.88,
@@ -455,14 +450,14 @@
         "date": "2026-10-19",
         "hoy": 35.2,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 35.33,
+        "semaforo": "NORMAL"
       }
     ],
     "TAPTB": [
-      {
-        "date": "2026-08-31",
-        "hoy": 15.9,
-        "semaforo": null
-      },
       {
         "date": "2026-09-01",
         "hoy": 15.88,
@@ -607,14 +602,14 @@
         "date": "2026-10-19",
         "hoy": 17.9,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 17.48,
+        "semaforo": "NORMAL"
       }
     ],
     "PUYTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 25.02,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 25.02,
@@ -759,14 +754,14 @@
         "date": "2026-10-19",
         "hoy": 25.2,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 25.34,
+        "semaforo": "NORMAL"
       }
     ],
     "TEATB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 33.72,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 33.71,
@@ -911,14 +906,14 @@
         "date": "2026-10-19",
         "hoy": 34.7,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 34.92,
+        "semaforo": "NORMAL"
       }
     ],
     "PNVTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 1.52,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 1.48,
@@ -1063,14 +1058,14 @@
         "date": "2026-10-19",
         "hoy": 6.6,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 6.12,
+        "semaforo": "NORMAL"
       }
     ],
     "SJOCP": [
-      {
-        "date": "2026-09-01",
-        "hoy": 19.84,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 19.83,
@@ -1215,14 +1210,14 @@
         "date": "2026-10-19",
         "hoy": 23.58,
         "semaforo": "ALERTA"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 22.74,
+        "semaforo": "PREVENCION"
       }
     ],
     "EPOTB": [
-      {
-        "date": "2026-08-28",
-        "hoy": 0.03,
-        "semaforo": null
-      },
       {
         "date": "2026-08-31",
         "hoy": 0.02,
@@ -1367,14 +1362,14 @@
         "date": "2026-10-19",
         "hoy": 2.3,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 2.36,
+        "semaforo": "NORMAL"
       }
     ],
     "SAACP": [
-      {
-        "date": "2026-09-01",
-        "hoy": 2.18,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 2.18,
@@ -1519,14 +1514,14 @@
         "date": "2026-10-19",
         "hoy": 6.55,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 6.4,
+        "semaforo": "NORMAL"
       }
     ],
     "MACTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 1.2,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 1.18,
@@ -1671,14 +1666,14 @@
         "date": "2026-10-19",
         "hoy": 5.89,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 6.16,
+        "semaforo": "NORMAL"
       }
     ],
     "BDCTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 12.99,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 12.93,
@@ -1823,14 +1818,14 @@
         "date": "2026-10-19",
         "hoy": 16.49,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 17.02,
+        "semaforo": "NORMAL"
       }
     ],
     "SPTTB": [
-      {
-        "date": "2026-09-01",
-        "hoy": 8.51,
-        "semaforo": null
-      },
       {
         "date": "2026-09-02",
         "hoy": 8.52,
@@ -1975,11 +1970,21 @@
         "date": "2026-10-19",
         "hoy": 8.68,
         "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
+        "hoy": 8.72,
+        "semaforo": "NORMAL"
       }
     ],
     "GABTB": [
       {
         "date": "2026-10-19",
+        "hoy": null,
+        "semaforo": "NORMAL"
+      },
+      {
+        "date": "2026-10-20",
         "hoy": null,
         "semaforo": "NORMAL"
       }
