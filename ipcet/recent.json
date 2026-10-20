@@ -1,0 +1,1988 @@
+{
+  "schema": "ipcet-recent/v1",
+  "stations": {
+    "SAMTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 11.43,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 11.43,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 11.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 11.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 11.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 11.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 11.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 11.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 11.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 11.84,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 11.79,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 11.76,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 11.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 11.6,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 11.67,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 12.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 11.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 11.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 11.62,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 11.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 11.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 11.6,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 12.46,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "GONTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 3.45,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 3.44,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 3.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 3.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 3.45,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 3.44,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 3.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 3.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 3.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 3.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 3.44,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 3.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 3.43,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 3.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 3.38,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 3.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 3.43,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 3.45,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 3.45,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 3.38,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 3.6,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 3.44,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 3.38,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 3.41,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 3.33,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "OXOTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 33.88,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 33.88,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 33.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 33.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 34.03,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 33.93,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 33.92,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 33.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 33.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 33.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 33.98,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 34.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 34.03,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 34.31,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 34.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 34.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 35.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 35.54,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 34.73,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 34.49,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 34.39,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 34.77,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 36.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 36.54,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 35.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 34.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 34.6,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 34.89,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 35.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 35.2,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "TAPTB": [
+      {
+        "date": "2026-08-31",
+        "hoy": 15.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-01",
+        "hoy": 15.88,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 15.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 15.86,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 15.84,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 15.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 15.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 15.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 15.74,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 15.74,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 15.73,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 15.93,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 16.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 16.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 16.25,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 16.32,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 17.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 17.3,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 17.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 16.94,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 16.73,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 17.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 17.23,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 17.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 17.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 17.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 17.32,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 17.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 17.16,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 17.9,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "PUYTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 25.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 24.98,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 24.98,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 24.97,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 25.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 24.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 25.04,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 25.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 25.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 25.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 25.25,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 25.08,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 24.99,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 24.92,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 25.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 25.04,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 25.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 25.07,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 25.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 25.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 25.04,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 25.36,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 25.16,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 25.2,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "TEATB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 33.72,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 33.71,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 33.71,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 33.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 33.69,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 33.69,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 33.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 33.72,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 33.72,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 33.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 34.1,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 34.03,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 34.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 34.46,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 34.85,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 34.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 34.46,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 34.26,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 34.06,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 33.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 34.36,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 34.08,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 34.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 34.04,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 34.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 33.98,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 33.85,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 33.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 34.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 34.7,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "PNVTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 1.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 1.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 1.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 1.47,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 1.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 1.76,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 1.6,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 1.56,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 1.56,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 1.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 1.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 3.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 2.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 2.56,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 3.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 4.76,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 5.46,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 5.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 5.62,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 4.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 3.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 3.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 4.24,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 5.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 6.06,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 5.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 4.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 3.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 4.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 6.6,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "SJOCP": [
+      {
+        "date": "2026-09-01",
+        "hoy": 19.84,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 19.83,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 19.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 19.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 19.82,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 19.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 19.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 19.94,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 19.94,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 19.89,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 23.08,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 21.66,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 21.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 21.79,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 22.13,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 23.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 22.48,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 21.34,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 20.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 20.56,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 22.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 22.4,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 21.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 21.08,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 21.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 20.8,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 20.61,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 21.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 20.62,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 23.58,
+        "semaforo": "ALERTA"
+      }
+    ],
+    "EPOTB": [
+      {
+        "date": "2026-08-28",
+        "hoy": 0.03,
+        "semaforo": null
+      },
+      {
+        "date": "2026-08-31",
+        "hoy": 0.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-01",
+        "hoy": 0.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 0.01,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 0.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 0.02,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 0.31,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 0.14,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 0.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 0.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 0.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 0.06,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 0.11,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 0.54,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 0.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 0.54,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 0.47,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 1.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 1.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 1.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 1.33,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 1.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 1.21,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 1.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 2.13,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 1.98,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 1.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 1.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 1.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 2.3,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "SAACP": [
+      {
+        "date": "2026-09-01",
+        "hoy": 2.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 2.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 2.17,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 2.16,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 2.16,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 2.16,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 2.17,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 2.13,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 2.13,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 2.14,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 2.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 3.06,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 3.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 3.96,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 6.25,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 8.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 4.08,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 4.41,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 5.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 3.81,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 2.84,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 2.87,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 3.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 4.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 8.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 5.79,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 4.49,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 4.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 6.45,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 6.55,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "MACTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 1.2,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 1.18,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 1.15,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 1.14,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 1.14,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 1.13,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 1.12,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 1.09,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 1.09,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 1.06,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 1.05,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 3.59,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 2.95,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 3.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 4.07,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 5.77,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 6.39,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 5.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 4.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 3.85,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 2.32,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 2.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 2.71,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 3.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 5.07,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 5.28,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 4.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 3.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 4.07,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 5.89,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "BDCTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 12.99,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 12.93,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 12.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 12.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 12.57,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 12.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 12.39,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 12.31,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 12.31,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 12.03,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 12.09,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 12.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 12.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 12.77,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 12.9,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 13.42,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 15.65,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 15.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 15.78,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 15.77,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 15.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 16.14,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 16.0,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 16.97,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 17.89,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 17.71,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 17.93,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 17.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 16.94,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 16.49,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "SPTTB": [
+      {
+        "date": "2026-09-01",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-02",
+        "hoy": 8.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-03",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-04",
+        "hoy": 8.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-07",
+        "hoy": 8.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-08",
+        "hoy": 8.5,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-09",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-14",
+        "hoy": 8.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-15",
+        "hoy": 8.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-17",
+        "hoy": 8.53,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-18",
+        "hoy": 8.53,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-21",
+        "hoy": 8.52,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-22",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-23",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-24",
+        "hoy": 8.51,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-25",
+        "hoy": 8.53,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-28",
+        "hoy": 8.53,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-29",
+        "hoy": 8.55,
+        "semaforo": null
+      },
+      {
+        "date": "2026-09-30",
+        "hoy": 8.57,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-01",
+        "hoy": 8.58,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-05",
+        "hoy": 8.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-06",
+        "hoy": 8.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-07",
+        "hoy": 8.68,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-08",
+        "hoy": 8.7,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-12",
+        "hoy": 8.63,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-13",
+        "hoy": 8.62,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-14",
+        "hoy": 8.61,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-15",
+        "hoy": 8.62,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-16",
+        "hoy": 8.64,
+        "semaforo": null
+      },
+      {
+        "date": "2026-10-19",
+        "hoy": 8.68,
+        "semaforo": "NORMAL"
+      }
+    ],
+    "GABTB": [
+      {
+        "date": "2026-10-19",
+        "hoy": null,
+        "semaforo": "NORMAL"
+      }
+    ]
+  }
+}
