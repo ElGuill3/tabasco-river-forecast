@@ -471,8 +471,8 @@ OCR/tesseract; image ingestion separately needs the existing `levels` reader and
 tesseract. Offline providers support both stored CEMS archives and the adopted
 Open-Meteo ensemble (T19/L51). The [daily operation](docs/operations.md) fetches
 Open-Meteo, ingests messenger-uploaded IPCET tables and publishes latest plus
-run-labeled history on the `forecasts` branch. Actions runs hourly from
-06:17–17:17 Mexico City and when the data-branch relay receives `meta.json`.
+run-labeled history on the `forecasts` branch. Actions runs every hour at
+minute 17 (UTC) and when the data-branch relay receives `meta.json`.
 The app reads the JSON; it never runs the model. See operations for one-time
 branch initialization, seeding, offline replay and failure recovery.
 
