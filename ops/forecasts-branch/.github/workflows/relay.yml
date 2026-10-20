@@ -1,0 +1,20 @@
+name: relay-ipcet
+
+on:
+  push:
+    paths:
+      - 'inputs/ipcet/*/meta.json'
+
+permissions:
+  actions: write
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Dispatch main forecast workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: timeout 60 gh workflow run forecast.yml --ref main --repo "$GH_REPO"

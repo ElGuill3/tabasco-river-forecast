@@ -1,0 +1,52 @@
+name: forecast
+
+on:
+  schedule:
+    - cron: '17 12-23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: forecast
+  cancel-in-progress: false
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: forecasts
+          path: out
+      - name: Install OCR runtime (levels.py uses default English data)
+        run: |
+          timeout 120 sudo apt-get update
+          timeout 180 sudo apt-get install -y tesseract-ocr tesseract-ocr-eng
+      - uses: astral-sh/setup-uv@v6
+      - name: Install locked Python environment
+        run: timeout 300 uv sync --frozen
+      - name: Operate
+        id: operate
+        run: |
+          summary=$(timeout 900 uv run python -m riverforecast.operate run --data out)
+          printf '%s\n' "$summary"
+          printf 'summary=%s\n' "$summary" >> "$GITHUB_OUTPUT"
+      - name: Commit changed branch files
+        working-directory: out
+        env:
+          SUMMARY: ${{ steps.operate.outputs.summary }}
+        run: |
+          if [ -n "$(timeout 30 git status --porcelain)" ]; then
+            timeout 30 git config user.name 'github-actions[bot]'
+            timeout 30 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            timeout 30 git add inputs bdctb
+            timeout 30 git commit -m "forecast: $SUMMARY"
+            timeout 60 git push origin HEAD:forecasts || {
+              timeout 60 git pull --rebase origin forecasts
+              timeout 60 git push origin HEAD:forecasts
+            }
+          fi
