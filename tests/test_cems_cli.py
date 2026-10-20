@@ -146,6 +146,36 @@ def test_raw_cost_limit_stops_submissions_and_is_retryable(tmp_path, capsys):
     assert len(list(tmp_path.glob("*.zip"))) == 4
 
 
+def test_raw_queue_limit_stops_submissions_and_is_retryable(tmp_path, capsys):
+    args = [
+        "fetch-raw",
+        "--area",
+        "tabasco",
+        "--start",
+        "2026-10-01",
+        "--end",
+        "2026-10-20",
+        "--out",
+        str(tmp_path),
+        "--parallel",
+        "1",
+    ]
+    message = (
+        "400 Client Error: Bad Request\nThe job has been rejected\n"
+        "Number queued requests for this dataset is temporarily limited."
+    )
+    client = RawClient(message)
+    assert cems_cli.main(args, client=client) == 1
+    assert len(client.calls) == 1
+    assert not list(tmp_path.glob("*.zip"))
+    captured = capsys.readouterr()
+    assert captured.err == f"2026-10-01: failed (RuntimeError: {message})\n"
+    assert captured.out == "0 requests stored, 1 failed\n"
+    client.error = None
+    assert cems_cli.main(args, client=client) == 0
+    assert len(list(tmp_path.glob("*.zip"))) == 4
+
+
 def test_raw_invalid_reply_never_replaces_stored_file(tmp_path, capsys):
     target = tmp_path / "2026-10-01.zip"
     previous = archive(["2026-09-01"])

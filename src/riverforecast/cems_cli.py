@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None, client=None) -> int:
         "--parallel",
         type=int,
         default=3,
-        help="concurrent requests (default: 3); stop on cost limits",
+        help="concurrent requests (default: 3); stop on cost or queue limits",
     )
     args = parser.parse_args(argv)
 

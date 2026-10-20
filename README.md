@@ -123,6 +123,10 @@ uv run python -m riverforecast.cems_reforecast_cli fetch-raw --area tabasco \
 | Reforecast | v4 (`version_4_0` / `lisflood`), both products, 11 members; 3,500 issues from 2003-03-27 through 2023-11-25 | 201 requests, 115,500 fields; 571.0 MiB float32 payload before metadata/compression. Validation: one issue, 105,842 bytes, 757 s. Roughly 0.4–0.6 GB; about 14–45 h at concurrency three if requests take 13–40 min. |
 
 These are planning estimates, not service guarantees: queue time and compression vary.
+When CEMS answers "Number queued requests for this dataset is temporarily
+limited" (or a cost limit), a run submits nothing further and exits 1; rerun it
+later and it resumes with the missing requests. In October 2026 the service
+accepted one queued request per account at a time, about one per hour.
 The operational estimate excludes NetCDF overhead; reserve at least 1 GB for both archives.
 The raw size estimate assumes 24 × 54 cells on the 0.05-degree grid.
 

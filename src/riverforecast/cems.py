@@ -154,11 +154,17 @@ def valid_raw(path: Path, request: dict, members: int) -> bool:
         return False
 
 
+# Rejections that apply to every later request of the run, not to one request.
+STOP_REASONS = ("cost limit", "number queued requests")
+
+
 def fetch_raw(jobs, dataset: str, folder: Path, parallel: int, client=None) -> int:
     """Bounded queue, atomic publication, resumable failures and global cost stop.
 
     Already-running service requests cannot be cancelled, but no new requests are
-    submitted after a cost rejection. Each worker owns its production CDS client.
+    submitted after a cost or queue-limit rejection: the service would reject
+    every later submission of the same run as well. Each worker owns its
+    production CDS client.
     """
     folder.mkdir(parents=True, exist_ok=True)
     members = 51 if dataset == DATASET else 11
@@ -190,7 +196,7 @@ def fetch_raw(jobs, dataset: str, folder: Path, parallel: int, client=None) -> i
             print(f"{label}: stored", flush=True)
             return True
         except Exception as error:  # noqa: BLE001 - preserve resumability on service errors
-            if "cost limit" in str(error).lower():
+            if any(reason in str(error).lower() for reason in STOP_REASONS):
                 stop.set()
             print(f"{label}: failed ({type(error).__name__}: {error})", file=sys.stderr)
             return False
