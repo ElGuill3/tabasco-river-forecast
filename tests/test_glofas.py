@@ -1,5 +1,7 @@
 import json
 import math
+import runpy
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -60,6 +62,75 @@ def test_fetch_accepts_a_single_location_answer():
 
     assert list(table.columns) == ["17.425,-91.525"]
     assert table.iloc[:, 0].tolist() == [1.0, 2.0, 3.0]
+
+
+def test_fetch_ensemble_uses_real_member_keys_and_preserves_missing_values():
+    calls = []
+    daily = {"time": DATES, "river_discharge": [1.0, None, 3.0]}
+    daily.update({f"river_discharge_member{m:02d}": [float(m), 2.0, 3.0] for m in range(1, 51)})
+
+    def fake_get(url):
+        calls.append(url)
+        return {"daily": daily}
+
+    table = glofas.fetch_ensemble_forecast(
+        17.425, -91.525, forecast_days=30, past_days=7, get_json=fake_get
+    )
+    assert calls == [
+        "https://flood-api.open-meteo.com/v1/flood?latitude=17.425&longitude=-91.525"
+        "&daily=river_discharge&models=forecast_v4&ensemble=true&forecast_days=30&past_days=7"
+    ]
+    assert list(table.columns) == ["date", "member", "discharge_m3s"]
+    assert len(table) == 153
+    assert set(table.member) == set(range(51))
+    control = table[table.member == 0]
+    assert control.date.tolist() == list(pd.to_datetime(DATES))
+    assert control.discharge_m3s.iloc[0] == 1.0
+    assert math.isnan(control.discharge_m3s.iloc[1])
+    assert table[table.member == 50].discharge_m3s.tolist() == [50.0, 2.0, 3.0]
+
+
+def test_fetch_ensemble_defaults_and_rate_limit_propagation():
+    calls = []
+
+    def fake_get(url):
+        calls.append(url)
+        raise glofas.RateLimited()
+
+    with pytest.raises(glofas.RateLimited):
+        glofas.fetch_ensemble_forecast(17.425, -91.525, get_json=fake_get)
+    assert calls[0].endswith("&forecast_days=8&past_days=0")
+
+
+def test_fetch_ensemble_rejects_incomplete_member_coverage():
+    with pytest.raises(ValueError, match="missing ensemble member keys"):
+        glofas.fetch_ensemble_forecast(
+            17.425,
+            -91.525,
+            get_json=lambda url: response((17.425, -91.525, [1.0, 2.0, 3.0])),
+        )
+
+
+def test_live_source_l45_exact_boundary_and_99_percent_rule():
+    experiment = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "experiments/14_live_source.py")
+    )
+    score = experiment["score_values"]
+    cems = np.full(100, 1000.0)
+    om = cems + 5.0  # Exactly the inclusive 0.5% boundary.
+    om[0] += 0.01
+    result = score(om, cems)
+    assert result["within_tolerance"] == 99
+    assert result["total"] == 100
+    assert result["share_within_tolerance"] == 0.99
+    assert result["passes"] is True
+    assert result["max_abs_difference_m3s"] == pytest.approx(5.01)
+    assert result["max_relative_difference"] == pytest.approx(0.00501)
+    om[1] += 0.01
+    assert score(om, cems)["passes"] is False
+    assert score(np.array([0.5]), np.array([0.0]))["passes"] is True
+    with pytest.raises(ValueError, match="finite"):
+        score(np.array([np.nan]), np.array([1.0]))
 
 
 def test_selects_the_cell_that_follows_the_observed_discharge():

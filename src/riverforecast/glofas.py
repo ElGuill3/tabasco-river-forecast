@@ -121,6 +121,46 @@ def fetch_discharge(
     return table
 
 
+def fetch_ensemble_forecast(
+    lat: float,
+    lon: float,
+    *,
+    forecast_days: int = 8,
+    past_days: int = 0,
+    get_json: Callable[[str], object] = _get_json,
+) -> pd.DataFrame:
+    """Fetch forecast_v4 as tidy date/member/discharge_m3s rows for one cell.
+
+    Member 0 is ``river_discharge``; members 1-50 use ``river_discharge_memberNN``.
+    Dates are API labels, not inferred issue dates. ``past_days`` returns archived
+    values, not separate historical forecast trajectories. Nulls remain NaN.
+    Uses the existing rate-limit retry helper by default; callers needing a hard
+    stop on HTTP 429 can inject ``get_json_with_retry(..., retries=0)``.
+    """
+    url = (
+        f"{API_URL}?latitude={lat:.3f}&longitude={lon:.3f}"
+        f"&daily=river_discharge&models=forecast_v4&ensemble=true"
+        f"&forecast_days={forecast_days}&past_days={past_days}"
+    )
+    daily = get_json(url)["daily"]
+    keys = ["river_discharge"] + [f"river_discharge_member{m:02d}" for m in range(1, 51)]
+    if not set(keys).issubset(daily):
+        raise ValueError("missing ensemble member keys")
+    return pd.concat(
+        [
+            pd.DataFrame(
+                {
+                    "date": pd.to_datetime(daily["time"]),
+                    "member": member,
+                    "discharge_m3s": pd.to_numeric(daily[key], errors="raise"),
+                }
+            )
+            for member, key in enumerate(keys)
+        ],
+        ignore_index=True,
+    ).sort_values(["date", "member"], ignore_index=True)
+
+
 def neighbourhood(lat: float, lon: float, radius: int = 2, step: float = 0.05):
     """Grid cell centres around a point (GloFAS cells are centred on x.x25 / x.x75)."""
     centre_lat = np.floor(lat / step) * step + step / 2
