@@ -123,3 +123,11 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
   - Schema in `docs/ipcet-schema.md`.
   - Deployment needs `forecast.yml` to also stage `ipcet` (separate commit). The 2026-10-19 folder's `meta.json` was overwritten by a later upload listing only the map, so the first official `latest.json` will come from the next table.
 - **L58** Correction to L57: the 2026-10-19 `meta.json` was not overwritten. The parent had printed only the first entry of its image list. The manual run 39372607930 (forecasts `dad0503`) published `ipcet/latest.json` from that day's table (Last-Modified 16:22:09 GMT): San Joaquín ALERTA, the other 13 NORMAL, Gaviotas with unreadable_namo/hoy/capacity. `recent.json` and `levels.csv` come from the 619-row seed (`1021a06`).
+- **L59** T9c/T9d download state (2026-10-20).
+  - On 2026-10-19/20 the operational loop stored about one file per hour, and the last run took 8 h for one file (79/253).
+  - The CEMS job list showed one or two accepted jobs of ours and every other submission rejected with "Number queued requests for this dataset is temporarily limited". At 07:06 UTC the EWDS live dashboard showed 266 queued requests and 16 running.
+  - The EWDS best-practices page says the store lowers the priority of users who submit too many requests. Each of our runs had submitted about 175 requests that were then rejected.
+  - Fix a057d22: `fetch_raw` now stops submitting after a queue-limit rejection, as it already did for cost limits. The run exits 1 and is resumable. RED: 4 submissions instead of 1. GREEN: 334 tests. Review `review-82098dbf1a70bc0e` (resilience) approved, with advisories: no backoff inside a run; string matching of stop reasons.
+  - The reforecast loop was relaunched alongside, with `--parallel 2` and 15 min between runs. The limit is per dataset, and 2 + 2 requests stay under the recommended maximum of 10.
+  - T9d: the Open-Meteo cell search had failed on rate limits (25 cells x 30 years per request). The switch is to `cems-glofas-historical`, whose request schema changed. The keys are now `year`/`month`/`day`, `timespan` (`time_mean`), variable `average_river_discharge_in_the_last_24_hours`, and system_version `version_4_0`; the old `hyear` keys answer HTTP 400. A one-year area probe (2020) is queued.
+
