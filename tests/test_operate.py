@@ -1,6 +1,7 @@
 """Offline operational contract; synthetic ensembles and injectable services only."""
 
 import copy
+import dataclasses
 import datetime as dt
 import hashlib
 import json
@@ -423,3 +424,196 @@ def test_fetch_timeout_and_two_attempts():
     with pytest.raises(OSError):
         operate.fetch_response(get=get)
     assert calls == [(operate.OPENMETEO_URL, 60)] * 2
+
+
+FIXTURES = Path(__file__).parent / "fixtures"
+PAGE_URL = "https://example.invalid/semaforo-19102026"
+
+
+def upload_table(root, fixture="semaforo_2026-10-19.jpeg", page="2026-10-19"):
+    folder = root / f"inputs/ipcet/{page}"
+    folder.mkdir(parents=True, exist_ok=True)
+    content = (FIXTURES / fixture).read_bytes()
+    (folder / fixture).write_bytes(content)
+    meta = {
+        "page_url": PAGE_URL,
+        "fetched_at": NOW,
+        "images": [
+            {
+                "url": "https://example.invalid/" + fixture,
+                "last_modified": "Mon, 19 Oct 2026 12:10:00 GMT",
+                "sha256": hashlib.sha256(content).hexdigest(),
+                "bytes": len(content),
+            }
+        ],
+    }
+    (folder / "meta.json").write_text(json.dumps(meta))
+    return folder
+
+
+def row(river, station, hoy=10.0, diff=-0.1, namo=20.0, semaforo="NORMAL"):
+    return levels.StationRow(
+        river, station, namo, 1.0, round(hoy - diff, 2), hoy, diff, round(namo - hoy, 2), semaforo
+    )
+
+
+def official(day, *rows):
+    return levels.LevelTable(None, day, rows, ())
+
+
+def ipcet(root, name):
+    return json.loads((root / f"ipcet/{name}.json").read_text())
+
+
+def test_official_table_publishes_every_station(seeded, capsys):
+    upload_table(seeded)
+    assert run(seeded) == 0
+    latest = ipcet(seeded, "latest")
+    assert {k: v for k, v in latest.items() if k != "stations"} == {
+        "schema": "ipcet-levels/v1",
+        "table_date": "2026-10-19",
+        "issued_at": "2026-10-19T06:00:00-06:00",
+        "last_modified": "Mon, 19 Oct 2026 12:10:00 GMT",
+        "source_url": PAGE_URL,
+    }
+    assert [s["code"] for s in latest["stations"]] == [c for _, _, c in operate.stations.STATIONS]
+    states = {s["code"]: s["semaforo"] for s in latest["stations"]}
+    assert states.pop("SJOCP") == "ALERTA"
+    assert set(states.values()) == {"NORMAL"}
+    bdctb = next(s for s in latest["stations"] if s["code"] == "BDCTB")
+    assert (bdctb["river"], bdctb["station"], bdctb["hoy"], bdctb["namo"]) == (
+        "Usumacinta",
+        "Boca del Cerro",
+        16.49,
+        19.21,
+    )
+    assert bdctb["problems"] == []
+    csv = pd.read_csv(seeded / "inputs/ipcet/levels.csv")
+    assert len(csv) == 14 and set(csv.table_date) == {"2026-10-19"}
+    recent = ipcet(seeded, "recent")
+    assert recent["schema"] == "ipcet-recent/v1"
+    assert recent["stations"]["BDCTB"] == [
+        {"date": "2026-10-19", "hoy": 16.49, "semaforo": "NORMAL"}
+    ]
+    assert json.loads((seeded / "bdctb/latest.json").read_text())["mode"] == "live"
+    capsys.readouterr()
+    before = snapshot(seeded)
+    assert run(seeded, reader=lambda _: pytest.fail("repeated OCR")) == 0
+    assert snapshot(seeded) == before
+    assert capsys.readouterr().out == "no change\n"
+
+
+def test_unknown_and_invalid_rows(seeded):
+    upload(seeded)
+    bad = dataclasses.replace(
+        row("Pichucalco", "San Joaquín", hoy=23.58, semaforo="ALERTA"), diff=5.0
+    )
+    rows = (
+        row("Usumacinta", "Boca del Cerro", hoy=17.65, diff=-0.32, namo=19.21),
+        bad,
+        row("Usumacinta", "Tenosique", semaforo=None),
+    )
+    assert run(seeded, reader=lambda _: official(dt.date(2026, 10, 19), *rows)) == 0
+    latest = ipcet(seeded, "latest")
+    assert [s["code"] for s in latest["stations"]] == ["BDCTB", "SJOCP", None]
+    assert latest["stations"][1]["problems"] == ["diff_mismatch"]
+    assert latest["stations"][2]["semaforo"] is None
+    recent = ipcet(seeded, "recent")["stations"]
+    assert sorted(recent) == ["BDCTB", "SJOCP"]
+    assert recent["SJOCP"] == [{"date": "2026-10-19", "hoy": None, "semaforo": "ALERTA"}]
+
+
+def seed_levels(root, rows, since="2026-01-01"):
+    source = root.parent / "levels-source.csv"
+    pd.DataFrame(rows).to_csv(source, index=False)
+    return operate.main(
+        ["seed-levels", "--data", str(root), "--levels", str(source), "--since", since]
+    )
+
+
+def archive_row(day, station="Boca del Cerro", river="Usumacinta", **extra):
+    values = {
+        "page_date": day,
+        "table_date": day,
+        "obs_date": day,
+        "obs_flag": "ok",
+        "kind": "station",
+        "river": river,
+        "station": station,
+        "namo": 19.21,
+        "ayer": 15.0,
+        "hoy": 15.1,
+        "diff": 0.1,
+        "capacity": 4.11,
+        "valid": True,
+        "reason": "",
+        "sha256": "x",
+    }
+    return values | extra
+
+
+def test_seed_levels_keeps_trusted_station_rows(seeded, capsys):
+    rows = [
+        archive_row("2026-10-01"),
+        archive_row("2026-10-01", "San Joaquín", "Pichucalco", hoy=20.5),
+        archive_row("2026-10-02", kind="dam", river="Peñitas", station="Peñitas"),
+        archive_row("2026-10-03", valid=False, reason="diff_mismatch"),
+        archive_row("2026-10-04", obs_flag="far_off"),
+        archive_row("2025-12-31"),
+        archive_row("2026-10-05", "Tenosique"),
+    ]
+    assert seed_levels(seeded, rows) == 0
+    assert capsys.readouterr().out == "seeded 3 level rows\n"
+    seed = pd.read_csv(seeded / "inputs/ipcet/levels_seed.csv", keep_default_na=False)
+    assert seed[["table_date", "code", "station", "hoy", "semaforo"]].values.tolist() == [
+        ["2026-10-01", "BDCTB", "Boca del Cerro", 15.1, ""],
+        ["2026-10-01", "SJOCP", "San Joaquín", 20.5, ""],
+        ["2026-10-05", "", "Tenosique", 15.1, ""],
+    ]
+    before = snapshot(seeded)
+    assert seed_levels(seeded, rows) == 1
+    assert "already seeded" in capsys.readouterr().err
+    assert snapshot(seeded) == before
+
+
+def test_recent_keeps_last_30_dates_and_newest_table_wins(seeded):
+    days = pd.date_range("2026-09-01", periods=40).strftime("%Y-%m-%d").tolist()
+    assert seed_levels(seeded, [archive_row(d) for d in days]) == 0
+    assert run(seeded) == 0
+    assert not (seeded / "ipcet/latest.json").exists()
+    assert len(ipcet(seeded, "recent")["stations"]["BDCTB"]) == 30
+    older = upload(seeded)
+    newer = seeded / "inputs/ipcet/2026-10-18"
+    newer.mkdir()
+    for path in older.iterdir():
+        (newer / path.name).write_bytes(path.read_bytes())
+
+    def reader(path):
+        day = dt.date(2026, 10, 18) if path.parent == newer else dt.date(2026, 10, 17)
+        return official(day, row("Usumacinta", "Boca del Cerro", hoy=17.0, namo=19.21))
+
+    assert run(seeded, reader=reader) == 0
+    assert ipcet(seeded, "latest")["table_date"] == "2026-10-18"
+    series = ipcet(seeded, "recent")["stations"]["BDCTB"]
+    expected = (days + ["2026-10-17", "2026-10-18"])[-30:]
+    assert [p["date"] for p in series] == expected
+    assert series[-1] == {"date": "2026-10-18", "hoy": 17.0, "semaforo": "NORMAL"}
+
+
+def test_each_image_is_read_once_per_run(seeded):
+    upload(seeded)
+    calls = []
+
+    def reader(path):
+        calls.append(path)
+        return table()
+
+    assert run(seeded, reader=reader) == 0
+    assert len(calls) == 1
+    assert json.loads((seeded / "inputs/ipcet/2026-10-19/tables.json").read_text())["errors"] == []
+
+
+def test_seed_levels_help(capsys):
+    with pytest.raises(SystemExit):
+        operate.main(["seed-levels", "--help"])
+    assert "--since" in capsys.readouterr().out

@@ -1,5 +1,7 @@
 """Daily BDCTB operation: acquire one ensemble, ingest messenger files, publish.
 
+Every ingested IPCET level table is also published for all stations (ipcet/*.json).
+
 Network access is confined to fetch_response; run/main accept a replacement fetch.
 All input validation and inference finish before any checkout file is written.
 """
@@ -20,13 +22,26 @@ from urllib.parse import unquote, urlsplit
 import pandas as pd
 import requests
 
-from riverforecast import levels, publish
+from riverforecast import levels, publish, stations
 
 OPENMETEO_URL = (
     "https://flood-api.open-meteo.com/v1/flood?latitude=17.425&longitude=-91.525"
     "&daily=river_discharge&models=forecast_v4&ensemble=true&past_days=10&forecast_days=10"
 )
 COLUMNS = ["date", "stage_m", "table_last_modified"]
+LEVEL_COLUMNS = [
+    "table_date",
+    "code",
+    "river",
+    "station",
+    "namo",
+    "ayer",
+    "hoy",
+    "diff",
+    "semaforo",
+    "valid",
+]
+RECENT_DATES = 30
 
 
 def fetch_response(*, get=None) -> bytes:
@@ -136,6 +151,38 @@ def image_path(root, folder, url):
     return target(root, f"{folder}/{name}")
 
 
+def verified_image(root, folder, image):
+    """Path and Last-Modified of an uploaded image whose bytes match its metadata."""
+    source = image_path(root, folder, image["url"])
+    content = source.read_bytes()
+    if len(content) != image["bytes"]:
+        raise ValueError("image bytes mismatch")
+    if hashlib.sha256(content).hexdigest() != image["sha256"]:
+        raise ValueError("image sha256 mismatch")
+    stamp = image["last_modified"]
+    utc(stamp)
+    return source, stamp
+
+
+def read_once(reader):
+    """Reader that OCRs each image once per run, replaying its result or error."""
+    results = {}
+
+    def read(path):
+        key = Path(path)
+        if key not in results:
+            try:
+                results[key] = (True, reader(path))
+            except Exception as exc:
+                results[key] = (False, exc)
+        ok, value = results[key]
+        if not ok:
+            raise value
+        return value
+
+    return read
+
+
 def ingest(root, issue, now, reader):
     """Cache OCR once; resolve only tables visible at this run's issue cutoff.
 
@@ -161,14 +208,7 @@ def ingest(root, issue, now, reader):
             rows, errors = [], []
             for image in metadata["images"]:
                 try:
-                    source = image_path(root, folder, image["url"])
-                    content = source.read_bytes()
-                    if len(content) != image["bytes"]:
-                        raise ValueError("image bytes mismatch")
-                    if hashlib.sha256(content).hexdigest() != image["sha256"]:
-                        raise ValueError("image sha256 mismatch")
-                    stamp = image["last_modified"]
-                    utc(stamp)
+                    source, stamp = verified_image(root, folder, image)
                     table = reader(source)
                     row = next(
                         r
@@ -242,6 +282,173 @@ def ingest(root, issue, now, reader):
     return observations, plan, hashlib.sha256(csv).hexdigest()
 
 
+def finite(value):
+    return value if isinstance(value, (int, float)) and math.isfinite(value) else None
+
+
+def station_record(row):
+    record = {
+        "code": stations.code_for(row.river, row.station),
+        "river": row.river,
+        "station": row.station,
+        **{
+            f: finite(getattr(row, f))
+            for f in ("namo", "namino", "ayer", "hoy", "diff", "capacity")
+        },
+        "semaforo": row.semaforo,
+    }
+    return record | {"problems": levels.row_problems(row, None)}
+
+
+def official_tables(root, now, reader):
+    """Every station of every uploaded level table, read once per folder.
+
+    Separate from ingest, whose cached BDCTB rows stay untouched. Errors are kept
+    in tables.json only: ingest already reports rejected folders on stderr.
+    """
+    plan, found = {}, []
+    for path in sorted(target(root, "inputs/ipcet").glob("*/meta.json")):
+        folder = path.parent.relative_to(root).as_posix()
+        marker = target(root, f"{folder}/tables.json")
+        try:
+            target(root, path.relative_to(root).as_posix())
+            page = date.fromisoformat(path.parent.name)
+            if marker.exists():
+                found.extend(json.loads(marker.read_text())["tables"])
+                continue
+            metadata = json.loads(path.read_text())
+            if utc(metadata["fetched_at"]) > now:
+                continue
+            tables, errors = [], []
+            for image in metadata["images"]:
+                try:
+                    source, stamp = verified_image(root, folder, image)
+                    table = reader(source)
+                    day, flag = levels.obs_date(page, table.table_date, now.date())
+                    if flag not in levels.TRUSTED_FLAGS:
+                        raise ValueError(f"untrusted table date ({flag})")
+                    tables.append(
+                        {
+                            "table_date": str(day),
+                            "last_modified": stamp,
+                            "source_url": metadata.get("page_url"),
+                            "stations": [station_record(r) for r in table.stations],
+                        }
+                    )
+                except Exception as exc:
+                    errors.append(str(exc))
+            found.extend(tables)
+            plan[f"{folder}/tables.json"] = json_bytes({"tables": tables, "errors": errors})
+        except (ValueError, OSError, KeyError, TypeError) as exc:
+            plan[f"{folder}/tables.json"] = json_bytes({"tables": [], "errors": [str(exc)]})
+    return plan, found
+
+
+def level_key(record):
+    return (record["table_date"], record["code"] or f"{record['river']}|{record['station']}")
+
+
+def seeded_levels(root):
+    path = target(root, "inputs/ipcet/levels_seed.csv")
+    if not path.exists():
+        return []
+    frame = pd.read_csv(path, dtype={"code": str, "semaforo": str}, keep_default_na=False)
+    records = []
+    for raw in frame.to_dict("records"):
+        record = {k: (None if raw[k] == "" else raw[k]) for k in LEVEL_COLUMNS}
+        for field in ("namo", "ayer", "hoy", "diff"):
+            record[field] = None if record[field] is None else float(record[field])
+        record["valid"] = str(raw["valid"]) == "True"
+        records.append(record)
+    return records
+
+
+def publish_levels(root, now, reader):
+    """Plan for tables.json markers, inputs/ipcet/levels.csv and ipcet/*.json.
+
+    Regenerated from the seed and the cached tables on every run, so a run
+    without a new table writes nothing.
+    """
+    plan, found = official_tables(root, now, reader)
+    found = sorted(found, key=lambda t: (t["table_date"], utc(t["last_modified"])))
+    merged = {level_key(r): r for r in seeded_levels(root)}
+    for table in found:
+        for s in table["stations"]:
+            record = {k: s.get(k) for k in LEVEL_COLUMNS if k not in ("table_date", "valid")}
+            record |= {"table_date": table["table_date"], "valid": not s["problems"]}
+            merged[level_key(record)] = record
+    rows = sorted(merged.values(), key=lambda r: r["table_date"])
+    outputs = {}
+    if rows:
+        buffer = io.StringIO()
+        frame = pd.DataFrame(rows, columns=LEVEL_COLUMNS)
+        frame.to_csv(buffer, index=False, lineterminator="\n")
+        outputs["inputs/ipcet/levels.csv"] = buffer.getvalue().encode()
+        series = {}
+        for r in rows:
+            if r["code"]:
+                point = {
+                    "date": r["table_date"],
+                    "hoy": r["hoy"] if r["valid"] else None,
+                    "semaforo": r["semaforo"] or None,
+                }
+                series.setdefault(r["code"], []).append(point)
+        recent = {code: points[-RECENT_DATES:] for code, points in series.items()}
+        outputs["ipcet/recent.json"] = json_bytes({"schema": "ipcet-recent/v1", "stations": recent})
+    if found:
+        newest = found[-1]
+        issued = pd.Timestamp(newest["table_date"]).tz_localize(publish.ZONE) + pd.Timedelta(
+            hours=6
+        )
+        outputs["ipcet/latest.json"] = json_bytes(
+            {
+                "schema": "ipcet-levels/v1",
+                "table_date": newest["table_date"],
+                "issued_at": issued.isoformat(),
+                "last_modified": newest["last_modified"],
+                "source_url": newest["source_url"],
+                "stations": newest["stations"],
+            }
+        )
+    for name, content in outputs.items():
+        path = target(root, name)
+        if not path.exists() or path.read_bytes() != content:
+            plan[name] = content
+    return plan
+
+
+def seed_levels(root, source, since):
+    """Bootstrap level history from the research OCR archive (no semáforo)."""
+    since = date.fromisoformat(since).isoformat()
+    path = target(root, "inputs/ipcet/levels_seed.csv")
+    if path.exists():
+        raise ValueError("levels already seeded; refusing to replace them")
+    archive = pd.read_csv(source, dtype=str, keep_default_na=False)
+    keep = archive[
+        (archive["kind"] == "station")
+        & (archive["valid"] == "True")
+        & archive["obs_flag"].isin(levels.TRUSTED_FLAGS)
+        & (archive["obs_date"] >= since)
+    ]
+    merged = {}
+    for raw in keep.to_dict("records"):
+        record = {
+            "table_date": raw["obs_date"],
+            "code": stations.code_for(raw["river"], raw["station"]),
+            "river": raw["river"],
+            "station": raw["station"],
+            **{f: float(raw[f]) for f in ("namo", "ayer", "hoy", "diff")},
+            "semaforo": None,
+            "valid": True,
+        }
+        merged[level_key(record)] = record
+    rows = sorted(merged.values(), key=lambda r: r["table_date"])
+    buffer = io.StringIO()
+    pd.DataFrame(rows, columns=LEVEL_COLUMNS).to_csv(buffer, index=False, lineterminator="\n")
+    write_plan(root, {"inputs/ipcet/levels_seed.csv": buffer.getvalue().encode()})
+    return f"seeded {len(rows)} level rows"
+
+
 def write_plan(root, plan):
     # Preflight every destination before creating anything. Input/inference errors
     # cannot leave a partial ingest, state update or publication behind.
@@ -271,6 +478,7 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
     if previous > now.date():
         raise ValueError("run label is after fetch date")
     saved = target(root, f"inputs/openmeteo/{previous}.json")
+    reader = read_once(reader)
     payload = fetch()
     plan = {}
     with tempfile.TemporaryDirectory(prefix="bdctb-operate-") as directory:
@@ -314,6 +522,7 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
             plan[log_name] = history + f"{label},{now.isoformat()},{kind}\n".encode()
         observations, ingest_plan, digest = ingest(root, str(label), now, reader)
         plan.update(ingest_plan)
+        plan.update(publish_levels(root, now, reader))
         receipt_path = target(root, "bdctb/published.json")
         receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else {}
         should_publish = (
@@ -359,8 +568,19 @@ def main(argv=None, *, fetch=None, reader=None, forecaster=None):
             command.add_argument(
                 "--run-label", required=True, help="independently established YYYY-MM-DD run"
             )
+    levels_seed = sub.add_parser(
+        "seed-levels", help="bootstrap station level history from the OCR archive"
+    )
+    levels_seed.add_argument("--data", type=Path, required=True, help="forecasts branch checkout")
+    levels_seed.add_argument(
+        "--levels", type=Path, required=True, help="levels_cli read CSV (research archive)"
+    )
+    levels_seed.add_argument("--since", required=True, help="first observation date, YYYY-MM-DD")
     args = parser.parse_args(argv)
     try:
+        if args.command == "seed-levels":
+            print(seed_levels(args.data, args.levels, args.since))
+            return 0
         now = utc(args.now)
         if args.command == "seed":
             summary = seed(args.data, args.response, args.run_label, now)

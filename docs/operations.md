@@ -145,6 +145,23 @@ writes nothing. Processing rejected or not-yet-visible images can write an
 OCR receipt without changing the forecast; its summary is
 `ingested inputs; forecast unchanged` rather than `no change`.
 
+### Official table for every station
+
+The same run also publishes IPCET's official table for all stations as
+`ipcet/latest.json` and `ipcet/recent.json` ([schema](ipcet-schema.md)). It keeps
+its own once-per-folder cache, `tables.json`, and never changes the BDCTB path
+above. Each image is still OCRed once per run. To give the chart history from
+day one, seed the station history once from the research OCR archive:
+
+```bash
+uv run python -m riverforecast.operate seed-levels --data /tmp/forecasts \
+  --levels data/raw/ipcet/levels.csv --since 2026-08-01
+```
+
+The seed keeps only valid station rows with a trusted date, on or after `--since`,
+and leaves `semaforo` empty. It refuses to replace an existing
+`inputs/ipcet/levels_seed.csv`.
+
 ## Local offline replay
 
 Normal `run` downloads Open-Meteo. **For an offline dry run, inject a fetch**;
