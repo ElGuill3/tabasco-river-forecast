@@ -468,9 +468,13 @@ See the [v2 JSON schema and input contract](docs/forecast-schema.md).
 `models/bdctb/` holds the trusted joblib models and versioned training metadata.
 Serving requires scikit-learn 1.9.1 (the artifact's version) and joblib, but no
 OCR/tesseract; image ingestion separately needs the existing `levels` reader and
-tesseract. The current provider reads the stored CEMS operational CSVs and day-0
-archive only, without network calls. Open-Meteo is an explicit unimplemented
-stub pending T19 validation; acquisition and daily scheduling remain T19/T21.
+tesseract. Offline providers support both stored CEMS archives and the adopted
+Open-Meteo ensemble (T19/L51). The [daily operation](docs/operations.md) fetches
+Open-Meteo, ingests messenger-uploaded IPCET tables and publishes latest plus
+run-labeled history on the `forecasts` branch. Actions runs hourly from
+06:17–17:17 Mexico City and when the data-branch relay receives `meta.json`.
+The app reads the JSON; it never runs the model. See operations for one-time
+branch initialization, seeding, offline replay and failure recovery.
 
 ## Development
 

@@ -54,8 +54,9 @@ The caller must resolve images **causally** with `levels`/`live`: process only
 visible tables, respect printed/page date rules, zero-difference exclusions,
 undated confirmations and conflicts. Do not export the retrospective full-archive
 `bdctb_levels.csv` as if it were a causal input stream. The three-column interface
-cannot reconstruct these table-level decisions. T21 must preserve the accepted
-value's effective availability and must not backdate a later correction.
+cannot reconstruct these table-level decisions. The [daily operation](operations.md)
+maintains the causal series from cached messenger table rows, preserves effective
+availability and does not backdate later confirmations into older issue windows.
 
 Publish ignores future observations and anything uploaded after the issue cutoff.
 It uses `live.real_revealed_values`, exactly as the post-audit library: ages **0–7
@@ -91,8 +92,16 @@ form the summary, and control values on dates at or before issue form past
 (day-0) discharge. Every date from issue−7 through issue+7 must be present;
 used discharge values must be finite and strictly positive. Invalid JSON,
 missing columns/dates, and invalid used values fail before writing output.
-Neither this option nor the default CEMS provider downloads inputs. Acquiring
-fresh inputs and IPCET messenger/OCR remain separate T21 work.
+Neither this option nor the default CEMS provider downloads inputs. The separate
+`python -m riverforecast.operate run --data DIR` operation acquires fresh inputs,
+infers the served run label against seeded state, ingests IPCET messenger images,
+and publishes only when inputs change. It supplies the saved run response to
+this provider and sets `generated_at` to the actual UTC operation time.
+See [operations](operations.md) for the run-date heuristic, fixed issue cutoff,
+seed command and offline replay. The app reads
+`https://raw.githubusercontent.com/ElGuill3/tabasco-river-forecast/forecasts/bdctb/latest.json`;
+history lives at `bdctb/history/<run_label>.json` on the same branch. Same-label
+IPCET updates overwrite that history entry without changing the schema.
 
 ## Output fields
 
