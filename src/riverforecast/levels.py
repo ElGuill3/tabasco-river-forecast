@@ -83,6 +83,7 @@ class StationRow:
     hoy: float | None
     diff: float | None
     capacity: float | None
+    semaforo: str | None = None
 
 
 @dataclass(frozen=True)
@@ -645,6 +646,69 @@ def _solve_row(
     return fallback or primary
 
 
+# Observed in the daily TABLE, not the differently labelled colour map.
+# See docs/semaforo-states.md for the archive survey and typical backgrounds.
+_SEMAFORO_COLOURS = {
+    "NORMAL": (11, 173, 84),
+    "A LA BAJA": (128, 128, 128),
+    "BAJO": (101, 50, 2),
+    "PREVENCION": (248, 248, 26),
+    "ALERTA": (243, 10, 10),
+    "EMERGENCIA": (108, 51, 152),
+}
+
+
+def _read_semaforo(
+    rgb: np.ndarray,
+    gray: np.ndarray,
+    coloured: np.ndarray,
+    bands: list[tuple[int, int]],
+    sem_left: int,
+) -> list[str | None]:
+    """Read official cell text first, falling back to surveyed backgrounds.
+
+    Sample the row margins to find the full column: the central white text
+    otherwise splits the colour profile into fragments. This is independent
+    of the existing numeric-column bounds, which remain unchanged.
+    """
+    margins = [y for top, bot in bands for y in (top + 2, bot - 2)]
+    profile = coloured[margins].mean(axis=0)
+    holders = [
+        run
+        for run in _runs_1d(profile > 0.5, 15, 100)
+        if run[0] < sem_left + 60 and run[1] > sem_left
+    ]
+    if not holders:
+        return [None] * len(bands)
+    x0, x1 = max(holders, key=lambda run: float(profile[run[0] : run[1]].sum()))
+    states: list[str | None] = []
+    vocabulary = {state.replace(" ", ""): state for state in _SEMAFORO_COLOURS}
+    for top, bot in bands:
+        crop = gray[top + 1 : bot, x0 + 1 : x1]
+        im = Image.fromarray(crop)
+        im = im.resize((im.width * 4, im.height * 4), Image.LANCZOS)
+        text = pytesseract.image_to_string(im, config="--psm 7").strip()
+        token = re.sub(r"[^A-Z]", "", _norm(text).upper())
+        if token == "SD":
+            states.append(None)
+            continue
+        if token in vocabulary:
+            states.append(vocabulary[token])
+            continue
+
+        pixels = rgb[top + 2 : bot - 1, x0 + 2 : x1 - 1].reshape(-1, 3).astype(int)
+        saturated = pixels[np.ptp(pixels, axis=1) > 60]
+        background = np.median(saturated if len(saturated) > len(pixels) * 0.15 else pixels, axis=0)
+        distances = {
+            state: float(np.linalg.norm(background - colour))
+            for state, colour in _SEMAFORO_COLOURS.items()
+        }
+        nearest = min(distances, key=distances.get)
+        # A white/empty cell or an unobserved hue (e.g. orange) is not normal.
+        states.append(nearest if distances[nearest] <= 70 else None)
+    return states
+
+
 def read_table(path: str | Path) -> LevelTable:
     """Read one daily level-table image. Raises UnreadableTable otherwise."""
     image = Image.open(path)
@@ -742,10 +806,13 @@ def read_table(path: str | Path) -> LevelTable:
             columns[name].append(value)
 
     blue = np.ascontiguousarray(rgb[..., 2])
+    semaforos = _read_semaforo(rgb, gray, coloured, bands, sem_left)
 
     stations = []
     for k in range(len(STATIONS)):
-        primary = StationRow(STATIONS[k][0], STATIONS[k][1], *(columns[n][k] for n in fields))
+        primary = StationRow(
+            STATIONS[k][0], STATIONS[k][1], *(columns[n][k] for n in fields), semaforos[k]
+        )
         if _consistent(primary):
             stations.append(primary)
             continue
@@ -754,7 +821,7 @@ def read_table(path: str | Path) -> LevelTable:
             _solve_row(
                 primary,
                 cands,
-                lambda *c, k=k: StationRow(STATIONS[k][0], STATIONS[k][1], *c),
+                lambda *c, k=k: StationRow(STATIONS[k][0], STATIONS[k][1], *c, semaforos[k]),
                 fields,
             )
         )

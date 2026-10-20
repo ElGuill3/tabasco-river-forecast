@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from PIL import Image, ImageDraw, ImageFont
 
 from riverforecast import levels
 
@@ -17,6 +18,73 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 def boca(table: levels.LevelTable) -> levels.StationRow:
     return next(r for r in table.stations if r.station == "Boca del Cerro")
+
+
+@pytest.mark.parametrize(
+    "name, special",
+    [
+        ("semaforo_2026-10-19.jpeg", {"San Joaquín": "ALERTA"}),
+        (
+            "levels_2026-10-14.jpg",
+            {"Samaria": "A LA BAJA", "Boca del Cerro": "PREVENCION"},
+        ),
+        ("levels_2022-10-10.jpg", {"Gaviotas": "PREVENCION", "San Pedro": "PREVENCION"}),
+        ("levels_2025-03-05.jpg", {"Samaria": "A LA BAJA", "Teapa": "A LA BAJA"}),
+    ],
+)
+def test_read_table_official_semaforo(name: str, special: dict[str, str]) -> None:
+    """All 14 states read by eye from the official table, not the map."""
+    table = levels.read_table(FIXTURES / name)
+    assert [(row.river, row.station) for row in table.stations] == list(levels.STATIONS)
+    assert {row.station: row.semaforo for row in table.stations} == {
+        station: special.get(station, "NORMAL") for _, station in levels.STATIONS
+    }
+
+
+def test_read_table_semaforo_fallback_missing_and_text_precedence(tmp_path: Path) -> None:
+    """Synthetic cell edits exercise the reader's public interface with real OCR.
+
+    All numeric cells and grid edges stay untouched. Coordinates are from the
+    October 19 fixture; these are test pixels, not production layout assumptions.
+    """
+    image = Image.open(FIXTURES / "semaforo_2026-10-19.jpeg").convert("RGB")
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default(size=9)
+    cases = [
+        ((11, 173, 84), "", "NORMAL"),
+        ((128, 128, 128), "", "A LA BAJA"),
+        ((101, 50, 2), "", "BAJO"),
+        ((248, 248, 26), "", "PREVENCION"),
+        ((243, 10, 10), "", "ALERTA"),
+        ((108, 51, 152), "", "EMERGENCIA"),
+        ((243, 10, 10), "NORMAL", "NORMAL"),
+        ((128, 128, 128), "S/D", None),
+        ((255, 150, 0), "", None),  # orange has no surveyed table state
+        ((255, 255, 255), "", None),
+    ]
+    edges = [246, 264, 280, 297, 314, 331, 348, 365, 382, 396, 413]
+    for i, (colour, text, _) in enumerate(cases):
+        draw.rectangle((492, edges[i] + 1, 553, edges[i + 1] - 1), fill=colour)
+        if text:
+            draw.text(
+                (523, (edges[i] + edges[i + 1]) / 2), text, font=font, fill="white", anchor="mm"
+            )
+    path = tmp_path / "synthetic-states.png"
+    image.save(path)
+    table = levels.read_table(path)
+    assert [r.semaforo for r in table.stations] == [c[2] for c in cases] + ["NORMAL"] * 4
+    assert (table.stations[0].ayer, table.stations[0].hoy) == (11.64, 12.46)
+    assert [(r.river, r.station) for r in table.stations] == list(levels.STATIONS)
+
+
+def test_read_table_refuses_october_14_map() -> None:
+    with pytest.raises(levels.UnreadableTable):
+        levels.read_table(FIXTURES / "semaforo_2026-10-14.jpeg")
+
+
+def test_station_row_positional_constructor_keeps_default_state() -> None:
+    row = levels.StationRow("river", "station", 1, 2, 3, 4, 5, 6)
+    assert row.semaforo is None
 
 
 def test_read_table_station_rows_2025() -> None:
