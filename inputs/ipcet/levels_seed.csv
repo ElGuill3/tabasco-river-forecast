@@ -1,0 +1,620 @@
+table_date,code,river,station,namo,ayer,hoy,diff,semaforo,valid
+2026-08-03,SAMTB,Samaria,Samaria,14.9,11.5,11.4,-0.1,,True
+2026-08-03,GONTB,Carrizal,González,8.77,3.54,3.56,0.02,,True
+2026-08-03,OXOTB,Oxolotán,Oxolotán,39.53,34.0,33.98,-0.02,,True
+2026-08-03,TAPTB,Tacotalpa,Tapijulapa,24.63,16.07,16.08,0.01,,True
+2026-08-03,PUYTB,Puyacatengo,Puyacatengo,29.65,25.05,25.05,0.0,,True
+2026-08-03,TEATB,Teapa,Teapa,37.71,33.62,33.61,-0.01,,True
+2026-08-03,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.8,1.77,-0.03,,True
+2026-08-03,SJOCP,Pichucalco,San Joaquín,23.12,19.84,19.82,-0.02,,True
+2026-08-03,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-03,SAACP,Tulijá,Salto de Agua,10.99,2.26,2.24,-0.02,,True
+2026-08-03,MACTB,Puxcatán,Macuspana,9.85,1.54,1.48,-0.06,,True
+2026-08-03,BDCTB,Usumacinta,Boca del Cerro,19.21,13.31,13.03,-0.28,,True
+2026-08-03,SPTTB,San Pedro,San Pedro,9.01,8.53,8.52,-0.01,,True
+2026-08-04,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-04,GONTB,Carrizal,González,8.77,3.56,3.57,0.01,,True
+2026-08-04,OXOTB,Oxolotán,Oxolotán,39.53,33.98,33.97,-0.01,,True
+2026-08-04,TAPTB,Tacotalpa,Tapijulapa,24.63,16.08,16.07,-0.01,,True
+2026-08-04,PUYTB,Puyacatengo,Puyacatengo,29.65,25.05,25.04,-0.01,,True
+2026-08-04,TEATB,Teapa,Teapa,37.71,33.61,33.61,0.0,,True
+2026-08-04,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.77,1.69,-0.08,,True
+2026-08-04,SJOCP,Pichucalco,San Joaquín,23.12,19.82,19.82,0.0,,True
+2026-08-04,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-04,SAACP,Tulijá,Salto de Agua,10.99,2.24,2.23,-0.01,,True
+2026-08-04,MACTB,Puxcatán,Macuspana,9.85,1.48,1.45,-0.03,,True
+2026-08-04,BDCTB,Usumacinta,Boca del Cerro,19.21,13.03,12.83,-0.2,,True
+2026-08-04,SPTTB,San Pedro,San Pedro,9.01,8.52,8.53,0.01,,True
+2026-08-05,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-05,GONTB,Carrizal,González,8.77,3.57,3.68,0.11,,True
+2026-08-05,OXOTB,Oxolotán,Oxolotán,39.53,33.97,34.27,0.3,,True
+2026-08-05,TAPTB,Tacotalpa,Tapijulapa,24.63,16.07,16.05,-0.02,,True
+2026-08-05,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-05,TEATB,Teapa,Teapa,37.71,33.61,33.61,0.0,,True
+2026-08-05,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.69,1.64,-0.05,,True
+2026-08-05,SJOCP,Pichucalco,San Joaquín,23.12,19.82,19.94,0.12,,True
+2026-08-05,EPOTB,Grijalva,Porvenir,4.74,0.02,0.04,0.02,,True
+2026-08-05,SAACP,Tulijá,Salto de Agua,10.99,2.23,2.22,-0.01,,True
+2026-08-05,MACTB,Puxcatán,Macuspana,9.85,1.45,1.44,-0.01,,True
+2026-08-05,BDCTB,Usumacinta,Boca del Cerro,19.21,12.83,12.62,-0.21,,True
+2026-08-05,SPTTB,San Pedro,San Pedro,9.01,8.53,8.52,-0.01,,True
+2026-08-07,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-07,GONTB,Carrizal,González,8.77,3.56,3.56,0.0,,True
+2026-08-07,OXOTB,Oxolotán,Oxolotán,39.53,34.04,34.02,-0.02,,True
+2026-08-07,TAPTB,Tacotalpa,Tapijulapa,24.63,16.04,16.02,-0.02,,True
+2026-08-07,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-07,TEATB,Teapa,Teapa,37.71,33.6,33.6,0.0,,True
+2026-08-07,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.86,1.88,0.02,,True
+2026-08-07,SJOCP,Pichucalco,San Joaquín,23.12,19.84,19.99,0.15,,True
+2026-08-07,EPOTB,Grijalva,Porvenir,4.74,0.06,0.04,-0.02,,True
+2026-08-07,SAACP,Tulijá,Salto de Agua,10.99,2.22,2.21,-0.01,,True
+2026-08-07,MACTB,Puxcatán,Macuspana,9.85,1.43,1.42,-0.01,,True
+2026-08-07,BDCTB,Usumacinta,Boca del Cerro,19.21,12.43,12.38,-0.05,,True
+2026-08-07,SPTTB,San Pedro,San Pedro,9.01,8.52,8.51,-0.01,,True
+2026-08-10,SAMTB,Samaria,Samaria,14.9,11.5,11.4,-0.1,,True
+2026-08-10,GONTB,Carrizal,González,8.77,3.54,3.6,0.06,,True
+2026-08-10,OXOTB,Oxolotán,Oxolotán,39.53,33.99,33.98,-0.01,,True
+2026-08-10,TAPTB,Tacotalpa,Tapijulapa,24.63,15.98,15.97,-0.01,,True
+2026-08-10,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-10,TEATB,Teapa,Teapa,37.71,33.62,33.61,-0.01,,True
+2026-08-10,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.8,1.86,0.06,,True
+2026-08-10,EPOTB,Grijalva,Porvenir,4.74,0.02,0.05,0.03,,True
+2026-08-10,SAACP,Tulijá,Salto de Agua,10.99,2.21,2.22,0.01,,True
+2026-08-10,MACTB,Puxcatán,Macuspana,9.85,1.39,1.35,-0.04,,True
+2026-08-10,BDCTB,Usumacinta,Boca del Cerro,19.21,12.41,12.39,-0.02,,True
+2026-08-10,SPTTB,San Pedro,San Pedro,9.01,8.52,8.51,-0.01,,True
+2026-08-12,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-12,GONTB,Carrizal,González,8.77,3.59,3.6,0.01,,True
+2026-08-12,OXOTB,Oxolotán,Oxolotán,39.53,33.96,33.95,-0.01,,True
+2026-08-12,TAPTB,Tacotalpa,Tapijulapa,24.63,16.09,16.1,0.02,,True
+2026-08-12,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-12,TEATB,Teapa,Teapa,37.7,33.61,33.61,0.0,,True
+2026-08-12,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.88,1.81,-0.07,,True
+2026-08-12,SJOCP,Pichucalco,San Joaquín,23.12,19.87,19.86,-0.01,,True
+2026-08-12,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-12,SAACP,Tulijá,Salto de Agua,10.99,2.22,2.22,0.0,,True
+2026-08-12,MACTB,Puxcatán,Macuspana,9.85,1.58,1.57,-0.01,,True
+2026-08-12,BDCTB,Usumacinta,Boca del Cerro,19.21,12.34,12.34,0.0,,True
+2026-08-12,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-08-13,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-13,GONTB,Carrizal,González,8.77,3.6,3.59,-0.01,,True
+2026-08-13,OXOTB,Oxolotán,Oxolotán,39.53,33.95,33.91,-0.04,,True
+2026-08-13,TAPTB,Tacotalpa,Tapijulapa,24.63,16.11,16.06,-0.05,,True
+2026-08-13,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-13,TEATB,Teapa,Teapa,37.71,33.61,33.6,-0.01,,True
+2026-08-13,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.81,1.74,-0.07,,True
+2026-08-13,SJOCP,Pichucalco,San Joaquín,23.12,19.86,19.84,-0.02,,True
+2026-08-13,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-13,SAACP,Tulijá,Salto de Agua,10.99,2.22,2.22,0.0,,True
+2026-08-13,MACTB,Puxcatán,Macuspana,9.85,1.57,1.54,-0.03,,True
+2026-08-13,BDCTB,Usumacinta,Boca del Cerro,19.21,12.34,12.25,-0.09,,True
+2026-08-13,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-08-14,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-14,GONTB,Carrizal,González,8.77,3.59,3.6,0.01,,True
+2026-08-14,OXOTB,Oxolotán,Oxolotán,39.53,33.91,33.93,0.02,,True
+2026-08-14,TAPTB,Tacotalpa,Tapijulapa,24.63,16.06,16.02,-0.04,,True
+2026-08-14,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-14,TEATB,Teapa,Teapa,37.71,33.6,33.6,0.0,,True
+2026-08-14,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.74,1.7,-0.04,,True
+2026-08-14,SJOCP,Pichucalco,San Joaquín,23.12,19.84,19.85,0.01,,True
+2026-08-14,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-14,SAACP,Tulijá,Salto de Agua,10.99,2.22,2.22,0.0,,True
+2026-08-14,MACTB,Puxcatán,Macuspana,9.85,1.54,1.5,-0.04,,True
+2026-08-14,BDCTB,Usumacinta,Boca del Cerro,19.21,12.25,12.14,-0.11,,True
+2026-08-14,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-08-17,SAMTB,Samaria,Samaria,14.9,11.54,11.4,-0.14,,True
+2026-08-17,GONTB,Carrizal,González,8.77,3.57,3.58,0.01,,True
+2026-08-17,OXOTB,Oxolotán,Oxolotán,39.53,33.91,33.92,0.01,,True
+2026-08-17,TAPTB,Tacotalpa,Tapijulapa,24.63,15.97,16.06,0.09,,True
+2026-08-17,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-17,TEATB,Teapa,Teapa,37.71,33.63,33.63,0.0,,True
+2026-08-17,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.68,1.67,-0.01,,True
+2026-08-17,SJOCP,Pichucalco,San Joaquín,23.12,19.83,19.85,0.02,,True
+2026-08-17,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-17,SAACP,Tulijá,Salto de Agua,10.99,2.22,2.23,0.01,,True
+2026-08-17,MACTB,Puxcatán,Macuspana,9.85,1.43,1.41,-0.02,,True
+2026-08-17,BDCTB,Usumacinta,Boca del Cerro,19.21,12.28,12.3,0.02,,True
+2026-08-17,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-08-18,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-18,GONTB,Carrizal,González,8.77,3.58,3.57,-0.01,,True
+2026-08-18,OXOTB,Oxolotán,Oxolotán,39.53,33.92,33.92,0.0,,True
+2026-08-18,TAPTB,Tacotalpa,Tapijulapa,24.63,16.06,16.18,0.12,,True
+2026-08-18,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-18,TEATB,Teapa,Teapa,37.71,33.63,33.62,-0.01,,True
+2026-08-18,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.67,1.7,0.03,,True
+2026-08-18,SJOCP,Pichucalco,San Joaquín,23.12,19.85,19.88,0.03,,True
+2026-08-18,EPOTB,Grijalva,Porvenir,4.74,0.02,0.03,0.01,,True
+2026-08-18,SAACP,Tulijá,Salto de Agua,10.99,2.23,2.34,0.11,,True
+2026-08-18,MACTB,Puxcatán,Macuspana,9.85,1.41,1.39,-0.02,,True
+2026-08-18,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-08-19,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-19,GONTB,Carrizal,González,8.77,3.57,3.6,0.03,,True
+2026-08-19,OXOTB,Oxolotán,Oxolotán,39.53,33.92,33.93,0.01,,True
+2026-08-19,TAPTB,Tacotalpa,Tapijulapa,24.63,16.18,16.12,-0.06,,True
+2026-08-19,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.05,0.01,,True
+2026-08-19,TEATB,Teapa,Teapa,37.71,33.62,33.62,0.0,,True
+2026-08-19,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.7,1.7,0.0,,True
+2026-08-19,SJOCP,Pichucalco,San Joaquín,23.12,19.88,19.98,0.1,,True
+2026-08-19,EPOTB,Grijalva,Porvenir,4.74,0.03,0.04,0.01,,True
+2026-08-19,SAACP,Tulijá,Salto de Agua,10.99,2.34,2.32,-0.02,,True
+2026-08-19,MACTB,Puxcatán,Macuspana,9.85,1.39,1.38,-0.01,,True
+2026-08-19,BDCTB,Usumacinta,Boca del Cerro,19.21,12.41,12.66,0.25,,True
+2026-08-19,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-08-20,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-20,GONTB,Carrizal,González,8.77,3.6,3.46,-0.14,,True
+2026-08-20,OXOTB,Oxolotán,Oxolotán,39.53,33.93,33.99,0.06,,True
+2026-08-20,TAPTB,Tacotalpa,Tapijulapa,24.63,16.12,16.07,-0.05,,True
+2026-08-20,PUYTB,Puyacatengo,Puyacatengo,29.65,25.05,25.04,-0.01,,True
+2026-08-20,TEATB,Teapa,Teapa,37.71,33.62,33.61,-0.01,,True
+2026-08-20,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.7,1.67,-0.03,,True
+2026-08-20,SJOCP,Pichucalco,San Joaquín,23.12,19.98,20.07,0.09,,True
+2026-08-20,EPOTB,Grijalva,Porvenir,4.74,0.04,0.03,-0.01,,True
+2026-08-20,SAACP,Tulijá,Salto de Agua,10.99,2.32,2.36,0.04,,True
+2026-08-20,MACTB,Puxcatán,Macuspana,9.85,1.38,1.52,0.14,,True
+2026-08-20,BDCTB,Usumacinta,Boca del Cerro,19.21,12.66,12.87,0.21,,True
+2026-08-20,SPTTB,San Pedro,San Pedro,9.01,8.49,8.5,0.01,,True
+2026-08-21,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-21,GONTB,Carrizal,González,8.77,3.46,3.48,0.02,,True
+2026-08-21,OXOTB,Oxolotán,Oxolotán,39.53,33.99,33.94,-0.05,,True
+2026-08-21,TAPTB,Tacotalpa,Tapijulapa,24.63,16.07,16.04,-0.03,,True
+2026-08-21,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-21,TEATB,Teapa,Teapa,37.71,33.61,33.61,0.0,,True
+2026-08-21,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.67,1.7,0.03,,True
+2026-08-21,SJOCP,Pichucalco,San Joaquín,23.12,20.07,19.85,-0.22,,True
+2026-08-21,EPOTB,Grijalva,Porvenir,4.74,0.03,0.05,0.02,,True
+2026-08-21,SAACP,Tulijá,Salto de Agua,10.99,2.36,2.34,-0.02,,True
+2026-08-21,MACTB,Puxcatán,Macuspana,9.85,1.52,1.49,-0.03,,True
+2026-08-21,BDCTB,Usumacinta,Boca del Cerro,19.21,12.87,12.73,-0.14,,True
+2026-08-21,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-08-24,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-24,GONTB,Carrizal,González,8.77,3.56,3.44,-0.12,,True
+2026-08-24,OXOTB,Oxolotán,Oxolotán,39.53,33.96,34.13,0.17,,True
+2026-08-24,TAPTB,Tacotalpa,Tapijulapa,24.63,16.04,16.04,0.0,,True
+2026-08-24,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-24,TEATB,Teapa,Teapa,37.71,33.81,33.79,-0.02,,True
+2026-08-24,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.66,1.78,0.12,,True
+2026-08-24,SJOCP,Pichucalco,San Joaquín,23.12,20.02,20.0,-0.02,,True
+2026-08-24,EPOTB,Grijalva,Porvenir,4.74,0.03,0.06,0.03,,True
+2026-08-24,SAACP,Tulijá,Salto de Agua,10.99,2.24,2.23,-0.01,,True
+2026-08-24,MACTB,Puxcatán,Macuspana,9.85,1.48,1.61,0.13,,True
+2026-08-24,BDCTB,Usumacinta,Boca del Cerro,19.21,12.57,12.53,-0.04,,True
+2026-08-24,SPTTB,San Pedro,San Pedro,9.01,8.49,8.5,0.01,,True
+2026-08-25,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-25,GONTB,Carrizal,González,8.77,3.44,3.43,-0.01,,True
+2026-08-25,OXOTB,Oxolotán,Oxolotán,39.53,34.13,33.97,-0.16,,True
+2026-08-25,TAPTB,Tacotalpa,Tapijulapa,24.63,16.04,16.01,-0.03,,True
+2026-08-25,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-25,TEATB,Teapa,Teapa,37.71,33.79,33.78,-0.01,,True
+2026-08-25,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.78,1.85,0.07,,True
+2026-08-25,SJOCP,Pichucalco,San Joaquín,23.12,20.0,19.92,-0.08,,True
+2026-08-25,EPOTB,Grijalva,Porvenir,4.74,0.06,0.12,0.06,,True
+2026-08-25,SAACP,Tulijá,Salto de Agua,10.99,2.23,2.24,0.01,,True
+2026-08-25,MACTB,Puxcatán,Macuspana,9.85,1.61,1.59,-0.02,,True
+2026-08-25,BDCTB,Usumacinta,Boca del Cerro,19.21,12.53,12.47,-0.06,,True
+2026-08-25,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-08-26,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-26,GONTB,Carrizal,González,8.77,3.43,3.46,0.03,,True
+2026-08-26,OXOTB,Oxolotán,Oxolotán,39.53,33.97,33.93,-0.04,,True
+2026-08-26,TAPTB,Tacotalpa,Tapijulapa,24.63,16.01,15.98,-0.03,,True
+2026-08-26,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.04,0.0,,True
+2026-08-26,TEATB,Teapa,Teapa,37.71,33.78,33.77,-0.01,,True
+2026-08-26,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.85,1.9,0.05,,True
+2026-08-26,SJOCP,Pichucalco,San Joaquín,23.12,19.92,19.91,-0.01,,True
+2026-08-26,EPOTB,Grijalva,Porvenir,4.74,0.12,0.1,-0.02,,True
+2026-08-26,SAACP,Tulijá,Salto de Agua,10.99,2.24,2.25,0.01,,True
+2026-08-26,MACTB,Puxcatán,Macuspana,9.85,1.59,1.57,-0.02,,True
+2026-08-26,BDCTB,Usumacinta,Boca del Cerro,19.21,12.47,12.34,-0.13,,True
+2026-08-26,SPTTB,San Pedro,San Pedro,9.01,8.5,8.49,-0.01,,True
+2026-08-27,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-27,GONTB,Carrizal,González,8.77,3.46,3.47,0.01,,True
+2026-08-27,OXOTB,Oxolotán,Oxolotán,39.53,33.93,33.92,-0.01,,True
+2026-08-27,TAPTB,Tacotalpa,Tapijulapa,24.63,15.98,15.95,-0.03,,True
+2026-08-27,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.03,-0.01,,True
+2026-08-27,TEATB,Teapa,Teapa,37.71,33.77,33.76,-0.01,,True
+2026-08-27,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.9,1.76,-0.14,,True
+2026-08-27,SJOCP,Pichucalco,San Joaquín,23.12,19.91,19.88,-0.03,,True
+2026-08-27,EPOTB,Grijalva,Porvenir,4.74,0.1,0.04,-0.06,,True
+2026-08-27,SAACP,Tulijá,Salto de Agua,10.99,2.25,2.23,-0.02,,True
+2026-08-27,MACTB,Puxcatán,Macuspana,9.85,1.57,1.5,-0.07,,True
+2026-08-27,BDCTB,Usumacinta,Boca del Cerro,19.21,12.34,12.34,0.0,,True
+2026-08-27,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-08-28,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-28,GONTB,Carrizal,González,8.77,3.47,3.49,0.02,,True
+2026-08-28,OXOTB,Oxolotán,Oxolotán,39.53,33.92,33.91,-0.01,,True
+2026-08-28,TAPTB,Tacotalpa,Tapijulapa,24.63,15.95,15.94,-0.01,,True
+2026-08-28,PUYTB,Puyacatengo,Puyacatengo,29.65,25.03,25.03,0.0,,True
+2026-08-28,TEATB,Teapa,Teapa,37.71,33.76,33.75,-0.01,,True
+2026-08-28,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.76,1.64,-0.12,,True
+2026-08-28,SJOCP,Pichucalco,San Joaquín,23.12,19.88,19.89,0.01,,True
+2026-08-28,EPOTB,Grijalva,Porvenir,4.74,0.04,0.03,-0.01,,True
+2026-08-28,SAACP,Tulijá,Salto de Agua,10.99,2.23,2.22,-0.01,,True
+2026-08-28,MACTB,Puxcatán,Macuspana,9.85,1.5,1.36,-0.14,,True
+2026-08-28,BDCTB,Usumacinta,Boca del Cerro,19.21,12.34,12.32,-0.02,,True
+2026-08-28,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-08-31,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-08-31,GONTB,Carrizal,González,8.77,3.6,3.46,-0.14,,True
+2026-08-31,OXOTB,Oxolotán,Oxolotán,39.53,33.89,33.89,0.0,,True
+2026-08-31,TAPTB,Tacotalpa,Tapijulapa,24.63,15.92,15.9,-0.02,,True
+2026-08-31,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-08-31,TEATB,Teapa,Teapa,37.71,33.73,33.72,-0.01,,True
+2026-08-31,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.66,1.58,-0.08,,True
+2026-08-31,SJOCP,Pichucalco,San Joaquín,23.12,19.86,19.84,-0.02,,True
+2026-08-31,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-08-31,SAACP,Tulijá,Salto de Agua,10.99,2.21,2.19,-0.02,,True
+2026-08-31,MACTB,Puxcatán,Macuspana,9.85,1.3,1.24,-0.06,,True
+2026-08-31,BDCTB,Usumacinta,Boca del Cerro,19.21,12.61,12.91,0.3,,True
+2026-08-31,SPTTB,San Pedro,San Pedro,9.01,8.49,8.49,0.0,,True
+2026-09-01,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-01,GONTB,Carrizal,González,8.77,3.46,3.45,-0.01,,True
+2026-09-01,OXOTB,Oxolotán,Oxolotán,39.53,33.89,33.88,-0.01,,True
+2026-09-01,TAPTB,Tacotalpa,Tapijulapa,24.63,15.9,15.88,-0.02,,True
+2026-09-01,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-01,TEATB,Teapa,Teapa,37.71,33.72,33.72,0.0,,True
+2026-09-01,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.58,1.52,-0.06,,True
+2026-09-01,SJOCP,Pichucalco,San Joaquín,23.12,19.84,19.84,0.0,,True
+2026-09-01,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-09-01,SAACP,Tulijá,Salto de Agua,10.99,2.19,2.18,-0.01,,True
+2026-09-01,MACTB,Puxcatán,Macuspana,9.85,1.24,1.2,-0.04,,True
+2026-09-01,BDCTB,Usumacinta,Boca del Cerro,19.21,12.91,12.99,0.08,,True
+2026-09-01,SPTTB,San Pedro,San Pedro,9.01,8.49,8.51,0.02,,True
+2026-09-02,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-02,GONTB,Carrizal,González,8.77,3.45,3.44,-0.01,,True
+2026-09-02,OXOTB,Oxolotán,Oxolotán,39.53,33.88,33.88,0.0,,True
+2026-09-02,TAPTB,Tacotalpa,Tapijulapa,24.63,15.88,15.87,-0.01,,True
+2026-09-02,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-02,TEATB,Teapa,Teapa,37.71,33.72,33.71,-0.01,,True
+2026-09-02,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.52,1.48,-0.04,,True
+2026-09-02,SJOCP,Pichucalco,San Joaquín,23.12,19.84,19.83,-0.01,,True
+2026-09-02,EPOTB,Grijalva,Porvenir,4.74,0.02,0.01,-0.01,,True
+2026-09-02,SAACP,Tulijá,Salto de Agua,10.99,2.18,2.18,0.0,,True
+2026-09-02,MACTB,Puxcatán,Macuspana,9.85,1.2,1.18,-0.02,,True
+2026-09-02,BDCTB,Usumacinta,Boca del Cerro,19.21,12.99,12.93,-0.06,,True
+2026-09-02,SPTTB,San Pedro,San Pedro,9.01,8.51,8.52,0.01,,True
+2026-09-03,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-03,GONTB,Carrizal,González,8.77,3.44,3.51,0.07,,True
+2026-09-03,OXOTB,Oxolotán,Oxolotán,39.53,33.88,33.87,-0.01,,True
+2026-09-03,TAPTB,Tacotalpa,Tapijulapa,24.63,15.87,15.86,-0.01,,True
+2026-09-03,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-03,TEATB,Teapa,Teapa,37.71,33.71,33.71,0.0,,True
+2026-09-03,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.48,1.48,0.0,,True
+2026-09-03,SJOCP,Pichucalco,San Joaquín,23.12,19.83,19.82,-0.01,,True
+2026-09-03,EPOTB,Grijalva,Porvenir,4.74,0.01,0.02,0.01,,True
+2026-09-03,SAACP,Tulijá,Salto de Agua,10.99,2.18,2.17,-0.01,,True
+2026-09-03,MACTB,Puxcatán,Macuspana,9.85,1.18,1.15,-0.03,,True
+2026-09-03,BDCTB,Usumacinta,Boca del Cerro,19.21,12.93,12.9,-0.03,,True
+2026-09-03,SPTTB,San Pedro,San Pedro,9.01,8.52,8.51,-0.01,,True
+2026-09-04,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-04,GONTB,Carrizal,González,8.77,3.51,3.52,0.01,,True
+2026-09-04,OXOTB,Oxolotán,Oxolotán,39.53,33.87,33.87,0.0,,True
+2026-09-04,TAPTB,Tacotalpa,Tapijulapa,24.63,15.86,15.84,-0.02,,True
+2026-09-04,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-04,TEATB,Teapa,Teapa,37.7,33.71,33.7,-0.01,,True
+2026-09-04,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.48,1.47,-0.01,,True
+2026-09-04,SJOCP,Pichucalco,San Joaquín,23.12,19.82,19.81,-0.01,,True
+2026-09-04,EPOTB,Grijalva,Porvenir,4.74,0.02,0.02,0.0,,True
+2026-09-04,SAACP,Tulijá,Salto de Agua,10.99,2.17,2.16,-0.01,,True
+2026-09-04,MACTB,Puxcatán,Macuspana,9.85,1.15,1.14,-0.01,,True
+2026-09-04,BDCTB,Usumacinta,Boca del Cerro,19.21,12.9,12.7,-0.2,,True
+2026-09-04,SPTTB,San Pedro,San Pedro,9.01,8.51,8.5,-0.01,,True
+2026-09-07,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-07,GONTB,Carrizal,González,8.77,3.5,3.45,-0.05,,True
+2026-09-07,OXOTB,Oxolotán,Oxolotán,39.53,34.09,34.03,-0.06,,True
+2026-09-07,TAPTB,Tacotalpa,Tapijulapa,24.63,15.81,15.8,-0.01,,True
+2026-09-07,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-07,TEATB,Teapa,Teapa,37.7,33.69,33.69,0.0,,True
+2026-09-07,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.46,1.58,0.12,,True
+2026-09-07,SJOCP,Pichucalco,San Joaquín,23.12,19.8,19.82,0.02,,True
+2026-09-07,EPOTB,Grijalva,Porvenir,4.74,0.23,0.31,0.08,,True
+2026-09-07,SAACP,Tulijá,Salto de Agua,10.99,2.16,2.16,0.0,,True
+2026-09-07,MACTB,Puxcatán,Macuspana,9.85,1.15,1.14,-0.01,,True
+2026-09-07,BDCTB,Usumacinta,Boca del Cerro,19.21,12.62,12.57,-0.05,,True
+2026-09-07,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-09-08,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-08,GONTB,Carrizal,González,8.77,3.45,3.44,-0.01,,True
+2026-09-08,OXOTB,Oxolotán,Oxolotán,39.53,34.03,33.93,-0.1,,True
+2026-09-08,TAPTB,Tacotalpa,Tapijulapa,24.63,15.8,15.78,-0.02,,True
+2026-09-08,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-08,TEATB,Teapa,Teapa,37.7,33.69,33.69,0.0,,True
+2026-09-08,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.58,1.76,0.18,,True
+2026-09-08,SJOCP,Pichucalco,San Joaquín,23.12,19.82,19.81,-0.01,,True
+2026-09-08,EPOTB,Grijalva,Porvenir,4.74,0.31,0.14,-0.17,,True
+2026-09-08,SAACP,Tulijá,Salto de Agua,10.99,2.16,2.16,0.0,,True
+2026-09-08,MACTB,Puxcatán,Macuspana,9.85,1.14,1.13,-0.01,,True
+2026-09-08,BDCTB,Usumacinta,Boca del Cerro,19.21,12.57,12.51,-0.06,,True
+2026-09-08,SPTTB,San Pedro,San Pedro,9.01,8.5,8.5,0.0,,True
+2026-09-09,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-09,GONTB,Carrizal,González,8.77,3.44,3.52,0.08,,True
+2026-09-09,OXOTB,Oxolotán,Oxolotán,39.53,33.93,33.92,-0.01,,True
+2026-09-09,TAPTB,Tacotalpa,Tapijulapa,24.63,15.78,15.81,0.03,,True
+2026-09-09,PUYTB,Puyacatengo,Puyacatengo,29.65,25.02,25.02,0.0,,True
+2026-09-09,TEATB,Teapa,Teapa,37.7,33.69,33.68,-0.01,,True
+2026-09-09,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.76,1.6,-0.16,,True
+2026-09-09,SJOCP,Pichucalco,San Joaquín,23.12,19.81,19.8,-0.01,,True
+2026-09-09,EPOTB,Grijalva,Porvenir,4.74,0.14,0.05,-0.09,,True
+2026-09-09,SAACP,Tulijá,Salto de Agua,10.99,2.16,2.17,0.01,,True
+2026-09-09,MACTB,Puxcatán,Macuspana,9.85,1.13,1.12,-0.01,,True
+2026-09-09,BDCTB,Usumacinta,Boca del Cerro,19.21,12.51,12.39,-0.12,,True
+2026-09-09,SPTTB,San Pedro,San Pedro,9.01,8.5,8.51,0.01,,True
+2026-09-14,SAMTB,Samaria,Samaria,14.9,11.48,11.43,-0.05,,True
+2026-09-14,GONTB,Carrizal,González,8.77,3.36,3.5,0.14,,True
+2026-09-14,OXOTB,Oxolotán,Oxolotán,39.53,33.89,33.87,-0.02,,True
+2026-09-14,TAPTB,Tacotalpa,Tapijulapa,24.63,15.75,15.74,-0.01,,True
+2026-09-14,PUYTB,Puyacatengo,Puyacatengo,29.65,24.96,24.98,0.02,,True
+2026-09-14,TEATB,Teapa,Teapa,37.71,33.82,33.72,-0.1,,True
+2026-09-14,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.72,1.56,-0.16,,True
+2026-09-14,SJOCP,Pichucalco,San Joaquín,23.12,19.96,19.94,-0.02,,True
+2026-09-14,EPOTB,Grijalva,Porvenir,4.74,0.12,0.05,-0.07,,True
+2026-09-14,SAACP,Tulijá,Salto de Agua,10.99,2.15,2.13,-0.02,,True
+2026-09-14,MACTB,Puxcatán,Macuspana,9.85,1.1,1.09,-0.01,,True
+2026-09-14,BDCTB,Usumacinta,Boca del Cerro,19.21,12.41,12.31,-0.1,,True
+2026-09-14,SPTTB,San Pedro,San Pedro,9.01,8.52,8.52,0.0,,True
+2026-09-15,SAMTB,Samaria,Samaria,14.9,11.43,11.43,0.0,,True
+2026-09-15,GONTB,Carrizal,González,8.77,3.5,3.5,0.0,,True
+2026-09-15,OXOTB,Oxolotán,Oxolotán,39.53,33.87,33.87,0.0,,True
+2026-09-15,TAPTB,Tacotalpa,Tapijulapa,24.63,15.74,15.74,0.0,,True
+2026-09-15,PUYTB,Puyacatengo,Puyacatengo,29.65,24.98,24.98,0.0,,True
+2026-09-15,TEATB,Teapa,Teapa,37.71,33.72,33.72,0.0,,True
+2026-09-15,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.56,1.56,0.0,,True
+2026-09-15,SJOCP,Pichucalco,San Joaquín,23.12,19.94,19.94,0.0,,True
+2026-09-15,EPOTB,Grijalva,Porvenir,4.74,0.05,0.05,0.0,,True
+2026-09-15,SAACP,Tulijá,Salto de Agua,10.99,2.13,2.13,0.0,,True
+2026-09-15,MACTB,Puxcatán,Macuspana,9.85,1.09,1.09,0.0,,True
+2026-09-15,BDCTB,Usumacinta,Boca del Cerro,19.21,12.31,12.31,0.0,,True
+2026-09-15,SPTTB,San Pedro,San Pedro,9.01,8.52,8.52,0.0,,True
+2026-09-17,SAMTB,Samaria,Samaria,14.9,11.4,11.4,0.0,,True
+2026-09-17,GONTB,Carrizal,González,8.77,3.44,3.51,0.07,,True
+2026-09-17,OXOTB,Oxolotán,Oxolotán,39.53,33.88,33.9,0.02,,True
+2026-09-17,TAPTB,Tacotalpa,Tapijulapa,24.63,15.71,15.73,0.02,,True
+2026-09-17,PUYTB,Puyacatengo,Puyacatengo,29.65,25.0,24.97,-0.03,,True
+2026-09-17,TEATB,Teapa,Teapa,37.7,33.71,33.7,-0.01,,True
+2026-09-17,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.59,1.52,-0.07,,True
+2026-09-17,SJOCP,Pichucalco,San Joaquín,23.12,19.88,19.89,0.01,,True
+2026-09-17,EPOTB,Grijalva,Porvenir,4.74,0.13,0.06,-0.07,,True
+2026-09-17,SAACP,Tulijá,Salto de Agua,10.99,2.13,2.14,0.01,,True
+2026-09-17,MACTB,Puxcatán,Macuspana,9.85,1.08,1.06,-0.02,,True
+2026-09-17,BDCTB,Usumacinta,Boca del Cerro,19.21,12.0,12.03,0.03,,True
+2026-09-17,SPTTB,San Pedro,San Pedro,9.01,8.52,8.53,0.01,,True
+2026-09-18,SAMTB,Samaria,Samaria,14.9,11.4,11.58,0.18,,True
+2026-09-18,GONTB,Carrizal,González,8.77,3.51,3.44,-0.07,,True
+2026-09-18,OXOTB,Oxolotán,Oxolotán,39.53,33.9,33.98,0.08,,True
+2026-09-18,TAPTB,Tacotalpa,Tapijulapa,24.63,15.73,15.93,0.2,,True
+2026-09-18,PUYTB,Puyacatengo,Puyacatengo,29.65,24.97,25.05,0.08,,True
+2026-09-18,TEATB,Teapa,Teapa,37.71,33.7,34.1,0.4,,True
+2026-09-18,PNVTB,De la Sierra,Pueblo Nuevo,7.49,1.52,1.48,-0.04,,True
+2026-09-18,SJOCP,Pichucalco,San Joaquín,23.12,19.89,23.08,3.19,,True
+2026-09-18,EPOTB,Grijalva,Porvenir,4.74,0.06,0.11,0.05,,True
+2026-09-18,SAACP,Tulijá,Salto de Agua,10.99,2.14,2.64,0.5,,True
+2026-09-18,MACTB,Puxcatán,Macuspana,9.85,1.06,1.05,-0.01,,True
+2026-09-18,BDCTB,Usumacinta,Boca del Cerro,19.21,12.03,12.09,0.06,,True
+2026-09-18,SPTTB,San Pedro,San Pedro,9.01,8.53,8.53,0.0,,True
+2026-09-21,SAMTB,Samaria,Samaria,14.9,11.76,11.68,-0.08,,True
+2026-09-21,GONTB,Carrizal,González,8.77,3.47,3.42,-0.05,,True
+2026-09-21,OXOTB,Oxolotán,Oxolotán,39.53,34.11,34.1,-0.01,,True
+2026-09-21,TAPTB,Tacotalpa,Tapijulapa,24.63,15.9,16.1,0.2,,True
+2026-09-21,PUYTB,Puyacatengo,Puyacatengo,29.65,25.16,24.8,-0.36,,True
+2026-09-21,TEATB,Teapa,Teapa,37.71,34.25,34.03,-0.22,,True
+2026-09-21,PNVTB,De la Sierra,Pueblo Nuevo,7.49,2.92,3.2,0.28,,True
+2026-09-21,SJOCP,Pichucalco,San Joaquín,23.12,21.92,21.66,-0.26,,True
+2026-09-21,EPOTB,Grijalva,Porvenir,4.74,0.48,0.54,0.06,,True
+2026-09-21,SAACP,Tulijá,Salto de Agua,10.99,2.7,3.06,0.36,,True
+2026-09-21,MACTB,Puxcatán,Macuspana,9.85,3.36,3.59,0.23,,True
+2026-09-21,BDCTB,Usumacinta,Boca del Cerro,19.21,12.13,12.42,0.29,,True
+2026-09-21,SPTTB,San Pedro,San Pedro,9.01,8.52,8.52,0.0,,True
+2026-09-22,SAMTB,Samaria,Samaria,14.9,11.68,11.64,-0.04,,True
+2026-09-22,GONTB,Carrizal,González,8.77,3.42,3.43,0.01,,True
+2026-09-22,OXOTB,Oxolotán,Oxolotán,39.53,34.1,34.03,-0.07,,True
+2026-09-22,TAPTB,Tacotalpa,Tapijulapa,24.63,16.1,16.18,0.08,,True
+2026-09-22,PUYTB,Puyacatengo,Puyacatengo,29.65,24.8,25.04,0.24,,True
+2026-09-22,TEATB,Teapa,Teapa,37.7,34.03,34.12,0.09,,True
+2026-09-22,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.2,2.58,-0.62,,True
+2026-09-22,SJOCP,Pichucalco,San Joaquín,23.12,21.66,21.48,-0.18,,True
+2026-09-22,EPOTB,Grijalva,Porvenir,4.74,0.54,0.5,-0.04,,True
+2026-09-22,SAACP,Tulijá,Salto de Agua,10.99,3.06,3.2,0.14,,True
+2026-09-22,MACTB,Puxcatán,Macuspana,9.85,3.59,2.95,-0.64,,True
+2026-09-22,BDCTB,Usumacinta,Boca del Cerro,19.21,12.42,12.65,0.23,,True
+2026-09-22,SPTTB,San Pedro,San Pedro,9.01,8.52,8.51,-0.01,,True
+2026-09-23,SAMTB,Samaria,Samaria,14.9,11.64,11.64,0.0,,True
+2026-09-23,GONTB,Carrizal,González,8.77,3.43,3.42,-0.01,,True
+2026-09-23,OXOTB,Oxolotán,Oxolotán,39.53,34.03,34.31,0.28,,True
+2026-09-23,TAPTB,Tacotalpa,Tapijulapa,24.63,16.18,16.25,0.07,,True
+2026-09-23,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.12,0.08,,True
+2026-09-23,TEATB,Teapa,Teapa,37.7,34.12,34.46,0.34,,True
+2026-09-23,PNVTB,De la Sierra,Pueblo Nuevo,7.49,2.58,2.56,-0.02,,True
+2026-09-23,SJOCP,Pichucalco,San Joaquín,23.12,21.48,21.79,0.31,,True
+2026-09-23,EPOTB,Grijalva,Porvenir,4.74,0.5,0.54,0.04,,True
+2026-09-23,SAACP,Tulijá,Salto de Agua,10.99,3.2,3.96,0.76,,True
+2026-09-23,MACTB,Puxcatán,Macuspana,9.85,2.95,3.51,0.56,,True
+2026-09-23,BDCTB,Usumacinta,Boca del Cerro,19.21,12.65,12.77,0.12,,True
+2026-09-23,SPTTB,San Pedro,San Pedro,9.01,8.51,8.51,0.0,,True
+2026-09-24,SAMTB,Samaria,Samaria,14.9,11.64,11.64,0.0,,True
+2026-09-24,GONTB,Carrizal,González,8.77,3.42,3.4,-0.02,,True
+2026-09-24,OXOTB,Oxolotán,Oxolotán,39.53,34.31,34.82,0.51,,True
+2026-09-24,TAPTB,Tacotalpa,Tapijulapa,24.63,16.25,16.32,0.07,,True
+2026-09-24,PUYTB,Puyacatengo,Puyacatengo,29.65,25.12,25.28,0.16,,True
+2026-09-24,TEATB,Teapa,Teapa,37.71,34.46,34.85,0.39,,True
+2026-09-24,PNVTB,De la Sierra,Pueblo Nuevo,7.49,2.56,3.28,0.72,,True
+2026-09-24,SJOCP,Pichucalco,San Joaquín,23.12,21.79,22.13,0.34,,True
+2026-09-24,EPOTB,Grijalva,Porvenir,4.74,0.54,0.47,-0.07,,True
+2026-09-24,SAACP,Tulijá,Salto de Agua,10.99,3.96,6.25,2.29,,True
+2026-09-24,MACTB,Puxcatán,Macuspana,9.85,3.51,4.07,0.56,,True
+2026-09-24,BDCTB,Usumacinta,Boca del Cerro,19.21,12.77,12.9,0.13,,True
+2026-09-24,SPTTB,San Pedro,San Pedro,9.01,8.51,8.51,0.0,,True
+2026-09-25,SAMTB,Samaria,Samaria,14.9,11.64,11.68,0.04,,True
+2026-09-25,GONTB,Carrizal,González,8.77,3.4,3.38,-0.02,,True
+2026-09-25,OXOTB,Oxolotán,Oxolotán,39.53,34.82,34.51,-0.31,,True
+2026-09-25,TAPTB,Tacotalpa,Tapijulapa,24.63,16.32,17.4,1.08,,True
+2026-09-25,PUYTB,Puyacatengo,Puyacatengo,29.65,25.28,25.4,0.12,,True
+2026-09-25,TEATB,Teapa,Teapa,37.71,34.85,34.82,-0.03,,True
+2026-09-25,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.28,4.76,1.48,,True
+2026-09-25,SJOCP,Pichucalco,San Joaquín,23.12,22.13,23.05,0.92,,True
+2026-09-25,SAACP,Tulijá,Salto de Agua,10.99,6.25,8.18,1.93,,True
+2026-09-25,MACTB,Puxcatán,Macuspana,9.85,4.07,5.77,1.7,,True
+2026-09-25,BDCTB,Usumacinta,Boca del Cerro,19.21,12.9,13.42,0.52,,True
+2026-09-25,SPTTB,San Pedro,San Pedro,9.01,8.51,8.53,0.02,,True
+2026-09-28,SAMTB,Samaria,Samaria,14.9,11.78,11.84,0.06,,True
+2026-09-28,GONTB,Carrizal,González,8.77,3.36,3.42,0.06,,True
+2026-09-28,OXOTB,Oxolotán,Oxolotán,39.53,34.88,35.05,0.17,,True
+2026-09-28,TAPTB,Tacotalpa,Tapijulapa,24.63,17.24,17.3,0.06,,True
+2026-09-28,PUYTB,Puyacatengo,Puyacatengo,29.65,25.34,25.25,-0.09,,True
+2026-09-28,TEATB,Teapa,Teapa,37.7,34.41,34.46,0.05,,True
+2026-09-28,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.26,5.46,0.2,,True
+2026-09-28,SJOCP,Pichucalco,San Joaquín,23.12,21.27,22.48,1.21,,True
+2026-09-28,EPOTB,Grijalva,Porvenir,4.74,1.8,1.52,-0.28,,True
+2026-09-28,SAACP,Tulijá,Salto de Agua,10.99,5.56,4.08,-1.48,,True
+2026-09-28,MACTB,Puxcatán,Macuspana,9.85,6.77,6.39,-0.38,,True
+2026-09-28,BDCTB,Usumacinta,Boca del Cerro,19.21,15.33,15.65,0.32,,True
+2026-09-28,SPTTB,San Pedro,San Pedro,9.01,8.53,8.53,0.0,,True
+2026-09-29,SAMTB,Samaria,Samaria,14.9,11.84,11.79,-0.05,,True
+2026-09-29,GONTB,Carrizal,González,8.77,3.42,3.43,0.01,,True
+2026-09-29,OXOTB,Oxolotán,Oxolotán,39.53,35.05,35.54,0.49,,True
+2026-09-29,TAPTB,Tacotalpa,Tapijulapa,24.63,17.3,17.1,-0.2,,True
+2026-09-29,PUYTB,Puyacatengo,Puyacatengo,29.65,25.25,25.08,-0.17,,True
+2026-09-29,TEATB,Teapa,Teapa,37.71,34.46,34.26,-0.2,,True
+2026-09-29,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.46,5.42,-0.04,,True
+2026-09-29,SJOCP,Pichucalco,San Joaquín,23.12,22.48,21.34,-1.14,,True
+2026-09-29,EPOTB,Grijalva,Porvenir,4.74,1.52,1.55,0.03,,True
+2026-09-29,SAACP,Tulijá,Salto de Agua,10.99,4.08,4.41,0.33,,True
+2026-09-29,MACTB,Puxcatán,Macuspana,9.85,6.39,5.58,-0.81,,True
+2026-09-29,BDCTB,Usumacinta,Boca del Cerro,19.21,15.65,15.52,-0.13,,True
+2026-09-29,SPTTB,San Pedro,San Pedro,9.01,8.53,8.55,0.02,,True
+2026-09-30,SAMTB,Samaria,Samaria,14.9,11.79,11.76,-0.03,,True
+2026-09-30,GONTB,Carrizal,González,8.77,3.43,3.4,-0.03,,True
+2026-09-30,OXOTB,Oxolotán,Oxolotán,39.53,35.54,34.73,-0.81,,True
+2026-09-30,TAPTB,Tacotalpa,Tapijulapa,24.63,17.1,16.94,-0.16,,True
+2026-09-30,PUYTB,Puyacatengo,Puyacatengo,29.65,25.08,24.99,-0.09,,True
+2026-09-30,TEATB,Teapa,Teapa,37.71,34.26,34.06,-0.2,,True
+2026-09-30,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.42,5.62,0.2,,True
+2026-09-30,SJOCP,Pichucalco,San Joaquín,23.12,21.34,20.81,-0.53,,True
+2026-09-30,EPOTB,Grijalva,Porvenir,4.74,1.55,1.65,0.1,,True
+2026-09-30,SAACP,Tulijá,Salto de Agua,10.99,4.41,5.28,0.87,,True
+2026-09-30,MACTB,Puxcatán,Macuspana,9.85,5.58,4.7,-0.88,,True
+2026-09-30,BDCTB,Usumacinta,Boca del Cerro,19.21,15.52,15.78,0.26,,True
+2026-09-30,SPTTB,San Pedro,San Pedro,9.01,8.55,8.57,0.02,,True
+2026-10-01,SAMTB,Samaria,Samaria,14.9,11.76,11.7,-0.06,,True
+2026-10-01,GONTB,Carrizal,González,8.77,3.4,3.45,0.05,,True
+2026-10-01,OXOTB,Oxolotán,Oxolotán,39.53,34.73,34.49,-0.24,,True
+2026-10-01,TAPTB,Tacotalpa,Tapijulapa,24.63,16.94,16.73,-0.21,,True
+2026-10-01,PUYTB,Puyacatengo,Puyacatengo,29.65,24.99,24.92,-0.07,,True
+2026-10-01,TEATB,Teapa,Teapa,37.71,34.06,33.8,-0.26,,True
+2026-10-01,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.62,4.52,-1.1,,True
+2026-10-01,SJOCP,Pichucalco,San Joaquín,23.12,20.81,20.56,-0.25,,True
+2026-10-01,EPOTB,Grijalva,Porvenir,4.74,1.65,1.33,-0.32,,True
+2026-10-01,SAACP,Tulijá,Salto de Agua,10.99,5.28,3.81,-1.47,,True
+2026-10-01,MACTB,Puxcatán,Macuspana,9.85,4.7,3.85,-0.85,,True
+2026-10-01,BDCTB,Usumacinta,Boca del Cerro,19.21,15.78,15.77,-0.01,,True
+2026-10-01,SPTTB,San Pedro,San Pedro,9.01,8.57,8.58,0.01,,True
+2026-10-05,SAMTB,Samaria,Samaria,14.9,11.62,11.6,-0.02,,True
+2026-10-05,GONTB,Carrizal,González,8.77,3.5,3.45,-0.05,,True
+2026-10-05,OXOTB,Oxolotán,Oxolotán,39.53,34.46,34.39,-0.07,,True
+2026-10-05,TAPTB,Tacotalpa,Tapijulapa,24.63,17.26,17.28,0.02,,True
+2026-10-05,PUYTB,Puyacatengo,Puyacatengo,29.65,25.0,25.2,0.2,,True
+2026-10-05,TEATB,Teapa,Teapa,37.71,34.02,34.36,0.34,,True
+2026-10-05,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.72,3.4,-0.32,,True
+2026-10-05,SJOCP,Pichucalco,San Joaquín,23.12,20.57,22.78,2.21,,True
+2026-10-05,SAACP,Tulijá,Salto de Agua,10.99,2.85,2.84,-0.01,,True
+2026-10-05,MACTB,Puxcatán,Macuspana,9.85,2.43,2.32,-0.1,,True
+2026-10-05,BDCTB,Usumacinta,Boca del Cerro,19.21,15.09,15.55,0.46,,True
+2026-10-05,SPTTB,San Pedro,San Pedro,9.01,8.64,8.64,0.0,,True
+2026-10-06,SAMTB,Samaria,Samaria,14.9,11.6,11.67,0.07,,True
+2026-10-06,GONTB,Carrizal,González,8.77,3.45,3.4,-0.05,,True
+2026-10-06,OXOTB,Oxolotán,Oxolotán,39.53,34.39,34.77,0.38,,True
+2026-10-06,TAPTB,Tacotalpa,Tapijulapa,24.63,17.28,17.23,-0.05,,True
+2026-10-06,PUYTB,Puyacatengo,Puyacatengo,29.65,25.2,25.04,-0.16,,True
+2026-10-06,TEATB,Teapa,Teapa,37.7,34.36,34.08,-0.28,,True
+2026-10-06,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.4,3.78,0.38,,True
+2026-10-06,SJOCP,Pichucalco,San Joaquín,23.12,22.78,22.4,-0.38,,True
+2026-10-06,EPOTB,Grijalva,Porvenir,4.74,0.92,1.05,0.13,,True
+2026-10-06,SAACP,Tulijá,Salto de Agua,10.99,2.84,2.87,0.03,,True
+2026-10-06,MACTB,Puxcatán,Macuspana,9.85,2.32,2.65,0.33,,True
+2026-10-06,BDCTB,Usumacinta,Boca del Cerro,19.21,15.55,16.14,0.59,,True
+2026-10-06,SPTTB,San Pedro,San Pedro,9.01,8.64,8.64,0.0,,True
+2026-10-07,SAMTB,Samaria,Samaria,14.9,11.67,12.2,0.53,,True
+2026-10-07,GONTB,Carrizal,González,8.77,3.4,3.38,-0.02,,True
+2026-10-07,OXOTB,Oxolotán,Oxolotán,39.53,34.77,36.12,1.35,,True
+2026-10-07,TAPTB,Tacotalpa,Tapijulapa,24.63,17.23,17.82,0.59,,True
+2026-10-07,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.1,0.06,,True
+2026-10-07,TEATB,Teapa,Teapa,37.7,34.08,34.28,0.2,,True
+2026-10-07,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.78,4.24,0.46,,True
+2026-10-07,SJOCP,Pichucalco,San Joaquín,23.12,22.4,21.18,-1.22,,True
+2026-10-07,EPOTB,Grijalva,Porvenir,4.74,1.05,1.21,0.16,,True
+2026-10-07,SAACP,Tulijá,Salto de Agua,10.99,2.87,3.64,0.77,,True
+2026-10-07,MACTB,Puxcatán,Macuspana,9.85,2.65,2.71,0.06,,True
+2026-10-07,BDCTB,Usumacinta,Boca del Cerro,19.21,16.14,16.0,-0.14,,True
+2026-10-07,SPTTB,San Pedro,San Pedro,9.01,8.64,8.68,0.04,,True
+2026-10-08,SAMTB,Samaria,Samaria,14.9,12.2,11.68,-0.52,,True
+2026-10-08,GONTB,Carrizal,González,8.77,3.38,3.6,0.22,,True
+2026-10-08,OXOTB,Oxolotán,Oxolotán,39.53,36.12,36.54,0.42,,True
+2026-10-08,TAPTB,Tacotalpa,Tapijulapa,24.63,17.82,17.68,-0.14,,True
+2026-10-08,PUYTB,Puyacatengo,Puyacatengo,29.65,25.1,25.07,-0.03,,True
+2026-10-08,TEATB,Teapa,Teapa,37.7,34.28,34.04,-0.24,,True
+2026-10-08,PNVTB,De la Sierra,Pueblo Nuevo,7.49,4.24,5.9,1.66,,True
+2026-10-08,SJOCP,Pichucalco,San Joaquín,23.12,21.18,21.08,-0.1,,True
+2026-10-08,EPOTB,Grijalva,Porvenir,4.74,1.21,1.55,0.34,,True
+2026-10-08,SAACP,Tulijá,Salto de Agua,10.99,3.64,4.55,0.91,,True
+2026-10-08,MACTB,Puxcatán,Macuspana,9.85,2.71,3.78,1.07,,True
+2026-10-08,BDCTB,Usumacinta,Boca del Cerro,19.21,16.0,16.97,0.97,,True
+2026-10-08,SPTTB,San Pedro,San Pedro,9.01,8.68,8.7,0.02,,True
+2026-10-12,SAMTB,Samaria,Samaria,14.9,11.64,11.68,0.04,,True
+2026-10-12,GONTB,Carrizal,González,8.77,3.41,3.4,-0.01,,True
+2026-10-12,OXOTB,Oxolotán,Oxolotán,39.53,35.65,35.1,-0.55,,True
+2026-10-12,TAPTB,Tacotalpa,Tapijulapa,24.63,17.51,17.55,0.04,,True
+2026-10-12,PUYTB,Puyacatengo,Puyacatengo,29.65,25.2,25.12,-0.08,,True
+2026-10-12,TEATB,Teapa,Teapa,37.71,34.15,34.02,-0.13,,True
+2026-10-12,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.96,6.06,0.1,,True
+2026-10-12,SJOCP,Pichucalco,San Joaquín,23.12,22.04,21.2,-0.84,,True
+2026-10-12,EPOTB,Grijalva,Porvenir,4.74,2.08,2.13,0.05,,True
+2026-10-12,SAACP,Tulijá,Salto de Agua,10.99,8.31,8.58,0.27,,True
+2026-10-12,MACTB,Puxcatán,Macuspana,9.85,4.05,5.07,1.02,,True
+2026-10-12,BDCTB,Usumacinta,Boca del Cerro,19.21,18.31,17.89,-0.42,,True
+2026-10-12,SPTTB,San Pedro,San Pedro,9.01,8.64,8.63,-0.01,,True
+2026-10-13,SAMTB,Samaria,Samaria,14.9,11.68,11.62,-0.06,,True
+2026-10-13,GONTB,Carrizal,González,8.77,3.4,3.44,0.04,,True
+2026-10-13,OXOTB,Oxolotán,Oxolotán,39.53,35.1,34.81,-0.29,,True
+2026-10-13,TAPTB,Tacotalpa,Tapijulapa,24.63,17.55,17.32,-0.23,,True
+2026-10-13,PUYTB,Puyacatengo,Puyacatengo,29.65,25.12,25.05,-0.07,,True
+2026-10-13,TEATB,Teapa,Teapa,37.71,34.02,33.98,-0.04,,True
+2026-10-13,PNVTB,De la Sierra,Pueblo Nuevo,7.49,6.06,5.4,-0.66,,True
+2026-10-13,SJOCP,Pichucalco,San Joaquín,23.12,21.2,20.8,-0.4,,True
+2026-10-13,EPOTB,Grijalva,Porvenir,4.74,2.13,1.98,-0.15,,True
+2026-10-13,SAACP,Tulijá,Salto de Agua,10.99,8.58,5.79,-2.79,,True
+2026-10-13,MACTB,Puxcatán,Macuspana,9.85,5.07,5.28,0.21,,True
+2026-10-13,BDCTB,Usumacinta,Boca del Cerro,19.21,17.89,17.71,-0.18,,True
+2026-10-13,SPTTB,San Pedro,San Pedro,9.01,8.63,8.62,-0.01,,True
+2026-10-14,SAMTB,Samaria,Samaria,14.9,11.62,11.58,-0.04,,True
+2026-10-14,GONTB,Carrizal,González,8.77,3.44,3.4,-0.04,,True
+2026-10-14,OXOTB,Oxolotán,Oxolotán,39.53,34.81,34.6,-0.21,,True
+2026-10-14,TAPTB,Tacotalpa,Tapijulapa,24.63,17.32,17.1,-0.21,,True
+2026-10-14,PUYTB,Puyacatengo,Puyacatengo,29.65,25.05,25.04,-0.01,,True
+2026-10-14,TEATB,Teapa,Teapa,37.71,33.98,33.85,-0.13,,True
+2026-10-14,PNVTB,De la Sierra,Pueblo Nuevo,7.49,5.4,4.48,-0.92,,True
+2026-10-14,SJOCP,Pichucalco,San Joaquín,23.12,20.8,20.61,-0.19,,True
+2026-10-14,EPOTB,Grijalva,Porvenir,4.74,1.98,1.78,-0.2,,True
+2026-10-14,SAACP,Tulijá,Salto de Agua,10.99,5.79,4.49,-1.3,,True
+2026-10-14,MACTB,Puxcatán,Macuspana,9.85,5.28,4.58,-0.7,,True
+2026-10-14,BDCTB,Usumacinta,Boca del Cerro,19.21,17.71,17.93,0.22,,True
+2026-10-14,SPTTB,San Pedro,San Pedro,9.01,8.62,8.61,-0.01,,True
+2026-10-15,SAMTB,Samaria,Samaria,14.9,11.58,11.58,0.0,,True
+2026-10-15,GONTB,Carrizal,González,8.77,3.4,3.38,-0.02,,True
+2026-10-15,OXOTB,Oxolotán,Oxolotán,39.53,34.6,34.89,0.29,,True
+2026-10-15,PUYTB,Puyacatengo,Puyacatengo,29.65,25.04,25.36,0.32,,True
+2026-10-15,TEATB,Teapa,Teapa,37.71,33.85,33.8,-0.05,,True
+2026-10-15,PNVTB,De la Sierra,Pueblo Nuevo,7.49,4.48,3.82,-0.66,,True
+2026-10-15,SJOCP,Pichucalco,San Joaquín,23.12,20.61,21.51,0.9,,True
+2026-10-15,EPOTB,Grijalva,Porvenir,4.74,1.78,1.65,-0.13,,True
+2026-10-15,SAACP,Tulijá,Salto de Agua,10.99,4.49,4.7,0.21,,True
+2026-10-15,MACTB,Puxcatán,Macuspana,9.85,4.58,3.78,-0.8,,True
+2026-10-15,BDCTB,Usumacinta,Boca del Cerro,19.21,17.93,17.55,-0.38,,True
+2026-10-15,SPTTB,San Pedro,San Pedro,9.01,8.61,8.62,0.01,,True
+2026-10-16,SAMTB,Samaria,Samaria,14.9,11.58,11.6,0.02,,True
+2026-10-16,GONTB,Carrizal,González,8.77,3.38,3.41,0.03,,True
+2026-10-16,OXOTB,Oxolotán,Oxolotán,39.53,34.89,35.1,0.21,,True
+2026-10-16,TAPTB,Tacotalpa,Tapijulapa,24.63,17.1,17.16,0.06,,True
+2026-10-16,PUYTB,Puyacatengo,Puyacatengo,29.65,25.36,25.16,-0.2,,True
+2026-10-16,TEATB,Teapa,Teapa,37.7,33.8,34.12,0.32,,True
+2026-10-16,PNVTB,De la Sierra,Pueblo Nuevo,7.49,3.82,4.9,1.08,,True
+2026-10-16,SJOCP,Pichucalco,San Joaquín,23.12,21.51,20.62,-0.89,,True
+2026-10-16,EPOTB,Grijalva,Porvenir,4.74,1.65,1.65,0.0,,True
+2026-10-16,SAACP,Tulijá,Salto de Agua,10.99,4.7,6.45,1.75,,True
+2026-10-16,MACTB,Puxcatán,Macuspana,9.85,3.78,4.07,0.29,,True
+2026-10-16,BDCTB,Usumacinta,Boca del Cerro,19.21,17.55,16.94,-0.61,,True
+2026-10-16,SPTTB,San Pedro,San Pedro,9.01,8.62,8.64,0.02,,True
