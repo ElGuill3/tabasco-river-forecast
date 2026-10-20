@@ -308,6 +308,111 @@ def test_conflict_is_not_exported_as_live_input(seeded):
     assert "2026-10-19" not in csv.date.tolist()
 
 
+def test_ocr_library_error_is_cached_and_other_folders_continue(seeded, capsys):
+    assert run(seeded) == 0
+    capsys.readouterr()
+    bad = upload(seeded)
+    good = seeded / "inputs/ipcet/2026-10-18"
+    good.mkdir()
+    for name in ("meta.json", "levels_2026-01-13.jpg"):
+        (good / name).write_bytes((bad / name).read_bytes())
+
+    def reader(path):
+        if path.parent == bad:
+            raise RuntimeError("tesseract failed")
+        return table(day=dt.date(2026, 10, 18))
+
+    doc = response()
+    doc["daily"]["river_discharge_member50"][-1] += 1
+    assert run(seeded, doc, "2026-10-20T20:00:00Z", reader=reader) == 0
+    error = "rejected inputs/ipcet/2026-10-19: tesseract failed"
+    assert capsys.readouterr() == ("published 2026-10-20 live (new run)\n", error + "\n")
+    assert json.loads((bad / "ingested.json").read_text()) == {"rows": [], "errors": [error]}
+    assert len(json.loads((good / "ingested.json").read_text())["rows"]) == 1
+    assert json.loads((seeded / "bdctb/latest.json").read_text())["mode"] == "live"
+    before = snapshot(seeded)
+    assert (
+        run(seeded, doc, "2026-10-20T21:00:00Z", reader=lambda _: pytest.fail("OCR retried")) == 0
+    )
+    assert snapshot(seeded) == before
+    assert capsys.readouterr() == ("no change\n", "")
+
+
+def test_same_day_revision_and_backwards_clock(seeded, capsys):
+    assert run(seeded) == 0
+    capsys.readouterr()
+    doc = response()
+    for revision, timestamp in enumerate(["2026-10-19T23:10:00Z", "2026-10-19T23:20:00Z"], start=1):
+        before_state = json.loads((seeded / "inputs/openmeteo/state.json").read_text())
+        doc["daily"]["river_discharge_member50"][-1] += 1
+        assert run(seeded, doc, timestamp) == 0
+        state = json.loads((seeded / "inputs/openmeteo/state.json").read_text())
+        assert state["run_label"] == "2026-10-19"
+        assert state["fetched_at"] == timestamp.replace("Z", "+00:00")
+        assert state["revisions"] == revision
+        assert state["fingerprint"] != before_state["fingerprint"]
+        assert (seeded / "inputs/openmeteo/2026-10-19.json").read_bytes() == encoded(doc)
+        latest = (seeded / "bdctb/latest.json").read_bytes()
+        assert latest == (seeded / "bdctb/history/2026-10-19.json").read_bytes()
+        assert json.loads(latest)["generated_at"] == timestamp.replace("Z", "+00:00")
+        assert capsys.readouterr().err == ""
+    before = snapshot(seeded)
+    doc["daily"]["river_discharge_member50"][-1] += 1
+    assert run(seeded, doc, "2026-10-18T23:00:00Z") == 1
+    assert snapshot(seeded) == before
+    assert capsys.readouterr() == ("", "error: run label is after fetch date\n")
+
+
+def test_detection_log_appends_only_detected_changes(seeded):
+    assert run(seeded) == 0
+    log = seeded / "inputs/openmeteo/detections.csv"
+    assert not log.exists()  # Seeding and unchanged polling are not detections.
+    doc = response()
+    expected = "run_label,fetched_at,kind\n"
+    for timestamp, label, kind in [
+        ("2026-10-20T01:00:00Z", "2026-10-20", "new"),
+        ("2026-10-20T02:00:00Z", "2026-10-20", "revision"),
+        ("2026-10-23T01:00:00Z", "2026-10-23", "inferred"),
+    ]:
+        doc["daily"]["river_discharge_member50"][-1] += 1
+        assert run(seeded, doc, timestamp) == 0
+        expected += f"{label},{timestamp.replace('Z', '+00:00')},{kind}\n"
+        assert log.read_text() == expected
+        before = snapshot(seeded)
+        assert run(seeded, doc, timestamp) == 0
+        assert snapshot(seeded) == before
+
+
+def test_schedule_polls_every_utc_hour():
+    workflow = Path(__file__).parents[1] / ".github/workflows/forecast.yml"
+    assert "cron: '17 * * * *'" in workflow.read_text()
+
+
+@pytest.mark.parametrize(
+    "stamp,visible",
+    [
+        ("Mon, 19 Oct 2026 16:59:59 GMT", True),
+        ("Mon, 19 Oct 2026 17:00:00 GMT", True),
+        ("Mon, 19 Oct 2026 17:00:01 GMT", False),
+    ],
+)
+def test_issue_cutoff_mexico_city(seeded, stamp, visible, capsys):
+    folder = upload(seeded)
+    meta = json.loads((folder / "meta.json").read_text())
+    meta["images"][0]["last_modified"] = stamp
+    (folder / "meta.json").write_text(json.dumps(meta))
+    capsys.readouterr()
+    assert run(seeded, reader=lambda _: table()) == 0
+    mode = "live" if visible else "glofas_only"
+    assert capsys.readouterr() == (f"published 2026-10-19 {mode} (same run)\n", "")
+    csv = pd.read_csv(seeded / "inputs/ipcet/bdctb_levels.csv")
+    assert ("2026-10-19" in csv.date.tolist()) == visible
+    assert json.loads((seeded / "bdctb/latest.json").read_text())["mode"] == mode
+    receipt = json.loads((folder / "ingested.json").read_text())
+    assert receipt["errors"] == []
+    assert len(receipt["rows"]) == 1
+
+
 def test_fetch_timeout_and_two_attempts():
     calls = []
 

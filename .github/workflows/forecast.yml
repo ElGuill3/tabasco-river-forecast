@@ -2,7 +2,8 @@ name: forecast
 
 on:
   schedule:
-    - cron: '17 12-23 * * *'
+    # Poll throughout the UTC day so detection labels do not slip to tomorrow.
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 permissions:

@@ -39,7 +39,7 @@ Hard errors print `error: ...` to stderr and exit 1.
 
 | Trigger | Behavior |
 | --- | --- |
-| Schedule `17 12-23 * * *` | Hourly 06:17–17:17 Mexico City, every day. GitHub may delay scheduled runs. |
+| Schedule `17 * * * *` | Minute 17 of every UTC hour, all day, every day. GitHub may delay scheduled runs. |
 | Messenger upload | The app writes article HTML and original image files, then `meta.json` last. The data-branch relay dispatches main's `forecast.yml`. |
 | Manual | Run `forecast.yml` with `workflow_dispatch`. |
 
@@ -73,15 +73,32 @@ provider's original eleven-member subset.
 - Changed trajectories: use previous label + one day if that equals today's UTC
   date. After a larger gap, use today's UTC date and record
   `run_label_inferred: true` in state.
-- No shared future dates, changed member sets, a future state label, or a changed
-  trajectory before the next day: fail closed rather than invent a run label.
+- Changed trajectories on the same UTC day as the previous label: treat as a
+  revision of that label, replace its saved response, increment `revisions`,
+  update `fingerprint` and `fetched_at`, and publish again.
+- No shared future dates, changed member sets, or a future state label (clock
+  moved backwards): fail closed rather than invent a run label.
 
 The per-run response is `inputs/openmeteo/<run_label>.json`; state records
-`run_label`, `fingerprint`, and `fetched_at`. This is a trajectory heuristic,
+`run_label`, `fingerprint`, `fetched_at`, and a `revisions` count (zero for a
+new label; older seeded states may omit it). Revisions preserve an existing
+`run_label_inferred` flag. This is a trajectory heuristic,
 not proof of a source issue date. A stale response remains the old run; it is
 never relabeled just because a calendar day passed. Long outages without
 shared future coverage need operator investigation and a newly verified seed
 in a fresh checkout, not an automatic reset.
+
+Each new label or same-day revision appends to
+`inputs/openmeteo/detections.csv`, with header `run_label,fetched_at,kind` and
+kind `new`, `inferred` (after a missed-day gap), or `revision`. Seeding and
+unchanged polls do not append detections. The log is written in the same
+rollback-protected plan as the response, state and publication.
+
+The inferred label is the **UTC date of detection**, correct only if Open-Meteo
+starts serving run D during UTC day D. Polling every hour of the day helps
+catch a run on its own UTC day, but is not proof of this assumption. Inspect
+the detection hours in this log after a few days to audit the assumption;
+scheduler delays and source delays remain possible.
 
 ## IPCET ingestion and publication
 
@@ -94,7 +111,10 @@ rejected and logged without aborting other images.
 
 The existing `levels` reader OCRs each image once. `ingested.json` caches parsed
 BDCTB rows and rejection reasons, including for images that are not level
-tables. Printed table dates win; undated tables use the folder date and require
+tables. Library exceptions such as tesseract failures are also cached as
+rejections: they do not abort other images or folders, or block publication of
+a new run. Process interrupts (`BaseException`) are not swallowed.
+Printed table dates win; undated tables use the folder date and require
 the reader's normal confirmation. `levels.row_problems` enforces the station's
 NAMO and printed arithmetic; the existing numeric range (absolute value at most
 1000) is retained. No value is repaired or imputed.

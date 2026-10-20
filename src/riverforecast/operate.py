@@ -196,7 +196,9 @@ def ingest(root, issue, now, reader):
                             "page_date": str(page),
                         }
                     )
-                except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
+                except Exception as exc:
+                    # OCR libraries raise their own errors; one image must not
+                    # poison every subsequent poll. Interrupts still propagate.
                     message = f"rejected {folder}: {exc}"
                     print(message, file=sys.stderr)
                     errors.append(message)
@@ -286,19 +288,30 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
         changed = fingerprint(old, shared) != fingerprint(new, shared)
         label = previous
         if changed:
-            if now.date() <= previous:
-                raise ValueError("changed trajectory before next run date; cannot infer run")
             label = now.date()
             validate(payload, str(label), scratch)
+            revision = label == previous
+            revisions = state.get("revisions", 0) + 1 if revision else 0
+            inferred = (
+                state.get("run_label_inferred", False)
+                if revision
+                else (previous + timedelta(days=1) != label)
+            )
             state = {
                 "run_label": str(label),
                 "fingerprint": fingerprint(new, future),
                 "fetched_at": now.isoformat(),
+                "revisions": revisions,
             }
-            if previous + timedelta(days=1) != label:
+            if inferred:
                 state["run_label_inferred"] = True
             plan[f"inputs/openmeteo/{label}.json"] = payload
             plan["inputs/openmeteo/state.json"] = json_bytes(state)
+            kind = "revision" if revision else "inferred" if inferred else "new"
+            log_name = "inputs/openmeteo/detections.csv"
+            log_path = target(root, log_name)
+            history = log_path.read_bytes() if log_path.exists() else b"run_label,fetched_at,kind\n"
+            plan[log_name] = history + f"{label},{now.isoformat()},{kind}\n".encode()
         observations, ingest_plan, digest = ingest(root, str(label), now, reader)
         plan.update(ingest_plan)
         receipt_path = target(root, "bdctb/published.json")
