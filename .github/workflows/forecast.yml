@@ -44,7 +44,7 @@ jobs:
           if [ -n "$(timeout 30 git status --porcelain)" ]; then
             timeout 30 git config user.name 'github-actions[bot]'
             timeout 30 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            timeout 30 git add inputs bdctb
+            timeout 30 git add inputs bdctb ipcet
             timeout 30 git commit -m "forecast: $SUMMARY"
             timeout 60 git push origin HEAD:forecasts || {
               timeout 60 git pull --rebase origin forecasts
