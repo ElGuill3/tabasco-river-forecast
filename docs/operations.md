@@ -186,6 +186,25 @@ again to exercise OCR and live inference. `reader`, `forecaster`, and the HTTP
 `get` transport are injectable for deterministic tests. Use a fresh system temp
 directory, never a live branch checkout, for test state.
 
+## Verifying the published forecasts
+
+`riverforecast.verify` compares every stored forecast with the official stage of
+its target date: the `hoy` value of the IPCET table dated that day, valid rows
+only. Leads whose target date has no table yet are counted as pending. The
+persistence column is the issue-day stage carried forward; a useful forecast
+should have a lower error than persistence over many days, not on one.
+
+```bash
+cd .cache/t21/forecasts   # a checkout of the forecasts branch
+uv run --project ../../.. python -m riverforecast.verify \
+    --history bdctb/history --levels inputs/ipcet/levels.csv --rows verify-rows.csv
+```
+
+It prints one Markdown table per mode and lead: scored and pending counts,
+MAE and bias of the median, q10–q90 coverage (80 % expected) and the
+persistence MAE. The metrics were fixed before the first score (ODD L60); the
+model is never retuned from them during operation.
+
 ## Failure modes and recovery
 
 | Symptom | Action |
