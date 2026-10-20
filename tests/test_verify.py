@@ -152,9 +152,12 @@ def test_cli_prints_the_summary_and_writes_the_rows(tmp_path, capsys):
     assert printed.splitlines()[0] == "BDCTB forecasts verified against the IPCET tables"
     assert "| live | 1 | 1 | 0 | 0.74 | +0.74 | 0% | 0.53 |" in printed
     assert "| live | 3 | 0 | 1 |" in printed
-    assert out.read_text().splitlines()[0] == (
+    lines = out.read_text().splitlines()
+    assert lines[0] == (
         "issue_date,mode,lead,target_date,q10,q50,q90,observed,error,inside,persistence_error"
     )
+    assert lines[1].split(",")[9] == "False"
+    assert [line.split(",")[9] for line in lines[2:]] == ["", ""]
 
 
 def test_cli_reports_a_missing_history_folder(tmp_path, capsys):

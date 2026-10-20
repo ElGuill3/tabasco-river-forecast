@@ -70,7 +70,9 @@ def match(history: pd.DataFrame, observed: dict[str, float]) -> pd.DataFrame:
     rows = history.copy()
     rows["observed"] = rows["target_date"].map(observed)
     rows["error"] = rows["q50"] - rows["observed"]
-    rows["inside"] = (rows["q10"] <= rows["observed"]) & (rows["observed"] <= rows["q90"])
+    inside = (rows["q10"] <= rows["observed"]) & (rows["observed"] <= rows["q90"])
+    # Pending leads have no verdict, not a miss.
+    rows["inside"] = inside.astype("boolean").mask(rows["observed"].isna())
     issue_stage = rows["issue_stage"].astype(float).fillna(rows["issue_date"].map(observed))
     rows["persistence_error"] = issue_stage - rows["observed"]
     return rows[ROW_COLUMNS]
