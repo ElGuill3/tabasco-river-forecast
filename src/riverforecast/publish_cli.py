@@ -7,7 +7,13 @@ import json
 import sys
 from pathlib import Path
 
-from riverforecast.publish import CemsArchiveProvider, forecast, freeze, read_observations
+from riverforecast.publish import (
+    CemsArchiveProvider,
+    OpenMeteoProvider,
+    forecast,
+    freeze,
+    read_observations,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -25,13 +31,18 @@ def main(argv: list[str] | None = None) -> int:
         "--ipcet",
         type=Path,
         required=True,
-        help="validated CSV: date,stage_m,table_last_modified (UTC timestamp)",
+        help="validated CSV: date,stage_m,table_last_modified (explicit timezone required)",
     )
     serve.add_argument(
         "--raw",
         type=Path,
         default=Path("data/raw"),
         help="stored CEMS operational CSVs and archived day-0 inputs (no training data)",
+    )
+    serve.add_argument(
+        "--openmeteo",
+        type=Path,
+        help="saved Open-Meteo forecast_v4 ensemble JSON; replaces --raw (no network)",
     )
     serve.add_argument("--out", type=Path, required=True, help="output JSON path")
     serve.add_argument(
@@ -46,7 +57,9 @@ def main(argv: list[str] | None = None) -> int:
                 args.artifact,
                 args.issue,
                 read_observations(args.ipcet),
-                CemsArchiveProvider(args.raw),
+                OpenMeteoProvider(args.openmeteo)
+                if args.openmeteo is not None
+                else CemsArchiveProvider(args.raw),
                 args.generated_at,
             )
             payload = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"

@@ -31,7 +31,7 @@ load an artifact from an untrusted source: joblib/pickle can execute code.
 
 ## Stored input contract
 
-The IPCET CSV, maintained by the caller, has this header and UTC upload timestamps:
+The IPCET CSV, maintained by the caller, has this header and timezone-qualified upload timestamps:
 
 ```csv
 date,stage_m,table_last_modified
@@ -41,7 +41,11 @@ date,stage_m,table_last_modified
 - `date`: observation calendar date (06:00 stage), not page date.
 - `stage_m`: finite, validated BDCTB stage on the 19.21 m NAMO datum.
 - `table_last_modified`: timezone-qualified timestamp when the validated value
-  became available. Use the conservative effective availability if a reader rule,
+  became available. An explicit timezone is required: ISO 8601 `...Z` or an offset,
+  and HTTP RFC 1123 GMT values such as `Mon, 19 Oct 2026 16:00:00 GMT`, are accepted.
+  Naive values fail with `table_last_modified must include a timezone`; they are
+  never silently assumed UTC. Quote RFC 1123 values in CSV because they contain a comma.
+  Use the conservative effective availability if a reader rule,
   confirmation or conflict resolution delays acceptance beyond the HTTP upload.
 - Empty CSV (header only) is valid and selects fallback. Duplicate usable dates,
   invalid dates/timestamps and nonfinite stages are rejected without writing JSON.
@@ -69,9 +73,26 @@ It reuses `data.glofas_operational_summary` with control plus perturbed members
 day0_series)` for an issue date. All three forecast leads and past discharge at
 issue, issue−3 and issue−7 must exist; missing inputs fail rather than producing
 a partial forecast. Neither provider nor CLI makes network calls.
-`OpenMeteoProvider` explicitly raises `NotImplementedError` until T19 validates
-that source. A production source and IPCET messenger/OCR remain T19/T21 work;
-this command alone cannot acquire fresh inputs.
+For the adopted T19/L51 live source, pass `--openmeteo PATH` to select
+`OpenMeteoProvider(PATH)` instead of the default CEMS `--raw` archive:
+
+```bash
+uv run python -m riverforecast.publish_cli publish --issue 2026-10-19 \
+  --ipcet .cache/t21/ipcet.csv --openmeteo .cache/t19/om/ensemble.json \
+  --out .cache/t21/forecast.json --generated-at 2026-10-19T23:03:54Z
+```
+
+The provider reads a **saved** Open-Meteo `forecast_v4` ensemble response with
+`daily.time`, `daily.river_discharge` (control), and
+`daily.river_discharge_member01`–`10` (perturbed 01–10). Other members are ignored
+so the summary uses the same 11 members as training. Dates are valid dates
+(issue + lead); the caller must supply the matching run's issue date. Leads 1–7
+form the summary, and control values on dates at or before issue form past
+(day-0) discharge. Every date from issue−7 through issue+7 must be present;
+used discharge values must be finite and strictly positive. Invalid JSON,
+missing columns/dates, and invalid used values fail before writing output.
+Neither this option nor the default CEMS provider downloads inputs. Acquiring
+fresh inputs and IPCET messenger/OCR remain separate T21 work.
 
 ## Output fields
 

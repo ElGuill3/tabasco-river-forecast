@@ -110,9 +110,99 @@ def test_missing_forecast_rejected(artifact):
         publish.forecast(artifact, "2026-10-13", publish.empty_observations(), Missing())
 
 
-def test_open_meteo_is_explicit_stub():
-    with pytest.raises(NotImplementedError, match="T19"):
-        publish.OpenMeteoProvider().inputs(pd.Timestamp("2026-10-13"))
+@pytest.fixture
+def openmeteo_response(tmp_path):
+    days = pd.date_range("2026-10-05", "2026-10-21")
+    daily = {"time": days.strftime("%Y-%m-%d").tolist()}
+    for member in range(51):
+        key = "river_discharge" + (f"_member{member:02d}" if member else "")
+        daily[key] = [100.0 + day + member for day in range(len(days))]
+    path = tmp_path / "ensemble.json"
+    path.write_text(json.dumps({"daily": daily}))
+    return path
+
+
+def test_open_meteo_inputs(openmeteo_response):
+    summary, past = publish.OpenMeteoProvider(openmeteo_response).inputs(pd.Timestamp("2026-10-13"))
+    assert summary.lead_days.tolist() == list(range(1, 8))
+    assert summary.members.tolist() == [11] * 7
+    assert summary.issue.tolist() == [pd.Timestamp("2026-10-13")] * 7
+    assert summary.valid.tolist() == list(pd.date_range("2026-10-14", "2026-10-20"))
+    for column, offset in {"control": 0, "mean": 5, "q10": 1, "q50": 5, "q90": 9}.items():
+        np.testing.assert_allclose(summary[column], np.arange(109, 116) + offset)
+    pd.testing.assert_series_equal(
+        past,
+        pd.Series(
+            np.arange(100, 109, dtype=float),
+            index=pd.DatetimeIndex(pd.date_range("2026-10-05", "2026-10-13"), name="date"),
+            name="discharge_m3s",
+        ),
+        check_freq=False,
+    )
+
+
+@pytest.mark.parametrize(
+    "defect,message",
+    [
+        ("json", "cannot read Open-Meteo JSON"),
+        ("daily", "Open-Meteo response requires daily/time"),
+        ("time", "Open-Meteo response requires daily/time"),
+        *[
+            (key, f"missing Open-Meteo column: {key}")
+            for key in [
+                "river_discharge",
+                *[f"river_discharge_member{i:02d}" for i in range(1, 11)],
+            ]
+        ],
+        *[(f"date:{i}", "missing Open-Meteo date:") for i in range(1, 16)],
+        *[
+            (f"value:{key}:{day}:{value}", "invalid Open-Meteo discharge:")
+            for key, day in [
+                ("river_discharge", 1),
+                ("river_discharge", 8),
+                ("river_discharge_member01", 9),
+                ("river_discharge_member10", 15),
+            ]
+            for value in [None, float("nan"), 0, -1]
+        ],
+    ],
+)
+def test_open_meteo_rejects_bad_inputs(openmeteo_response, defect, message):
+    document = json.loads(openmeteo_response.read_text())
+    if defect == "json":
+        openmeteo_response.write_text("{")
+    else:
+        if defect == "daily":
+            del document["daily"]
+        elif defect.startswith("date:"):
+            day = int(defect.split(":")[1])
+            for values in document["daily"].values():
+                values.pop(day)
+        elif defect.startswith("value:"):
+            _, key, day, value = defect.split(":")
+            document["daily"][key][int(day)] = None if value == "None" else float(value)
+        else:
+            del document["daily"][defect]
+        openmeteo_response.write_text(json.dumps(document))
+    before = openmeteo_response.read_bytes()
+    with pytest.raises(ValueError, match=message):
+        publish.OpenMeteoProvider(openmeteo_response).inputs(pd.Timestamp("2026-10-13"))
+    assert openmeteo_response.read_bytes() == before
+
+
+@pytest.mark.parametrize("stamp", ["2026-10-13T16:00:00", "2026-10-13 16:00:00"])
+def test_naive_upload_timestamp_rejected(artifact, stamp):
+    obs = pd.DataFrame({"date": ["2026-10-13"], "stage_m": [13.2], "table_last_modified": [stamp]})
+    with pytest.raises(ValueError, match="^table_last_modified must include a timezone$"):
+        publish.forecast(artifact, "2026-10-13", obs, Provider())
+
+
+@pytest.mark.parametrize("stamp", ["Tue, 13 Oct 2026 16:00:00 GMT", "2026-10-13T16:00:00Z"])
+def test_timezone_upload_timestamp_supported(artifact, stamp):
+    obs = pd.DataFrame({"date": ["2026-10-13"], "stage_m": [13.2], "table_last_modified": [stamp]})
+    result = publish.forecast(artifact, "2026-10-13", obs, Provider())
+    assert result["mode"] == "live"
+    assert result["live_input"] == {"date": "2026-10-13", "stage_m": 13.2, "age_days": 0}
 
 
 def test_historical_parity():

@@ -5,7 +5,7 @@ import json
 import pytest
 
 from riverforecast import publish_cli
-from tests.test_publish import Provider, artifact  # noqa: F401
+from tests.test_publish import Provider, artifact, openmeteo_response  # noqa: F401
 
 
 def test_publish_cli(artifact, tmp_path, monkeypatch, capsys):  # noqa: F811
@@ -55,6 +55,43 @@ def test_publish_cli(artifact, tmp_path, monkeypatch, capsys):  # noqa: F811
     assert captured.out == ""
     assert captured.err == "error: IPCET CSV requires date, stage_m, table_last_modified\n"
     assert out.read_bytes() == before
+
+
+def test_openmeteo_cli(artifact, openmeteo_response, tmp_path, capsys):  # noqa: F811
+    csv = tmp_path / "ipcet.csv"
+    csv.write_text("date,stage_m,table_last_modified\n")
+    out = tmp_path / "forecast.json"
+    args = [
+        "publish",
+        "--artifact",
+        str(artifact),
+        "--issue",
+        "2026-10-13",
+        "--ipcet",
+        str(csv),
+        "--openmeteo",
+        str(openmeteo_response),
+        "--out",
+        str(out),
+    ]
+    assert publish_cli.main(args) == 0
+    assert capsys.readouterr() == ("", "")
+    assert json.loads(out.read_text())["forecasts"]["h7"]["q50"] == 12.0
+    before = out.read_bytes()
+    openmeteo_response.write_text("{}")
+    assert publish_cli.main(args) == 1
+    assert capsys.readouterr() == ("", "error: Open-Meteo response requires daily/time\n")
+    assert out.read_bytes() == before
+
+
+def test_publish_help(capsys):
+    with pytest.raises(SystemExit) as exc:
+        publish_cli.main(["publish", "--help"])
+    assert exc.value.code == 0
+    captured = capsys.readouterr()
+    assert "--openmeteo" in captured.out
+    assert "timezone" in captured.out
+    assert captured.err == ""
 
 
 def test_freeze_cli(monkeypatch, capsys):

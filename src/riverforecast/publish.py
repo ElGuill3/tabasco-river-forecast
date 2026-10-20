@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 
-from riverforecast import data, features, live
+from riverforecast import data, features, live, reforecast
 from riverforecast.model import ConformalQuantileModel
 
 L1_COLUMNS = [*features.COLUMNS, "obs_last", "obs_age", "obs_day_q"]
@@ -105,10 +105,73 @@ class CemsArchiveProvider:
 
 
 class OpenMeteoProvider:
-    """Reserved for T19's validated live source; deliberately unavailable."""
+    """Saved forecast_v4 ensemble, aligned to the caller's issue date (L51)."""
+
+    def __init__(self, path: str | Path):
+        self.path = Path(path)
 
     def inputs(self, issue):
-        raise NotImplementedError("Open-Meteo provider pending T19 source parity validation")
+        issue = pd.Timestamp(issue)
+        try:
+            document = json.loads(self.path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, ValueError) as exc:
+            raise ValueError(f"cannot read Open-Meteo JSON: {exc}") from exc
+        daily = document.get("daily") if isinstance(document, dict) else None
+        if not isinstance(daily, dict) or not isinstance(daily.get("time"), list):
+            raise ValueError("Open-Meteo response requires daily/time")
+        try:
+            dates = pd.DatetimeIndex(pd.to_datetime(daily["time"], errors="raise"), name="date")
+        except (ValueError, TypeError) as exc:
+            raise ValueError("invalid Open-Meteo dates") from exc
+        if (
+            dates.hasnans
+            or dates.has_duplicates
+            or dates.tz is not None
+            or not dates.equals(dates.normalize())
+        ):
+            raise ValueError("Open-Meteo dates must be unique timezone-naive calendar dates")
+        required = pd.date_range(issue - pd.Timedelta(days=7), issue + pd.Timedelta(days=7))
+        missing = required.difference(dates)
+        if len(missing):
+            raise ValueError(f"missing Open-Meteo date: {missing[0]:%Y-%m-%d}")
+        rows = []
+        past = None
+        for number, member in enumerate(MEMBERS_11):
+            key = "river_discharge" + (f"_member{number:02d}" if number else "")
+            if key not in daily:
+                raise ValueError(f"missing Open-Meteo column: {key}")
+            values = daily[key]
+            if not isinstance(values, list) or len(values) != len(dates):
+                raise ValueError(f"invalid Open-Meteo column length: {key}")
+            series = pd.Series(values, index=dates)
+            used = series.loc[series.index <= issue] if number == 0 else series.iloc[:0]
+            future = series.reindex(required[8:])
+            used = pd.concat([used, future])
+            numeric = pd.to_numeric(used, errors="coerce").astype(float)
+            invalid = ~np.isfinite(numeric) | (numeric <= 0)
+            if invalid.any():
+                day = numeric.index[invalid][0]
+                raise ValueError(f"invalid Open-Meteo discharge: {key} on {day:%Y-%m-%d}")
+            if number == 0:
+                past = (
+                    numeric.loc[numeric.index <= issue]
+                    .sort_index()
+                    .rename("discharge_m3s")
+                    .rename_axis("date")
+                )
+            for h in range(1, 8):
+                rows.append(
+                    {
+                        "issue": issue,
+                        "lead_days": h,
+                        "member": member,
+                        "discharge_m3s": numeric.loc[issue + pd.Timedelta(days=h)],
+                    }
+                )
+        summary = reforecast.ensemble_summary(pd.DataFrame(rows))
+        summary["issue"] = pd.to_datetime(summary["issue"])
+        summary["valid"] = summary["issue"] + pd.to_timedelta(summary["lead_days"], unit="D")
+        return summary, past
 
 
 def empty_observations() -> pd.DataFrame:
@@ -136,7 +199,10 @@ def forecast(artifact, issue, observations, provider: GlofasProvider, generated_
     models = joblib.load(artifact / "models.joblib")  # trusted repository artifact only
     obs = observations.copy()
     obs["date"] = pd.to_datetime(obs["date"])
-    stamps = pd.to_datetime(obs["table_last_modified"], utc=True, errors="raise")
+    parsed_stamps = [pd.Timestamp(value) for value in obs["table_last_modified"]]
+    if any(not pd.isna(stamp) and stamp.tzinfo is None for stamp in parsed_stamps):
+        raise ValueError("table_last_modified must include a timezone")
+    stamps = pd.Series(pd.to_datetime(parsed_stamps, utc=True), index=obs.index)
     obs["stage_m"] = pd.to_numeric(obs["stage_m"], errors="raise")
     if obs["date"].isna().any() or stamps.isna().any() or not np.isfinite(obs.stage_m).all():
         raise ValueError("IPCET inputs must have finite levels, dates and upload timestamps")
