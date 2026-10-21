@@ -1,0 +1,46 @@
+{
+  "schema": "bdctb-forecast/v2",
+  "station": {
+    "code": "BDCTB",
+    "name": "Boca del Cerro"
+  },
+  "issue_time": "2026-10-21T11:00:00-06:00",
+  "generated_at": "2026-10-21T15:19:54.142763+00:00",
+  "model_version": "bdctb-L1-postaudit-v1",
+  "mode": "live",
+  "live_input": {
+    "date": "2026-10-20",
+    "stage_m": 17.02,
+    "age_days": 1
+  },
+  "forecasts": {
+    "h1": {
+      "q10": 17.522422088292906,
+      "q50": 18.35343476857818,
+      "q90": 19.09509733144874,
+      "target_date": "2026-10-22",
+      "distance_to_namo_m": -0.856565231421822,
+      "namo_m": 19.21,
+      "data_kind": "modeled_not_observed"
+    },
+    "h3": {
+      "q10": 16.822827558668813,
+      "q50": 17.880316983739437,
+      "q90": 18.90937913965559,
+      "target_date": "2026-10-24",
+      "distance_to_namo_m": -1.3296830162605637,
+      "namo_m": 19.21,
+      "data_kind": "modeled_not_observed"
+    },
+    "h7": {
+      "q10": 15.20018772172119,
+      "q50": 16.487791545474398,
+      "q90": 17.741364086193506,
+      "target_date": "2026-10-28",
+      "distance_to_namo_m": -2.722208454525603,
+      "namo_m": 19.21,
+      "data_kind": "modeled_not_observed"
+    }
+  },
+  "disclaimer": "Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET."
+}
