@@ -646,3 +646,17 @@ table_date,code,river,station,namo,ayer,hoy,diff,semaforo,valid
 2026-10-20,MACTB,Puxcatán,Macuspana,9.85,5.89,6.16,0.27,NORMAL,True
 2026-10-20,BDCTB,Usumacinta,Boca del Cerro,19.21,16.49,17.02,0.53,NORMAL,True
 2026-10-20,SPTTB,San Pedro,San Pedro,9.01,8.68,8.72,0.04,NORMAL,True
+2026-10-21,SAMTB,Samaria,Samaria,14.9,12.37,12.22,-0.15,NORMAL,True
+2026-10-21,GONTB,Carrizal,González,8.77,3.85,3.62,-0.23,NORMAL,True
+2026-10-21,OXOTB,Oxolotán,Oxolotán,39.53,35.33,35.92,0.59,NORMAL,True
+2026-10-21,TAPTB,Tacotalpa,Tapijulapa,24.63,17.48,17.18,-0.3,NORMAL,True
+2026-10-21,PUYTB,Puyacatengo,Puyacatengo,29.65,25.34,25.5,0.16,NORMAL,True
+2026-10-21,TEATB,Teapa,Teapa,37.7,34.92,35.67,0.75,NORMAL,True
+2026-10-21,PNVTB,De la Sierra,Pueblo Nuevo,7.49,6.12,6.3,0.18,NORMAL,True
+2026-10-21,SJOCP,Pichucalco,San Joaquín,23.12,22.74,24.24,1.5,ALERTA,True
+2026-10-21,GABTB,Grijalva,Gaviotas,7.0,35.0,,0.06,NORMAL,False
+2026-10-21,EPOTB,Grijalva,Porvenir,4.74,2.36,2.43,0.07,NORMAL,True
+2026-10-21,SAACP,Tulijá,Salto de Agua,10.99,6.4,6.53,0.13,NORMAL,True
+2026-10-21,MACTB,Puxcatán,Macuspana,9.85,6.16,6.06,-0.1,NORMAL,True
+2026-10-21,BDCTB,Usumacinta,Boca del Cerro,19.21,17.02,18.53,1.51,PREVENCION,True
+2026-10-21,SPTTB,San Pedro,San Pedro,9.01,8.72,8.74,0.02,NORMAL,True
