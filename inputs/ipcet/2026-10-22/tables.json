@@ -1,0 +1,201 @@
+{
+  "tables": [
+    {
+      "table_date": "2026-10-22",
+      "last_modified": "Thu, 22 Oct 2026 14:21:06 GMT",
+      "source_url": "https://tabasco.gob.mx/noticias/semaforo-hidrometereologico-y-niveles-de-rios-22102026",
+      "stations": [
+        {
+          "code": "SAMTB",
+          "river": "Samaria",
+          "station": "Samaria",
+          "namo": 14.9,
+          "namino": 11.5,
+          "ayer": 12.22,
+          "hoy": 12.9,
+          "diff": 0.68,
+          "capacity": 2.0,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "GONTB",
+          "river": "Carrizal",
+          "station": "González",
+          "namo": 8.77,
+          "namino": 2.7,
+          "ayer": 3.62,
+          "hoy": 3.56,
+          "diff": -0.06,
+          "capacity": 5.21,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "OXOTB",
+          "river": "Oxolotán",
+          "station": "Oxolotán",
+          "namo": 39.53,
+          "namino": 31.2,
+          "ayer": 35.92,
+          "hoy": 35.37,
+          "diff": -0.55,
+          "capacity": 4.16,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "TAPTB",
+          "river": "Tacotalpa",
+          "station": "Tapijulapa",
+          "namo": 24.63,
+          "namino": 15.3,
+          "ayer": 17.18,
+          "hoy": 17.95,
+          "diff": 0.77,
+          "capacity": 6.68,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "PUYTB",
+          "river": "Puyacatengo",
+          "station": "Puyacatengo",
+          "namo": 29.65,
+          "namino": 24.1,
+          "ayer": 25.5,
+          "hoy": 25.32,
+          "diff": -0.18,
+          "capacity": 4.33,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "TEATB",
+          "river": "Teapa",
+          "station": "Teapa",
+          "namo": 37.71,
+          "namino": 335.0,
+          "ayer": 35.67,
+          "hoy": 34.66,
+          "diff": -1.01,
+          "capacity": 3.05,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "PNVTB",
+          "river": "De la Sierra",
+          "station": "Pueblo Nuevo",
+          "namo": 7.49,
+          "namino": 14.0,
+          "ayer": 6.3,
+          "hoy": 7.15,
+          "diff": 0.85,
+          "capacity": 0.34,
+          "semaforo": "PREVENCION",
+          "problems": []
+        },
+        {
+          "code": "SJOCP",
+          "river": "Pichucalco",
+          "station": "San Joaquín",
+          "namo": 23.12,
+          "namino": 18.1,
+          "ayer": 24.24,
+          "hoy": 23.65,
+          "diff": -0.59,
+          "capacity": -0.53,
+          "semaforo": "ALERTA",
+          "problems": []
+        },
+        {
+          "code": "GABTB",
+          "river": "Grijalva",
+          "station": "Gaviotas",
+          "namo": null,
+          "namino": null,
+          "ayer": 21.0,
+          "hoy": null,
+          "diff": 0.48,
+          "capacity": null,
+          "semaforo": "NORMAL",
+          "problems": [
+            "unreadable_namo",
+            "unreadable_hoy",
+            "unreadable_capacity"
+          ]
+        },
+        {
+          "code": "EPOTB",
+          "river": "Grijalva",
+          "station": "Porvenir",
+          "namo": 4.74,
+          "namino": 0.15,
+          "ayer": 2.43,
+          "hoy": 2.76,
+          "diff": 0.33,
+          "capacity": 1.98,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "SAACP",
+          "river": "Tulijá",
+          "station": "Salto de Agua",
+          "namo": 10.99,
+          "namino": 1.92,
+          "ayer": 6.53,
+          "hoy": 7.92,
+          "diff": 1.39,
+          "capacity": 3.07,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "MACTB",
+          "river": "Puxcatán",
+          "station": "Macuspana",
+          "namo": 9.85,
+          "namino": 0.45,
+          "ayer": 6.06,
+          "hoy": 6.87,
+          "diff": 0.81,
+          "capacity": 2.98,
+          "semaforo": "NORMAL",
+          "problems": []
+        },
+        {
+          "code": "BDCTB",
+          "river": "Usumacinta",
+          "station": "Boca del Cerro",
+          "namo": 19.21,
+          "namino": null,
+          "ayer": 18.53,
+          "hoy": 19.17,
+          "diff": 0.64,
+          "capacity": 0.04,
+          "semaforo": "PREVENCION",
+          "problems": []
+        },
+        {
+          "code": "SPTTB",
+          "river": "San Pedro",
+          "station": "San Pedro",
+          "namo": 9.01,
+          "namino": 758.0,
+          "ayer": 8.74,
+          "hoy": 8.74,
+          "diff": 0.0,
+          "capacity": 0.27,
+          "semaforo": "NORMAL",
+          "problems": []
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "no FECHA line found",
+    "no FECHA line found"
+  ]
+}
