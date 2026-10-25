@@ -195,7 +195,25 @@ def test_five_successful_stations_write_nothing_on_repeat(seeded, capsys):
     )
 
 
-@pytest.mark.parametrize("bad_index", range(5))
+def test_bdctb_failure_fails_the_run(seeded, capsys):
+    """A BDCTB failure keeps failing the run, as before the new stations (review R4)."""
+    from tests.test_operate import fake_forecast
+
+    documents = multi()
+    documents[0]["daily"].pop("river_discharge_member01")
+    code = operate.main(
+        ["run", "--data", str(seeded), "--now", NOW],
+        fetch=lambda: encoded(documents),
+        forecaster=fake_forecast,
+    )
+    captured = capsys.readouterr()
+    assert code == 1
+    assert captured.out == ""
+    assert captured.err.startswith("error: BDCTB: failed: missing Open-Meteo column")
+    assert not (seeded / "bdctb" / "latest.json").exists()
+
+
+@pytest.mark.parametrize("bad_index", range(1, 5))
 def test_bad_cell_does_not_block_other_stations(seeded, capsys, bad_index):
     from tests.test_operate import fake_forecast
 

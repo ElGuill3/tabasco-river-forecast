@@ -303,8 +303,7 @@ def station_record(row):
         },
         "semaforo": row.semaforo,
     }
-    namo = stations.NAMO.get(record["code"]) if record["code"] != "BDCTB" else None
-    return record | {"problems": levels.row_problems(row, namo)}
+    return record | {"problems": levels.row_problems(row, None)}
 
 
 def official_tables(root, now, reader):
@@ -592,6 +591,7 @@ def run_all(root, artifact, now, *, fetch, reader, forecaster):
         raise ValueError("Open-Meteo response must contain five station cells")
     summaries = []
     succeeded = 0
+    bdctb_failed = False
     for code, document in zip(stations.PUBLISHED, documents, strict=True):
         try:
             content = json_bytes(document)
@@ -626,7 +626,11 @@ def run_all(root, artifact, now, *, fetch, reader, forecaster):
             succeeded += 1
         except Exception as exc:
             summaries.append(f"{code}: failed: {exc}")
-    if not succeeded:
+            if code == "BDCTB":
+                bdctb_failed = True
+    # A BDCTB failure still fails the run, as before the new stations; the
+    # other stations only add to it and never mask its failure.
+    if not succeeded or bdctb_failed:
         raise ValueError("; ".join(summaries))
     return "; ".join(summaries)
 

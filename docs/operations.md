@@ -204,10 +204,13 @@ on their first valid response. Their responses, state and detections live under
 the BDCTB rules. Inference always uses control plus members 1–10 and the same
 provider's day-0 past discharge. No fitting occurs in the operation.
 
-The summary reports each station's publication/no-change or failure. One failed
-station preserves its prior publication and cannot stop the others; it is retried
-on the next run. A partial-success run exits 0 so Actions can commit the successful
-stations. If every station fails, the command exits 1. Bootstrap response/state
+The summary reports each station's publication/no-change or failure. A failed new
+station (MACTB, SAACP, PNVTB, TAPTB) preserves its prior publication and cannot
+stop the others; it is retried on the next run, and the run exits 0 so Actions can
+commit the successful stations. A BDCTB failure still exits 1, as before the new
+stations, so it stays visible as a failed run; that hour nothing is committed and
+every station is retried on the next run. If every station fails, the command
+also exits 1. Bootstrap response/state
 and first publication share the same validated write plan: a failed first
 publication leaves neither bootstrap state nor a partial forecast.
 Each station's plan has the existing write rollback protection; the overall run
