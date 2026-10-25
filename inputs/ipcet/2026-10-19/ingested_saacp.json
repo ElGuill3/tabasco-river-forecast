@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "obs_date": "2026-10-19",
+      "obs_flag": "ok",
+      "valid": true,
+      "ayer": 4.78,
+      "hoy": 6.55,
+      "diff": 1.77,
+      "last_modified": "Mon, 19 Oct 2026 16:22:09 GMT",
+      "page_date": "2026-10-19"
+    }
+  ],
+  "errors": [
+    "rejected inputs/ipcet/2026-10-19: no FECHA line found",
+    "rejected inputs/ipcet/2026-10-19: no FECHA line found"
+  ]
+}

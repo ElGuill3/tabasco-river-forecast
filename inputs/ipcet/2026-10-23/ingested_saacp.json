@@ -1,0 +1,8 @@
+{
+  "rows": [],
+  "errors": [
+    "rejected inputs/ipcet/2026-10-23: no FECHA line found",
+    "rejected inputs/ipcet/2026-10-23: no FECHA line found",
+    "rejected inputs/ipcet/2026-10-23: diff_mismatch"
+  ]
+}
