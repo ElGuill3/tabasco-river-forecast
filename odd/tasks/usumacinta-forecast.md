@@ -37,7 +37,7 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
 - [x] **T21** (S8) GitHub Actions workflow: daily schedule (GloFAS-only or last known level) and a run triggered when a new IPCET table image arrives; commits the JSON to a `forecasts` branch (latest plus dated history). Route: gentle-ai-worker, gentle-ai-verify. Commits: distributionMapApp a945855, 8394229, 5d71876, f3c963d, 184f8ed on feat/bdctb-live-forecast (L48, L49); PR after T21 publishes. Done: deployed and verified end to end (L55).
 - [ ] **T22** (S8) distributionMapApp: messenger (on start, if online and today's forecast lacks today's IPCET level, download the table image with its Last-Modified and upload it to the repo with a single-repo fine-grained token), reads the published JSON with a local cache, shows the available forecast with an "updating" notice until the new run lands, level-versus-NAMO chart, no own semáforo. Route: gentle-ai-worker, gentle-ai-verify. Commits: distributionMapApp a945855, 8394229, 5d71876, f3c963d, 184f8ed on feat/bdctb-live-forecast (L48, L49); PR after T21 publishes.
 - [ ] **T23** (S3, S1) Per-station GloFAS ceiling on the development years only (experiment 15, L63): the L1 recipe with the reanalysis as a perfect GloFAS forecast and the CONAGUA issue-day stage, scored against persistence; orientation for T9, never a publication decision. Route: gentle-ai-worker. Commit: see L64.
-- [ ] **T24** (S3, S1) Per-station models trained on the reanalysis and scored once on the real CEMS operational forecasts 2023-08..2026-10 (experiment 16, L65); acceptance per L61. Route: gentle-ai-worker. Commit: TBD.
+- [ ] **T24** (S3, S1) Per-station models trained on the reanalysis and scored once on the real CEMS operational forecasts 2023-08..2026-10 (experiment 16, L65); acceptance per L61. Route: gentle-ai-worker (script), parent (extraction speed-up, run). Commit: see L66.
 - [ ] **T9** (S3) Extend to the 14 semáforo rivers (Grijalva needs dam releases if available). Route: TBD.
 - [ ] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: inline.
 - [ ] **T11** (S2) After the user confirms: delete `distributionMapApp-model-research` (local and GitHub). Route: user decision.
@@ -174,4 +174,31 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
     - the period holds only two to three wet seasons;
     - GABTB has no valid IPCET reading yet (Gaviotas OCR), so an accepted GABTB lead cannot go live until the reader works.
   - Output: `experiments/16_station_models.py` and `docs/results/16-station-models.{json,md}`. Scored once and reported as it comes out.
+- **L66** T24 / experiment 16 result (L65), scored once in 17 min with no bug-forced re-run of the scoring. Tables: `docs/results/16-station-models.md`.
+  - Extraction:
+    - The worker's first extraction stalled because `cems.read_cell` costs about 13 s per archive per cell. The parent replaced it with one array load per file, which gave output identical to `cems.read_cell` on a test archive.
+    - Every station has 1170 issues. The BDCTB re-extraction matched the reference files with a maximum difference of 0.0.
+  - Scoring rows: about 520–670 per station and lead (2023-08 to 2025-09), and about 1040–1110 for SAACP and SJOCP (to 2026-10).
+  - L1 skill vs persistence, h1 / h3 / h7:
+
+    | Station | h1 | h3 | h7 |
+    | --- | --- | --- | --- |
+    | BDCTB | .21 | .30 | .29 |
+    | PNVTB | .13 | .27 | .32 |
+    | SAACP | .15 | .34 | .37 |
+    | TAPTB | .12 | .10 | .17 |
+    | MACTB | .18 | .35 | .35 |
+    | GABTB | .04 | .18 | .15 |
+    | OXOTB | −.40 | −.08 | .13 |
+    | SJOCP | .02 | .13 | .19 |
+    | TEATB | −.50 | −.19 | −.14 |
+    | PUYTB | .06 | .13 | .09 |
+    | EPOTB | .04 | .28 | .30 |
+    | GONTB | −.41 | −.39 | −.24 |
+
+  - **Accepted (L61):** all three leads of BDCTB, PNVTB, SAACP, TAPTB, MACTB, GABTB, SJOCP, PUYTB and EPOTB; OXOTB at h7 only. TEATB and GONTB are not accepted at any lead.
+  - L1 q10–q90 coverage is 0.76–0.93 for the accepted stations. The expected too-narrow bands did not appear, except at OXOTB (0.54–0.57) and TEATB (0.33–0.40), the two stations with clear negative h1 skill.
+  - Margins at h1 are small for SJOCP (0.007 m), GABTB (0.005 m), EPOTB (0.007 m) and PUYTB (0.003 m). No significance test was pre-registered, so the L61 rule is applied as written and the margins are reported.
+  - M1 (no issue-day stage) loses to persistence almost everywhere at h1 and h3, so publication requires the live IPCET stage.
+  - GABTB remains blocked for live use until the Gaviotas row is read (L65).
 
