@@ -1,0 +1,85 @@
+{
+  "model_version": "taptb-L65-v1",
+  "training_period": [
+    "1999-01-01",
+    "2022-12-31"
+  ],
+  "training_rows": {
+    "h1": {
+      "start": "1999-01-02",
+      "end": "2022-12-31",
+      "rows": 7710
+    },
+    "h3": {
+      "start": "1999-01-04",
+      "end": "2022-12-31",
+      "rows": 7613
+    },
+    "h7": {
+      "start": "1999-01-08",
+      "end": "2022-12-31",
+      "rows": 7535
+    }
+  },
+  "source_cell": {
+    "cell": "17.525,-92.825",
+    "latitude": 17.525,
+    "longitude": -92.825,
+    "correlation": 0.6176,
+    "lag_days": 0,
+    "mean_ratio": 1.0756,
+    "days": 9167,
+    "rule": "among cells whose mean is 0.5-2 times the observed mean, the cell nearest the station whose daily correlation with observed discharge (allowing it to lead by 0-5 days) is within 0.005 of the best"
+  },
+  "station": {
+    "code": "TAPTB",
+    "name": "Tapijulapa"
+  },
+  "namo_m": 24.63,
+  "pre_registration": "odd/tasks/usumacinta-forecast.md L65/L67",
+  "recipe": "experiment 16 training_table / fit_l1; perfect reanalysis forecast; age 0",
+  "features": {
+    "live": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos",
+      "obs_last",
+      "obs_age",
+      "obs_day_q"
+    ],
+    "glofas_only": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos"
+    ]
+  },
+  "conformal_margins": {
+    "live": {
+      "h1": 0.0362376991667297,
+      "h3": 0.11269484089321047,
+      "h7": 0.16377680776449566
+    },
+    "glofas_only": {
+      "h1": 0.2503809098583787,
+      "h3": 0.26585918002624354,
+      "h7": 0.28510409831450545
+    }
+  },
+  "sklearn_version": "1.9.1"
+}

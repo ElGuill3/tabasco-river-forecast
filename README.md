@@ -21,7 +21,10 @@ Tabasco, Mexico, built only from public data.
   *Semáforo Hidrometeorológico*.
 
 The first river is the Usumacinta at Boca del Cerro (station BDCTB, Tenosique).
-The plan then extends to the 14 rivers in the IPCET semáforo.
+Hourly publication also covers Macuspana (MACTB), Salto de Agua (SAACP),
+Pueblo Nuevo (PNVTB) and Tapijulapa (TAPTB), selected by the pre-registered
+L67 product rule after [experiment 16](docs/results/16-station-models.md).
+The broader research plan covers the 14 rivers in the IPCET semáforo.
 
 ## Data
 
@@ -479,6 +482,25 @@ run-labeled history on the `forecasts` branch. Actions runs every hour at
 minute 17 (UTC) and when the data-branch relay receives `meta.json`.
 The app reads the JSON; it never runs the model. See operations for one-time
 branch initialization, seeding, offline replay and failure recovery.
+
+### Additional frozen station forecasts
+
+`models/mactb`, `models/saacp`, `models/pnvtb` and `models/taptb` contain the
+exact L65 L1/M1 recipe fitted on 1999–2022 CONAGUA stage and reanalysis-as-perfect
+forecast rows, not on later observations. Reproduce one offline with
+`timeout 1500 uv run python -m riverforecast.publish_cli fit --code MACTB`
+(`freeze --code MACTB` is equivalent; the original BDCTB default is unchanged).
+Use `publish --artifact models/mactb` with that station's causal IPCET CSV and
+saved single-cell Open-Meteo response for offline serving.
+
+The hourly operation fetches all five cells in one Open-Meteo request and writes
+`<code lowercase>/latest.json`, `history/<label>.json` and `published.json`.
+All use the existing v2 schema with station-specific code, name and NAMO.
+BDCTB's artifact and output contract remain unchanged. Each station has the same
+reading-age, M1 fallback and receipt rules; a failure is reported without stopping
+successful stations. See [operations](docs/operations.md#additional-published-stations-l65l67)
+for artifact provenance, paths and limitations (particularly M1 fallback skill
+and the new models' age-zero training).
 
 ## Development
 

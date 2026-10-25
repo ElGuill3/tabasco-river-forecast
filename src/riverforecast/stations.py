@@ -23,6 +23,30 @@ STATIONS = (
 )
 
 
+# L67 publication subset; NAMO is the IPCET station datum, in metres.
+PUBLISHED = ("BDCTB", "MACTB", "SAACP", "PNVTB", "TAPTB")
+NAMO = dict(zip(PUBLISHED, (19.21, 9.85, 10.99, 7.49, 24.63), strict=True))
+# Frozen Open-Meteo coordinates from data/raw/glofas/<CODE>/cell.json (L67).
+# Kept with serving configuration so a broken artifact cannot block the fetch.
+CELLS = dict(
+    zip(
+        PUBLISHED,
+        (
+            (17.425, -91.525),
+            (17.725, -92.475),
+            (17.575, -92.375),
+            (17.975, -92.975),
+            (17.525, -92.825),
+        ),
+        strict=True,
+    )
+)
+
+
+def identity(code: str) -> dict:
+    return {"code": code, "name": next(s for _, s, c in STATIONS if c == code)}
+
+
 def normalise(name: str) -> str:
     """Case-, accent- and spacing-insensitive form of a printed name."""
     decomposed = unicodedata.normalize("NFKD", name)

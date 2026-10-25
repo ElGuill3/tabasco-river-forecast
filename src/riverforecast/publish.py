@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 
-from riverforecast import data, features, live, reforecast
+from riverforecast import data, features, live, reforecast, stations
 from riverforecast.model import ConformalQuantileModel
 
 L1_COLUMNS = [*features.COLUMNS, "obs_last", "obs_age", "obs_day_q"]
@@ -76,6 +76,11 @@ def freeze(
         "station": STATION,
         "recipe": "experiment 13 / L39; shifted training past; simulated census availability",
     }
+    return write_artifact(destination, models, metadata)
+
+
+def write_artifact(destination, models, metadata):
+    """Persist a trusted frozen artifact, enforcing the existing size limit."""
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     joblib.dump(models, destination / "models.joblib", compress=3)
@@ -84,6 +89,68 @@ def freeze(
     if size > 25_000_000:
         raise ValueError(f"artifact exceeds 25 MB: {size} bytes; stop without changing model")
     return {"artifact_bytes": size, **metadata}
+
+
+def training_table(stage, discharge, lead):
+    """Exact L65 perfect-forecast construction (experiment 16 training_table)."""
+    end = pd.Timestamp("2022-12-31")
+    past = discharge.shift(1, freq="D").loc[:end]
+    summary = pd.DataFrame({"valid": discharge.index, "lead_days": lead})
+    summary["issue"] = summary.valid - pd.Timedelta(days=lead)
+    for column in ("control", "mean", "q10", "q50", "q90"):
+        summary[column] = discharge.to_numpy()
+    table = features.build(summary, past, lead)
+    table = table[
+        table.valid.between("1999-01-01", end)
+        & table.valid.isin(stage.index)
+        & table.index.isin(stage.index)
+    ]
+    revealed = live.real_revealed_values(
+        stage, pd.Series(stage.index, index=stage.index), table.index
+    )
+    return table, revealed, past
+
+
+def freeze_station(code, destination=None, version=None):
+    """Freeze precisely the scored L65 model; never fit on 2023+ rows."""
+    code = code.upper()
+    if code not in stations.PUBLISHED[1:]:
+        raise ValueError("station must be MACTB, SAACP, PNVTB or TAPTB")
+    stage = data.stage(code).loc[:"2022-12-31"]
+    stage = stage[np.isfinite(stage)]
+    discharge = data.glofas_reanalysis(code).loc[:"2022-12-31"]
+    discharge = discharge[np.isfinite(discharge) & (discharge > 0)]
+    models = {"live": {}, "glofas_only": {}}
+    periods = {}
+    for h in (1, 3, 7):
+        train, revealed, past = training_table(stage, discharge, h)
+        days = pd.DatetimeIndex(train.valid)
+        models["live"][h] = fit_l1(train, stage, revealed, past)
+        models["glofas_only"][h] = ConformalQuantileModel.fit(
+            train[features.COLUMNS], stage.loc[days], days
+        )
+        periods[f"h{h}"] = {
+            "start": f"{days.min():%Y-%m-%d}",
+            "end": f"{days.max():%Y-%m-%d}",
+            "rows": len(train),
+        }
+    cell = json.loads((data.RAW / "glofas" / code / "cell.json").read_text())
+    metadata = {
+        "model_version": version or f"{code.lower()}-L65-v1",
+        "training_period": ["1999-01-01", "2022-12-31"],
+        "training_rows": periods,
+        "source_cell": cell,
+        "station": stations.identity(code),
+        "namo_m": stations.NAMO[code],
+        "pre_registration": "odd/tasks/usumacinta-forecast.md L65/L67",
+        "recipe": "experiment 16 training_table / fit_l1; perfect reanalysis forecast; age 0",
+        "features": {"live": L1_COLUMNS, "glofas_only": features.COLUMNS},
+        "conformal_margins": {
+            mode: {f"h{h}": m.margin for h, m in fits.items()} for mode, fits in models.items()
+        },
+        "sklearn_version": sklearn.__version__,
+    }
+    return write_artifact(destination or f"models/{code.lower()}", models, metadata)
 
 
 class GlofasProvider(Protocol):
@@ -197,6 +264,8 @@ def forecast(artifact, issue, observations, provider: GlofasProvider, generated_
     if metadata["sklearn_version"] != sklearn.__version__:
         raise ValueError("artifact scikit-learn version does not match runtime")
     models = joblib.load(artifact / "models.joblib")  # trusted repository artifact only
+    station = metadata.get("station", STATION)
+    namo = metadata.get("namo_m", NAMO)
     obs = observations.copy()
     obs["date"] = pd.to_datetime(obs["date"])
     parsed_stamps = [pd.Timestamp(value) for value in obs["table_last_modified"]]
@@ -234,13 +303,13 @@ def forecast(artifact, issue, observations, provider: GlofasProvider, generated_
         forecasts[f"h{h}"] = dict(zip(("q10", "q50", "q90"), quantiles, strict=True))
         forecasts[f"h{h}"].update(
             target_date=f"{issue + pd.Timedelta(days=h):%Y-%m-%d}",
-            distance_to_namo_m=quantiles[1] - NAMO,
-            namo_m=NAMO,
+            distance_to_namo_m=quantiles[1] - namo,
+            namo_m=namo,
             data_kind="modeled_not_observed",
         )
     return {
         "schema": "bdctb-forecast/v2",
-        "station": STATION,
+        "station": station,
         "issue_time": issue_time.isoformat(),
         "generated_at": issue_time.isoformat()
         if generated_at is None

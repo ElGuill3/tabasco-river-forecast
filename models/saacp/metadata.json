@@ -1,0 +1,85 @@
+{
+  "model_version": "saacp-L65-v1",
+  "training_period": [
+    "1999-01-01",
+    "2022-12-31"
+  ],
+  "training_rows": {
+    "h1": {
+      "start": "1999-01-02",
+      "end": "2022-12-31",
+      "rows": 7827
+    },
+    "h3": {
+      "start": "1999-01-04",
+      "end": "2022-12-31",
+      "rows": 7745
+    },
+    "h7": {
+      "start": "1999-01-08",
+      "end": "2022-12-31",
+      "rows": 7709
+    }
+  },
+  "source_cell": {
+    "cell": "17.575,-92.375",
+    "latitude": 17.575,
+    "longitude": -92.375,
+    "correlation": 0.6467,
+    "lag_days": 1,
+    "mean_ratio": 0.72,
+    "days": 9320,
+    "rule": "among cells whose mean is 0.5-2 times the observed mean, the cell nearest the station whose daily correlation with observed discharge (allowing it to lead by 0-5 days) is within 0.005 of the best"
+  },
+  "station": {
+    "code": "SAACP",
+    "name": "Salto de Agua"
+  },
+  "namo_m": 10.99,
+  "pre_registration": "odd/tasks/usumacinta-forecast.md L65/L67",
+  "recipe": "experiment 16 training_table / fit_l1; perfect reanalysis forecast; age 0",
+  "features": {
+    "live": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos",
+      "obs_last",
+      "obs_age",
+      "obs_day_q"
+    ],
+    "glofas_only": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos"
+    ]
+  },
+  "conformal_margins": {
+    "live": {
+      "h1": 0.020196783177145683,
+      "h3": 0.055598372127090734,
+      "h7": 0.0956184144400738
+    },
+    "glofas_only": {
+      "h1": 0.11776610006698673,
+      "h3": 0.11003141735250921,
+      "h7": 0.12269405412939483
+    }
+  },
+  "sklearn_version": "1.9.1"
+}

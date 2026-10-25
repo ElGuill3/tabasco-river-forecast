@@ -1,4 +1,4 @@
-"""Daily BDCTB operation: acquire one ensemble, ingest messenger files, publish.
+"""Hourly river operation: acquire five cells, ingest messenger files, publish.
 
 Every ingested IPCET level table is also published for all stations (ipcet/*.json).
 
@@ -44,12 +44,12 @@ LEVEL_COLUMNS = [
 RECENT_DATES = 30
 
 
-def fetch_response(*, get=None) -> bytes:
+def fetch_response(*, get=None, url=OPENMETEO_URL) -> bytes:
     """One endpoint, 60-second timeout, at most two attempts (injectable HTTP)."""
     get = requests.get if get is None else get
     for attempt in range(2):
         try:
-            reply = get(OPENMETEO_URL, timeout=60)
+            reply = get(url, timeout=60)
             reply.raise_for_status()
             return reply.content
         except (requests.RequestException, OSError):
@@ -112,9 +112,9 @@ def validate(payload: bytes, label: str, scratch: Path):
     return document
 
 
-def seed(root, response, label, now):
+def seed(root, response, label, now, input_dir="inputs/openmeteo", *, plan_only=False):
     date.fromisoformat(label)
-    if target(root, "inputs/openmeteo/state.json").exists():
+    if target(root, f"{input_dir}/state.json").exists():
         raise ValueError("already seeded; refusing to replace run state")
     payload = Path(response).read_bytes()
     with tempfile.TemporaryDirectory(prefix="bdctb-seed-") as directory:
@@ -125,13 +125,13 @@ def seed(root, response, label, now):
         "fingerprint": fingerprint(doc, future),
         "fetched_at": now.isoformat(),
     }
-    write_plan(
-        root,
-        {
-            f"inputs/openmeteo/{label}.json": payload,
-            "inputs/openmeteo/state.json": json_bytes(state),
-        },
-    )
+    plan = {
+        f"{input_dir}/{label}.json": payload,
+        f"{input_dir}/state.json": json_bytes(state),
+    }
+    if plan_only:
+        return plan
+    write_plan(root, plan)
     return f"seeded {label}"
 
 
@@ -183,7 +183,7 @@ def read_once(reader):
     return read
 
 
-def ingest(root, issue, now, reader):
+def ingest(root, issue, now, reader, code="BDCTB"):
     """Cache OCR once; resolve only tables visible at this run's issue cutoff.
 
     Reuse station_series for zero differences, confirmations and conflicting
@@ -195,7 +195,8 @@ def ingest(root, issue, now, reader):
     cutoff = pd.Timestamp(issue).tz_localize(publish.ZONE) + pd.Timedelta(hours=11)
     for path in sorted(base.glob("*/meta.json")):
         folder = path.parent.relative_to(root).as_posix()
-        marker = target(root, f"{folder}/ingested.json")
+        marker_name = "ingested.json" if code == "BDCTB" else f"ingested_{code.lower()}.json"
+        marker = target(root, f"{folder}/{marker_name}")
         try:
             target(root, path.relative_to(root).as_posix())
             page = date.fromisoformat(path.parent.name)
@@ -213,9 +214,13 @@ def ingest(root, issue, now, reader):
                     row = next(
                         r
                         for r in table.stations
-                        if r.station == "Boca del Cerro" and r.river == "Usumacinta"
+                        if (
+                            (r.station == "Boca del Cerro" and r.river == "Usumacinta")
+                            if code == "BDCTB"
+                            else stations.code_for(r.river, r.station) == code
+                        )
                     )
-                    problems = levels.row_problems(row, publish.NAMO)
+                    problems = levels.row_problems(row, stations.NAMO[code])
                     if any(
                         v is None or not math.isfinite(v) or abs(v) > 1000
                         for v in (row.hoy, row.ayer)
@@ -243,10 +248,10 @@ def ingest(root, issue, now, reader):
                     print(message, file=sys.stderr)
                     errors.append(message)
             records.extend(rows)
-            plan[f"{folder}/ingested.json"] = json_bytes({"rows": rows, "errors": errors})
+            plan[f"{folder}/{marker_name}"] = json_bytes({"rows": rows, "errors": errors})
         except (ValueError, OSError, KeyError, TypeError) as exc:
             print(f"rejected {folder}: {exc}", file=sys.stderr)
-            plan[f"{folder}/ingested.json"] = json_bytes({"rows": [], "errors": [str(exc)]})
+            plan[f"{folder}/{marker_name}"] = json_bytes({"rows": [], "errors": [str(exc)]})
     visible = [
         r
         for r in records
@@ -276,9 +281,10 @@ def ingest(root, issue, now, reader):
     buffer = io.StringIO()
     observations.to_csv(buffer, index=False, lineterminator="\n")
     csv = buffer.getvalue().encode()
-    csv_path = target(root, "inputs/ipcet/bdctb_levels.csv")
+    csv_name = f"inputs/ipcet/{code.lower()}_levels.csv"
+    csv_path = target(root, csv_name)
     if not csv_path.exists() or csv_path.read_bytes() != csv:
-        plan["inputs/ipcet/bdctb_levels.csv"] = csv
+        plan[csv_name] = csv
     return observations, plan, hashlib.sha256(csv).hexdigest()
 
 
@@ -297,7 +303,8 @@ def station_record(row):
         },
         "semaforo": row.semaforo,
     }
-    return record | {"problems": levels.row_problems(row, None)}
+    namo = stations.NAMO.get(record["code"]) if record["code"] != "BDCTB" else None
+    return record | {"problems": levels.row_problems(row, namo)}
 
 
 def official_tables(root, now, reader):
@@ -469,22 +476,30 @@ def write_plan(root, plan):
         raise
 
 
-def run(root, artifact, now, *, fetch, reader, forecaster):
-    state_path = target(root, "inputs/openmeteo/state.json")
-    if not state_path.exists():
+def run(root, artifact, now, *, fetch, reader, forecaster, code="BDCTB", initial_plan=None):
+    output_dir = code.lower()
+    input_dir = "inputs/openmeteo" if code == "BDCTB" else f"inputs/openmeteo/{output_dir}"
+    plan = dict(initial_plan or {})
+    state_name = f"{input_dir}/state.json"
+    state_path = target(root, state_name)
+    if not state_path.exists() and state_name not in plan:
         raise ValueError("missing Open-Meteo state; use operate seed first")
-    state = json.loads(state_path.read_text())
+    state = json.loads(plan[state_name] if state_name in plan else state_path.read_bytes())
     previous = date.fromisoformat(state["run_label"])
     if previous > now.date():
         raise ValueError("run label is after fetch date")
-    saved = target(root, f"inputs/openmeteo/{previous}.json")
+    saved_name = f"{input_dir}/{previous}.json"
+    saved = target(root, saved_name)
     reader = read_once(reader)
     payload = fetch()
-    plan = {}
     with tempfile.TemporaryDirectory(prefix="bdctb-operate-") as directory:
         scratch = Path(directory) / "response.json"
         new = validate(payload, now.date().isoformat(), scratch)
-        old = validate(saved.read_bytes(), str(previous), Path(directory) / "previous.json")
+        old = validate(
+            plan[saved_name] if saved_name in plan else saved.read_bytes(),
+            str(previous),
+            Path(directory) / "previous.json",
+        )
         future = {day for day in new["daily"]["time"] if day > now.date().isoformat()}
         shared = future.intersection(old["daily"]["time"])
         if not shared:
@@ -513,25 +528,26 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
             }
             if inferred:
                 state["run_label_inferred"] = True
-            plan[f"inputs/openmeteo/{label}.json"] = payload
-            plan["inputs/openmeteo/state.json"] = json_bytes(state)
+            plan[f"{input_dir}/{label}.json"] = payload
+            plan[f"{input_dir}/state.json"] = json_bytes(state)
             kind = "revision" if revision else "inferred" if inferred else "new"
-            log_name = "inputs/openmeteo/detections.csv"
+            log_name = f"{input_dir}/detections.csv"
             log_path = target(root, log_name)
             history = log_path.read_bytes() if log_path.exists() else b"run_label,fetched_at,kind\n"
             plan[log_name] = history + f"{label},{now.isoformat()},{kind}\n".encode()
-        observations, ingest_plan, digest = ingest(root, str(label), now, reader)
+        observations, ingest_plan, digest = ingest(root, str(label), now, reader, code=code)
         plan.update(ingest_plan)
-        plan.update(publish_levels(root, now, reader))
-        receipt_path = target(root, "bdctb/published.json")
+        if code == "BDCTB":
+            plan.update(publish_levels(root, now, reader))
+        receipt_path = target(root, f"{output_dir}/published.json")
         receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else {}
         should_publish = (
             changed
-            or not target(root, "bdctb/latest.json").exists()
+            or not target(root, f"{output_dir}/latest.json").exists()
             or receipt.get("observations_sha256") != digest
         )
         if should_publish:
-            provider = publish.OpenMeteoProvider(scratch if changed else saved)
+            provider = publish.OpenMeteoProvider(scratch if changed or initial_plan else saved)
             result = forecaster(
                 artifact,
                 issue=str(label),
@@ -540,9 +556,9 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
                 generated_at=now.isoformat(),
             )
             output = json_bytes(result)
-            plan["bdctb/latest.json"] = output
-            plan[f"bdctb/history/{label}.json"] = output
-            plan["bdctb/published.json"] = json_bytes(
+            plan[f"{output_dir}/latest.json"] = output
+            plan[f"{output_dir}/history/{label}.json"] = output
+            plan[f"{output_dir}/published.json"] = json_bytes(
                 {"run_label": str(label), "observations_sha256": digest}
             )
             summary = f"published {label} {result['mode']} ({'new run' if changed else 'same run'})"
@@ -550,6 +566,69 @@ def run(root, artifact, now, *, fetch, reader, forecaster):
             summary = "ingested inputs; forecast unchanged" if plan else "no change"
     write_plan(root, plan)
     return summary
+
+
+def fetch_all_response():
+    """One multi-cell request, in the fixed L67 station order; no longitude conversion."""
+    cells = [stations.CELLS[code] for code in stations.PUBLISHED]
+    url = (
+        "https://flood-api.open-meteo.com/v1/flood?latitude="
+        + ",".join(f"{lat:.3f}" for lat, _ in cells)
+        + "&longitude="
+        + ",".join(f"{lon:.3f}" for _, lon in cells)
+        + "&daily=river_discharge&models=forecast_v4&ensemble=true&past_days=10&forecast_days=10"
+    )
+    return fetch_response(url=url)
+
+
+def run_all(root, artifact, now, *, fetch, reader, forecaster):
+    payload = fetch()
+    documents = json.loads(payload)
+    reader = read_once(reader)
+    if not isinstance(documents, list):
+        # Original injected single-cell interface remains available for offline replay.
+        return run(root, artifact, now, fetch=lambda: payload, reader=reader, forecaster=forecaster)
+    if len(documents) != len(stations.PUBLISHED):
+        raise ValueError("Open-Meteo response must contain five station cells")
+    summaries = []
+    succeeded = 0
+    for code, document in zip(stations.PUBLISHED, documents, strict=True):
+        try:
+            content = json_bytes(document)
+            initial_plan = None
+            if code != "BDCTB":
+                input_dir = f"inputs/openmeteo/{code.lower()}"
+                if not target(root, f"{input_dir}/state.json").exists():
+                    # Adopt the established BDCTB label, not an independently guessed date.
+                    state = json.loads(target(root, "inputs/openmeteo/state.json").read_text())
+                    with tempfile.TemporaryDirectory(prefix="station-seed-") as directory:
+                        source = Path(directory) / "response.json"
+                        source.write_bytes(content)
+                        initial_plan = seed(
+                            root,
+                            source,
+                            state["run_label"],
+                            now,
+                            input_dir=input_dir,
+                            plan_only=True,
+                        )
+            summary = run(
+                root,
+                artifact if code == "BDCTB" else Path(f"models/{code.lower()}"),
+                now,
+                fetch=lambda content=content: content,
+                reader=reader,
+                forecaster=forecaster,
+                code=code,
+                initial_plan=initial_plan,
+            )
+            summaries.append(f"{code}: {summary}")
+            succeeded += 1
+        except Exception as exc:
+            summaries.append(f"{code}: failed: {exc}")
+    if not succeeded:
+        raise ValueError("; ".join(summaries))
+    return "; ".join(summaries)
 
 
 def main(argv=None, *, fetch=None, reader=None, forecaster=None):
@@ -585,11 +664,11 @@ def main(argv=None, *, fetch=None, reader=None, forecaster=None):
         if args.command == "seed":
             summary = seed(args.data, args.response, args.run_label, now)
         else:
-            summary = run(
+            summary = run_all(
                 args.data,
                 args.artifact,
                 now,
-                fetch=fetch or fetch_response,
+                fetch=fetch or fetch_all_response,
                 reader=reader or levels.read_table,
                 forecaster=forecaster or publish.forecast,
             )

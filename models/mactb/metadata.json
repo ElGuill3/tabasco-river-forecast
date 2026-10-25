@@ -1,0 +1,85 @@
+{
+  "model_version": "mactb-L65-v1",
+  "training_period": [
+    "1999-01-01",
+    "2022-12-31"
+  ],
+  "training_rows": {
+    "h1": {
+      "start": "1999-01-02",
+      "end": "2022-12-31",
+      "rows": 8118
+    },
+    "h3": {
+      "start": "1999-01-04",
+      "end": "2022-12-31",
+      "rows": 8060
+    },
+    "h7": {
+      "start": "1999-01-08",
+      "end": "2022-12-31",
+      "rows": 8022
+    }
+  },
+  "source_cell": {
+    "cell": "17.725,-92.475",
+    "latitude": 17.725,
+    "longitude": -92.475,
+    "correlation": 0.616,
+    "lag_days": 1,
+    "mean_ratio": 1.5003,
+    "days": 6491,
+    "rule": "among cells whose mean is 0.5-2 times the observed mean, the cell nearest the station whose daily correlation with observed discharge (allowing it to lead by 0-5 days) is within 0.005 of the best"
+  },
+  "station": {
+    "code": "MACTB",
+    "name": "Macuspana"
+  },
+  "namo_m": 9.85,
+  "pre_registration": "odd/tasks/usumacinta-forecast.md L65/L67",
+  "recipe": "experiment 16 training_table / fit_l1; perfect reanalysis forecast; age 0",
+  "features": {
+    "live": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos",
+      "obs_last",
+      "obs_age",
+      "obs_day_q"
+    ],
+    "glofas_only": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos"
+    ]
+  },
+  "conformal_margins": {
+    "live": {
+      "h1": 0.03880001579933867,
+      "h3": 0.10788442676278853,
+      "h7": 0.19467978556412657
+    },
+    "glofas_only": {
+      "h1": 0.23135171480412775,
+      "h3": 0.23590235314422814,
+      "h7": 0.2548001669240132
+    }
+  },
+  "sklearn_version": "1.9.1"
+}

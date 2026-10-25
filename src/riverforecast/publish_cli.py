@@ -12,6 +12,7 @@ from riverforecast.publish import (
     OpenMeteoProvider,
     forecast,
     freeze,
+    freeze_station,
     read_observations,
 )
 
@@ -19,9 +20,15 @@ from riverforecast.publish import (
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    fit = sub.add_parser("freeze", help="fit final post-audit L1 and M1 from local training data")
-    fit.add_argument("--artifact", type=Path, default=Path("models/bdctb"))
-    fit.add_argument("--version", default="bdctb-L1-postaudit-v1")
+    fit = sub.add_parser("freeze", aliases=["fit"], help="fit frozen L1/M1 from local data")
+    fit.add_argument(
+        "--code",
+        default="BDCTB",
+        type=str.upper,
+        choices=["BDCTB", "MACTB", "SAACP", "PNVTB", "TAPTB"],
+    )
+    fit.add_argument("--artifact", type=Path, help="default models/<code lowercase>")
+    fit.add_argument("--version", help="default station's pre-registered version")
     serve = sub.add_parser(
         "publish", help="write v2 JSON from a trusted frozen artifact; never train"
     )
@@ -50,8 +57,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     try:
-        if args.command == "freeze":
-            print(json.dumps(freeze(args.artifact, args.version), ensure_ascii=False))
+        if args.command in ("freeze", "fit"):
+            if args.code == "BDCTB":
+                result = freeze(
+                    args.artifact or Path("models/bdctb"), args.version or "bdctb-L1-postaudit-v1"
+                )
+            else:
+                result = freeze_station(args.code, args.artifact, args.version)
+            print(json.dumps(result, ensure_ascii=False))
         else:
             result = forecast(
                 args.artifact,

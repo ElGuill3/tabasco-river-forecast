@@ -1,4 +1,4 @@
-# Operate the daily BDCTB forecast
+# Operate the hourly river forecasts
 
 The model runs on GitHub Actions, not the fair laptop. Main holds the frozen
 artifact and Python code; the `forecasts` branch holds messenger inputs and the
@@ -58,9 +58,11 @@ Keep the relay installed on the data branch as well as `forecast.yml` on main.
 ## How run dates are inferred
 
 There is one Open-Meteo endpoint request, with a 60-second timeout and at most
-two attempts. It requests the BDCTB river cell 17.425, −91.525, `forecast_v4`,
-ensemble, 10 past days and 10 forecast days. The response is validated before
-any stored file changes. No CEMS or IPCET website fetch occurs in this module.
+two attempts. One multi-cell request covers BDCTB, MACTB, SAACP, PNVTB and
+TAPTB, in that order, using their frozen Open-Meteo river cells (`stations.CELLS`,
+matching `data/raw/glofas/<CODE>/cell.json`, without CEMS longitude conversion).
+It requests `forecast_v4`, ensemble, 10 past days and 10 forecast days. Each
+station's response is validated before its stored files change. No CEMS or IPCET website fetch occurs in this module.
 
 Open-Meteo does not expose the served GloFAS issue date. Compare the saved
 response with the fresh response using SHA-256 over sorted `(absolute date,
@@ -161,6 +163,63 @@ uv run python -m riverforecast.operate seed-levels --data /tmp/forecasts \
 The seed keeps only valid station rows with a trusted date, on or after `--since`,
 and leaves `semaforo` empty. It refuses to replace an existing
 `inputs/ipcet/levels_seed.csv`.
+
+## Additional published stations (L65/L67)
+
+The hourly operation also publishes Macuspana (MACTB), Salto de Agua (SAACP),
+Pueblo Nuevo (PNVTB) and Tapijulapa (TAPTB). Each has
+`<code lowercase>/latest.json`, `history/<run_label>.json` and `published.json`.
+They use the same `bdctb-forecast/v2` schema (the schema identifier is retained
+for compatibility), with their own `station.code`, `station.name`, model version
+and NAMO: 9.85, 10.99, 7.49 and 24.63 m, respectively.
+`distance_to_namo_m` remains q50 minus that station's NAMO. BDCTB's artifact,
+paths, schema and forecast bytes for fixed inputs are unchanged.
+
+Artifacts live in `models/<code lowercase>/`. To reproduce one offline:
+
+```bash
+timeout 1500 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  uv run python -B -m riverforecast.publish_cli fit --code MACTB
+```
+
+`freeze --code MACTB` is equivalent. With no code, both `fit` and the original
+`freeze` retain the BDCTB recipe and defaults. The four new artifacts are exactly
+the experiment-16 L65 recipe: `training_table`, `fit_l1` L1 plus M1 fallback,
+CONAGUA stage and perfect-forecast reanalysis rows with targets in 1999–2022.
+No 2023+ row is fitted. Metadata records the source cell, period, per-lead row
+counts, version `<code>-L65-v1` and L65/L67 reference. This is not a new scoring
+or model-selection exercise.
+
+Each station resolves its own validated IPCET row by code using the original
+causal `station_series` rules, fixed 11:00 cutoff and reading ages 0–7; age 8
+or no valid reading uses M1. Yesterday's value and zero-difference handling
+remain as at BDCTB. Validation uses that station's NAMO, never BDCTB's.
+Station caches are `ingested_<code>.json`; causal observations are
+`inputs/ipcet/<code>_levels.csv`. Official `levels_seed.csv` is not imported as a
+live input because it lacks causal upload timestamps.
+
+New stations bootstrap their own run state from the established BDCTB run label
+on their first valid response. Their responses, state and detections live under
+`inputs/openmeteo/<code>/`; detection and observation receipts otherwise follow
+the BDCTB rules. Inference always uses control plus members 1–10 and the same
+provider's day-0 past discharge. No fitting occurs in the operation.
+
+The summary reports each station's publication/no-change or failure. One failed
+station preserves its prior publication and cannot stop the others; it is retried
+on the next run. A partial-success run exits 0 so Actions can commit the successful
+stations. If every station fails, the command exits 1. Bootstrap response/state
+and first publication share the same validated write plan: a failed first
+publication leaves neither bootstrap state nor a partial forecast.
+Each station's plan has the existing write rollback protection; the overall run
+is intentionally not an all-station transaction. The shared HTTP request itself
+is a common failure boundary.
+
+The subset is the L67 product decision: accepted at all three leads and h1 L1
+skill at least 0.10. L65 evaluated age-zero stage availability, not the full live
+availability pattern. M1 generally loses to persistence at h1/h3; fallback is
+explicitly labelled, not a claim of equal skill. The additional stations have
+not been trained on aged readings, even though operation retains BDCTB's age
+rules. See [experiment 16](results/16-station-models.md) for the scored results.
 
 ## Local offline replay
 

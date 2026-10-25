@@ -1,0 +1,85 @@
+{
+  "model_version": "pnvtb-L65-v1",
+  "training_period": [
+    "1999-01-01",
+    "2022-12-31"
+  ],
+  "training_rows": {
+    "h1": {
+      "start": "1999-01-05",
+      "end": "2022-12-31",
+      "rows": 8299
+    },
+    "h3": {
+      "start": "1999-01-07",
+      "end": "2022-12-31",
+      "rows": 8241
+    },
+    "h7": {
+      "start": "1999-01-11",
+      "end": "2022-12-31",
+      "rows": 8217
+    }
+  },
+  "source_cell": {
+    "cell": "17.975,-92.975",
+    "latitude": 17.975,
+    "longitude": -92.975,
+    "correlation": 0.7793,
+    "lag_days": 1,
+    "mean_ratio": 1.3817,
+    "days": 9711,
+    "rule": "among cells whose mean is 0.5-2 times the observed mean, the cell nearest the station whose daily correlation with observed discharge (allowing it to lead by 0-5 days) is within 0.005 of the best"
+  },
+  "station": {
+    "code": "PNVTB",
+    "name": "Pueblo Nuevo"
+  },
+  "namo_m": 7.49,
+  "pre_registration": "odd/tasks/usumacinta-forecast.md L65/L67",
+  "recipe": "experiment 16 training_table / fit_l1; perfect reanalysis forecast; age 0",
+  "features": {
+    "live": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos",
+      "obs_last",
+      "obs_age",
+      "obs_day_q"
+    ],
+    "glofas_only": [
+      "fc_q50",
+      "fc_mean",
+      "fc_control",
+      "fc_spread",
+      "past_q0",
+      "past_q3",
+      "past_q7",
+      "past_trend3",
+      "fc_vs_now",
+      "season_sin",
+      "season_cos"
+    ]
+  },
+  "conformal_margins": {
+    "live": {
+      "h1": 0.03539195141526408,
+      "h3": 0.08452160927287267,
+      "h7": 0.14191976449496924
+    },
+    "glofas_only": {
+      "h1": 0.22918044791732006,
+      "h3": 0.25239653234581283,
+      "h7": 0.24926601551959138
+    }
+  },
+  "sklearn_version": "1.9.1"
+}
