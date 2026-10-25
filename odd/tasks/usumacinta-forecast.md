@@ -38,7 +38,7 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
 - [ ] **T22** (S8) distributionMapApp: messenger (on start, if online and today's forecast lacks today's IPCET level, download the table image with its Last-Modified and upload it to the repo with a single-repo fine-grained token), reads the published JSON with a local cache, shows the available forecast with an "updating" notice until the new run lands, level-versus-NAMO chart, no own semáforo. Route: gentle-ai-worker, gentle-ai-verify. Commits: distributionMapApp a945855, 8394229, 5d71876, f3c963d, 184f8ed on feat/bdctb-live-forecast (L48, L49); PR after T21 publishes.
 - [ ] **T23** (S3, S1) Per-station GloFAS ceiling on the development years only (experiment 15, L63): the L1 recipe with the reanalysis as a perfect GloFAS forecast and the CONAGUA issue-day stage, scored against persistence; orientation for T9, never a publication decision. Route: gentle-ai-worker. Commit: see L64.
 - [ ] **T24** (S3, S1) Per-station models trained on the reanalysis and scored once on the real CEMS operational forecasts 2023-08..2026-10 (experiment 16, L65); acceptance per L61. Route: gentle-ai-worker (script), parent (extraction speed-up, run). Commit: see L66.
-- [ ] **T25** (S3, S8) Publish the L67 stations (MACTB, SAACP, PNVTB, TAPTB): frozen per-station artifacts of the exact L65 model, `<code>/latest.json` and history in the hourly workflow, BDCTB output unchanged. Route: gentle-ai-worker. Commit: TBD.
+- [ ] **T25** (S3, S8) Publish the L67 stations (MACTB, SAACP, PNVTB, TAPTB): frozen per-station artifacts of the exact L65 model, `<code>/latest.json` and history in the hourly workflow, BDCTB output unchanged. Route: gentle-ai-worker. Commit: ab0ca62, 7d1b797 (ci), 86fd025 (review fix); see L68.
 - [ ] **T26** (S3, S8) distributionMapApp: show the published forecast for every station in the feed, generalising the BDCTB popup and chart. Route: gentle-ai-worker (app repo). Commit: TBD.
 - [ ] **T9** (S3) Extend to the 14 semáforo rivers (Grijalva needs dam releases if available). Route: TBD.
 - [ ] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: inline.
@@ -220,4 +220,12 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
       - the IPCET `hoy` of the station row as the issue-day stage, with the BDCTB age and fallback rules (M1 when no valid reading).
     - Each station's NAMO is the `namo` column of its IPCET row: MACTB 9.85, SAACP 10.99, PNVTB 7.49, TAPTB 24.63.
     - Output is `<code lowercase>/latest.json` plus `history/` in the same schema as `bdctb/latest.json`. The BDCTB artifact, paths and schema stay unchanged because the app consumes them.
+- **L68** T25 implemented by worker mvnuwcl2-4-xi0s.
+  - Commits: ab0ca62 (code, tests, docs, four frozen models) and 7d1b797 (workflow staging of the new directories).
+  - Checks: 373 tests. The smoke run published all five stations live on 2026-10-25, and the offline replay was byte-identical. A differential run against the base showed identical BDCTB outputs. The four training tables match experiment 16 exactly.
+  - Native review `review-099762d7a722f693` (risk, resilience, reliability) was approved and acknowledged. Two of the reviewer runs were refused at admission because the binary `models.joblib` files can't be inspected; each lens was re-run.
+  - Advisories fixed in 86fd025 (RED observed first):
+    1. A BDCTB failure was masked by the new stations, because a partial success exited 0. It now exits 1 as before.
+    2. The all-stations `levels.csv` had begun NAMO-checking the new stations. That unrequested change was reverted; per-station NAMO stays in the per-station ingestion only.
+  - Open advisories: fetch before the state check; the shared multi-cell fetch couples BDCTB to the other cells; the bootstrap label is adopted from BDCTB; a test depends on the working directory.
 
