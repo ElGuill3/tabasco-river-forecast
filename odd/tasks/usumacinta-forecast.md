@@ -233,4 +233,15 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
   - The IPCET messenger stays on the BDCTB feed only.
   - Checks: backend 814 passed plus 1 failure that already exists on main; vitest 336; e2e 36. The live feed validated all four published files.
   - Reviews `review-45bff01a4688c0ca` and `review-f988d62d4e8801f8` were approved.
+- **L70** (user) "continua con eso hasta lo de los modelos de las otras estaciones, cuando tengamos todo listo haremos el informe" / "vamos al menos con las mejores, igual bien justificado y todo eso para el documento de informe". All models are ready (L66–L69), so T10 starts.
+  - **Form:** the report is in Spanish, neutral and professional, Markdown first (`docs/report/informe.md`), with the PDF built afterwards. It follows the structure and tone of the flood susceptibility report (copy at `.cache/t10/template-flood-report.md`).
+  - **Header:** authors Guillermo Antonio Jiménez de la Cruz and Fernando Pech-May; Tecnológico Nacional de México, Instituto Tecnológico Superior de los Ríos (ITSR), Balancán, Tabasco, México.
+  - **Research only:** no funding, keywords, author-contribution or conflict-of-interest sections. Avoid the characters `~` and `§`.
+  - **Content:** every number comes from `docs/results/*` or this Log. Report every pre-registered result as it came out, including failures:
+    - rain not admitted (L16);
+    - the operational over-forecast and its diagnosis (L21–L25);
+    - TEATB, GONTB and OXOTB not accepted;
+    - the stopped reforecast download and the reanalysis-trained substitute (L65).
+  - **Justify the publication subset (L67)** explicitly as a product decision taken after the evaluation.
+  - **References:** real and verifiable only, each with a DOI or official URL checked to resolve.
 
