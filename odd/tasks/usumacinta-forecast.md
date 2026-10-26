@@ -41,7 +41,7 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
 - [x] **T25** (S3, S8) Publish the L67 stations (MACTB, SAACP, PNVTB, TAPTB): frozen per-station artifacts of the exact L65 model, `<code>/latest.json` and history in the hourly workflow, BDCTB output unchanged. Route: gentle-ai-worker. Commit: ab0ca62, 7d1b797 (ci), 86fd025 (review fix); see L68.
 - [x] **T26** (S3, S8) distributionMapApp: show the published forecast for every station in the feed, generalising the BDCTB popup and chart. Route: gentle-ai-worker (app repo). Commit: distributionMapApp PR #33 (e58eee4); see L69.
 - [ ] **T9** (S3) Extend to the 14 semáforo rivers (Grijalva needs dam releases if available). Route: TBD.
-- [ ] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: inline.
+- [x] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: gentle-ai-worker draft, parent review and PDF. Commit: da9797f, 81446b4, 5cc9b20; see L72.
 - [ ] **T11** (S2) After the user confirms: delete `distributionMapApp-model-research` (local and GitHub). Route: user decision.
 
 ## Log
@@ -256,4 +256,9 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
   - The h1 forecast for 10-22 was q50 18.61 (band 17.91–18.96, error −0.56): the observation fell above the band.
   - The h1 forecast for 10-23 was q50 18.90 (band 18.36–19.29, error −0.33): inside the band.
   - The sample is too small to support conclusions.
+- **L72** T10 done.
+  - `docs/report/informe.md` is the single source; `docs/report/latex/build.sh` composes `informe.pdf` (25 pages, pandoc and tectonic) and turns the "**Figura N.**" paragraphs into captions. Figures come from `experiments/17_report_figures.py`.
+  - The report cites experiments and results files, not Log IDs.
+  - Checks: `.cache/t10/check_report.py` PASS; a visual check of the PDF pages.
+  - Review `review-783b2a01e553c4b3` was approved. Its advisories were the stale "PDF later" sentence (fixed in 5cc9b20) and minor figure-script items, which are deferred.
 
