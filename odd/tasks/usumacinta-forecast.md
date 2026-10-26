@@ -244,4 +244,16 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
     - the stopped reforecast download and the reanalysis-trained substitute (L65).
   - **Justify the publication subset (L67)** explicitly as a product decision taken after the evaluation.
   - **References:** real and verifiable only, each with a DOI or official URL checked to resolve.
+- **L71** Live BDCTB verification, cumulative through the IPCET table of 2026-10-23. Command: `riverforecast.verify --history bdctb/history --levels inputs/ipcet/levels.csv`, run in the forecasts worktree.
+
+  | Lead | Scored | Pending | MAE q50 (m) | Bias q50 (m) | q10–q90 coverage | MAE persistence (m) |
+  | --- | --- | --- | --- | --- | --- | --- |
+  | h1 | 4 | 3 | 0.47 | -0.10 | 50% | 0.69 |
+  | h3 | 2 | 5 | 0.64 | -0.64 | 100% | 2.45 |
+  | h7 | 0 | 7 | – | – | – | – |
+
+  Observed stage: 10-21 18.53 m, 10-22 19.17 m (PREVENCION), 10-23 19.23 m (ALERTA, 2 cm over the NAMO of 19.21 m).
+  - The h1 forecast for 10-22 was q50 18.61 (band 17.91–18.96, error −0.56): the observation fell above the band.
+  - The h1 forecast for 10-23 was q50 18.90 (band 18.36–19.29, error −0.33): inside the band.
+  - The sample is too small to support conclusions.
 
