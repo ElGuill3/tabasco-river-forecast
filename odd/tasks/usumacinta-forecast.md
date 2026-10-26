@@ -42,7 +42,7 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
 - [x] **T26** (S3, S8) distributionMapApp: show the published forecast for every station in the feed, generalising the BDCTB popup and chart. Route: gentle-ai-worker (app repo). Commit: distributionMapApp PR #33 (e58eee4); see L69.
 - [ ] **T9** (S3) Extend to the 14 semáforo rivers (Grijalva needs dam releases if available). Route: TBD.
 - [x] **T10** (S4) Spanish technical report (Markdown + PDF) like the flood susceptibility report. Route: gentle-ai-worker draft, parent review and PDF. Commit: da9797f, 81446b4, 5cc9b20; see L72.
-- [ ] **T11** (S2) After the user confirms: delete `distributionMapApp-model-research` (local and GitHub). Route: user decision.
+- [ ] **T11** (S2) After the user confirms: delete `distributionMapApp-model-research` (local and GitHub). Route: user decision. Local copy deleted; GitHub pending, see L73.
 
 ## Log
 
@@ -261,4 +261,10 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
   - The report cites experiments and results files, not Log IDs.
   - Checks: `.cache/t10/check_report.py` PASS; a visual check of the PDF pages.
   - Review `review-783b2a01e553c4b3` was approved. Its advisories were the stale "PDF later" sentence (fixed in 5cc9b20) and minor figure-script items, which are deferred.
+- **L73** (user) "si porfa": delete the old repo. Before deleting it:
+  - A git bundle of every branch went to `data/raw/legacy-research/distributionMapApp-model-research.bundle` (verified). It includes the local-only branches `chain/05-r1-new` and `feat/bdctb-forecast-operations`.
+  - Its untracked data went to `data/raw/legacy-research/data-external` and `data-derived` (493 MB, `diff -rq` clean; gitignored). That data includes the original BDCTB reforecast source behind `reforecast_v4.csv`.
+  - The local directory was then deleted, and the `reforecast_cli` docstring now points at the legacy copy.
+  - Deleting the GitHub repo failed with "This API operation needs the "delete_repo" scope". The user must run `gh auth refresh -h github.com -s delete_repo` first.
+  - The distributionMapApp README and `backend/scripts/run_local_forecast_stack.py` still name the deleted repo; that is now an obsolete local stack.
 

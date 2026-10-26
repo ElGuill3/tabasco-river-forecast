@@ -1,8 +1,11 @@
 """Import GloFAS v4 reforecasts saved by the first research repository.
 
+That repository was deleted; its data is kept locally under
+``data/raw/legacy-research/data-external``.
+
     uv run python -m riverforecast.reforecast_cli import BDCTB \\
-        ../distributionMapApp-model-research/data/external/glofas-v4-reforecast/normalized \\
-        ../distributionMapApp-model-research/data/external/glofas-v4-reforecast-h1-holdout/normalized
+        data/raw/legacy-research/data-external/glofas-v4-reforecast/normalized \\
+        data/raw/legacy-research/data-external/glofas-v4-reforecast-h1-holdout/normalized
 
 Writes ``<root>/glofas/<CODE>/reforecast_v4.csv`` with one row per issue, valid
 day and ensemble member.
