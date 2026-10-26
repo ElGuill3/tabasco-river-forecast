@@ -1,0 +1,16 @@
+{
+  "dpi": 150,
+  "inputs_sha256": {
+    "docs/results/15-station-ceiling.json": "50ac2a51a76257040cc196f80fc04f69e456a9a11db671b36115edb484957931",
+    "docs/results/16-station-models.json": "09e35a5b133184c96e02ac6b1e25dd97feb8f77e8e4c960c7c1165b055ae49f9",
+    "docs/results/09-independent.json": "513aa4ed98090c05a468677baee760545c5bdc7b85dc0dd93bc7339f98d4cf20"
+  },
+  "map_coordinates": "CEMS cell labels from experiment 16, not gauge coordinates",
+  "hydrograph": "Experiment 09 M1, levels/1, October 2026 press-quoted dates only",
+  "figures": [
+    "01-estaciones.png",
+    "02-habilidad-techo.png",
+    "03-habilidad-operativa.png",
+    "04-hidrograma-bdctb.png"
+  ]
+}

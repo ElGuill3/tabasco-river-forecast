@@ -1,0 +1,109 @@
+% Informe técnico: pronóstico del nivel de ríos de Tabasco.
+% Compilar con `./build.sh` (pandoc + tectonic). El contenido se genera desde
+% ../informe.md en cuerpo.tex: no edites cuerpo.tex a mano.
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+  ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+  ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\setmonofont{lmmonolt10}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, Scale=0.9]
+\usepackage[spanish,es-noshorthands,es-tabla,es-nodecimaldot]{babel}
+\usepackage{unicode-math}
+\setmathfont{texgyrepagella-math.otf}
+
+\usepackage[a4paper,margin=2.4cm,headheight=14pt]{geometry}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable,booktabs,array,calc}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,width=0.92\textwidth}
+\usepackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+% Long commands in code blocks wrap instead of overflowing the margin.
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\small}
+\usepackage{seqsplit}
+% Long paths in inline code may break at any character.
+\let\oldtexttt\texttt
+\renewcommand{\texttt}[1]{\oldtexttt{\seqsplit{#1}}}
+\usepackage{framed}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent,citecolor=accent}
+
+\definecolor{accent}{HTML}{253494}
+\definecolor{soft}{HTML}{EEF2FA}
+\definecolor{rule}{HTML}{9AA7C7}
+
+% Section titles in the accent colour, sans serif.
+\titleformat{\section}{\sffamily\Large\bfseries\color{accent}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\sffamily\large\bfseries\color{accent}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\sffamily\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+% Pandoc output helpers.
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newlength{\cslhangindent}
+\newcounter{none} % pandoc: unnumbered longtables
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{8pt}
+\renewcommand{\arraystretch}{1.18}
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\tabcolsep}{5pt}
+% Block quotes (pandoc `quote`) as a soft shaded note.
+\renewenvironment{quote}{\def\FrameCommand{\colorbox{soft}}\MakeFramed{\advance\hsize-\width\FrameRestore}\small\itshape}{\endMakeFramed}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{accent}Pronóstico del nivel de ríos de Tabasco}
+\fancyhead[R]{\small\sffamily Informe técnico}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% Figures are referenced from ../informe.md as figures/...
+\graphicspath{{../}}
+\providecommand{\pandocbounded}[1]{\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}}
+\makeatletter\def\fps@figure{H}\makeatother
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2.2cm}
+  {\sffamily\small\color{accent}INFORME TÉCNICO\par}
+  \vspace{0.6cm}
+  {\sffamily\huge\bfseries Pronóstico del nivel de ríos\\[4pt] de Tabasco con datos públicos\par}
+  \vspace{0.4cm}
+  {\Large Modelado probabilístico y validación temporal\par}
+  \vspace{0.9cm}
+  {\large Guillermo Antonio Jiménez de la Cruz \quad Fernando Pech-May\par}
+  \vspace{0.2cm}
+  {\small Tecnológico Nacional de México, Instituto Tecnológico Superior de los Ríos\\
+  Balancán, Tabasco, México\par}
+  \vspace{0.9cm}
+  \includegraphics[height=9.5cm]{figures/03-habilidad-operativa.png}\par
+  \vspace{1.2cm}
+  {\normalsize Octubre de 2026\par}
+  \vfill
+  {\small\color{gray} Fuentes: CONAGUA (SIH), Copernicus CEMS GloFAS v4, Open-Meteo,
+  IPCET (Gobierno de Tabasco), NASA GPM IMERG.\par}
+\end{titlepage}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage
+
+\input{cuerpo.tex}
+
+\end{document}
