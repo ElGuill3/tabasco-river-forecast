@@ -463,7 +463,7 @@ La extensión a otras estaciones debe juzgarse contra persistencia. Con el proto
 
 Los resultados negativos delimitan el alcance: la lluvia no mejoró de forma consistente el desarrollo; la recalibración de avisos no resolvió la sobreestimación; ampliar el entrenamiento apenas redujo el MAE; y los repronósticos incompletos obligaron a una alternativa más limitada para las estaciones nuevas. No se ofrece un semáforo propio ni un sistema de alertas validado.
 
-La prioridad siguiente es prolongar la verificación prospectiva por estación, horizonte, edad y modo; conservar versiones de emisión; y contrastar alternativas de respaldo con persistencia. La mejora de ríos regulados requiere información operativa adicional y la de ríos rápidos, observaciones temporales más representativas. La versión PDF corresponde a una fase posterior; este documento constituye el borrador técnico verificable.
+La prioridad siguiente es prolongar la verificación prospectiva por estación, horizonte, edad y modo; conservar versiones de emisión; y contrastar alternativas de respaldo con persistencia. La mejora de ríos regulados requiere información operativa adicional y la de ríos rápidos, observaciones temporales más representativas.
 
 ---
 
@@ -495,7 +495,7 @@ Los resultados numéricos se conservan en [`docs/results`](../results/). La hist
 
 Los JSON homónimos conservan precisión y estructura; las tablas de este informe redondean para lectura. No se vuelven a elegir variables ni umbrales al generar las figuras.
 
-### 9.2 Regeneración de figuras y controles del borrador
+### 9.2 Regeneración de figuras y del PDF
 
 Desde la raíz del repositorio, con el entorno ya disponible:
 
@@ -506,6 +506,12 @@ timeout 120 uv run ruff check experiments/17_report_figures.py
 ```
 
 El script solo lee resultados locales y el catálogo existente. Usa Pillow, ya incluido en el proyecto, sin instalar dependencias, descargar mapas ni entrenar modelos. Escribe PNG a 150 dpi en `docs/report/figures/` y un manifiesto `procedencia.json` con hashes de los resultados leídos. El ejemplo de hidrograma usa el M1 histórico del experimento 09, no simula una salida nueva.
+
+El PDF se compone desde este mismo Markdown con pandoc y tectonic:
+
+```bash
+docs/report/latex/build.sh
+```
 
 Para repetir la comprobación de fuente viva con sus insumos guardados:
 

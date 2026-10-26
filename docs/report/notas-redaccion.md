@@ -25,7 +25,7 @@ Estas notas no modifican el Log ni los resultados. Documentan las decisiones edi
 
 ## Alcance del entregable
 
-- Borrador Markdown y figuras, no PDF: L70 indica que la composición PDF ocurre después.
+- Markdown, figuras y PDF. El PDF se genera desde `informe.md` con `docs/report/latex/build.sh` (pandoc + tectonic); no se edita a mano.
 - S4 es la especificación principal de T10. El contenido documenta además la evidencia de S1, S3, S5, S6, S7 y S8; no completa la cobertura espacial pretendida en S3 ni implementa tareas de operación nuevas.
 - No se reentrenaron modelos, no se regeneraron puntuaciones, no se modificaron datos, código de producción, pruebas, resultados ni ODD.
 - Figuras generadas con Pillow ya disponible. La fuente tipográfica DejaVu Sans debe estar accesible al sistema para regenerar la misma presentación; no se instalaron paquetes ni fuentes.
