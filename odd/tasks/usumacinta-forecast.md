@@ -268,3 +268,14 @@ the rivers of the IPCET semáforo. Mirror: Engram `odd/usumacinta-forecast/tasks
   - Deleting the GitHub repo failed with "This API operation needs the "delete_repo" scope". The user must run `gh auth refresh -h github.com -s delete_repo` first.
   - The distributionMapApp README and `backend/scripts/run_local_forecast_stack.py` still name the deleted repo; that is now an obsolete local stack.
 - **L74** The user granted the `delete_repo` scope. `gh repo delete ElGuill3/distributionMapApp-model-research --yes` succeeded, and `gh repo view` now reports "Could not resolve to a Repository". T11 is done. The only copy left is the local backup in `data/raw/legacy-research/` (L73).
+- **L75** (user, about the report) "una cosa nadamas que creo que habria que corregirm que es que mencionas los markdown y cosas asi". The report still names repository internals, which a reader of the PDF cannot open:
+  - about 45 file paths and code identifiers in sections 1–8 (`docs/operations.md`, `16-station-models.json`, `inputs/ipcet/levels.csv`, `past_days`, ...);
+  - "Markdown";
+  - file-name footers inside figures 1 and 2;
+  - a section 9 made of repository commands.
+
+  Fix:
+  - Sections 1–8, captions and figures: describe sources in prose (experiment number, IPCET level table, operation contract) with no file names, paths, JSON keys or code identifiers.
+  - Section 9: shorten to a prose paragraph like the flood report's: public sources, a versioned and automated procedure, the per-experiment script and result, the dated pre-registrations. Keep at most the public repository URL.
+  - The closing note under Referencias: no file names.
+
