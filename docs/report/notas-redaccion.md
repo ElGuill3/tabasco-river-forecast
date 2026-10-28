@@ -23,6 +23,8 @@ Estas notas no modifican el Log ni los resultados. Documentan las decisiones edi
 | Las publicaciones pueden sobrescribir la historia de una fecha | Se advierte que esa historia no conserva necesariamente todas las versiones vistas por usuarios |
 | Portales SIH y datos CONAGUA con bucle de redirecciones; página IPCET concreta con 404 | Se excluyen esas URL de las referencias verificadas. El portal Tabasco que sí responde se identifica como referencia institucional, no como validación de cada tabla |
 
+Corrección editorial solicitada por el usuario: se sustituyen rutas e identificadores por prosa para el lector del PDF, se abrevia Reproducibilidad y se actualizan los pies de figura, sin cambiar cifras ni conclusiones.
+
 ## Alcance del entregable
 
 - Markdown, figuras y PDF. El PDF se genera desde `informe.md` con `docs/report/latex/build.sh` (pandoc + tectonic); no se edita a mano.

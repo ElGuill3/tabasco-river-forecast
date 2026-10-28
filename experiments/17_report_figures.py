@@ -103,7 +103,7 @@ def station_map(result):
     text(
         draw,
         (90, 995),
-        "Fuente: 16-station-models.json. Sin mapa base ni límites administrativos.",
+        "Fuente: experimento 16. Sin mapa base ni límites administrativos.",
         21,
     )
     save(image, "01-estaciones.png")
@@ -194,8 +194,7 @@ def hydrograph(result):
     text(
         draw,
         (90, 995),
-        "Fuente: 09-independent.json, levels/1. "
-        "Líneas entre fechas disponibles; no se imputan días.",
+        "Fuente: experimento 09. Líneas entre fechas disponibles; no se imputan días.",
         21,
     )
     save(image, "04-hidrograma-bdctb.png")

@@ -34,7 +34,7 @@ Las secciones siguientes presentan los antecedentes, los datos y el protocolo; r
 
 ## 3. Trabajos relacionados
 
-GloFAS proporciona una base hidrológica global que permite elaborar pronósticos donde no existe una cadena local accesible. Alfieri et al. [1] describen el sistema de predicción por conjuntos; Harrigan et al. [2] documentan el reanálisis GloFAS-ERA5. Ambos son antecedentes de la fuente de caudal, no una validación de la conversión local de caudal a nivel. La versión usada aquí se identifica por los archivos y por el catálogo operativo CEMS [5]; no se atribuye a esos trabajos una evaluación específica de GloFAS v4 en Tabasco.
+GloFAS proporciona una base hidrológica global que permite elaborar pronósticos donde no existe una cadena local accesible. Alfieri et al. [1] describen el sistema de predicción por conjuntos; Harrigan et al. [2] documentan el reanálisis GloFAS-ERA5. Ambos son antecedentes de la fuente de caudal, no una validación de la conversión local de caudal a nivel. La versión usada aquí se identifica en los registros de procedencia y en el catálogo operativo CEMS [5]; no se atribuye a esos trabajos una evaluación específica de GloFAS v4 en Tabasco.
 
 La regresión conformal por cuantiles de Romano, Patterson y Candès [3] ofrece el fundamento para ajustar intervalos a partir de errores fuera del ajuste. En series hidrológicas con dependencia temporal y cambios de distribución, la cobertura debe medirse en los periodos retenidos: no se interpreta como una garantía universal. Para los avisos, Bartholmes et al. [4] aportan un antecedente de verificación de sistemas hidrológicos por conjuntos y de persistencia entre emisiones.
 
@@ -75,23 +75,23 @@ El dominio es la red de estaciones publicada por IPCET en Tabasco y su entorno h
 | SAMTB | Samaria | Samaria | Sin celda GloFAS admisible |
 | SPTTB | San Pedro | San Pedro | Sin celda GloFAS admisible |
 
-: Inventario y alcance: experimento 16 y catálogo de la tabla IPCET del repositorio; publicación según la sección 4.4.
+: Inventario y alcance: experimento 16 y catálogo de la tabla IPCET; publicación según la sección 4.4.
 
 ![Celdas GloFAS de las estaciones evaluadas](figures/01-estaciones.png)
 
-**Figura 1.** Localización esquemática de las estaciones mediante sus celdas CEMS del experimento 16. No representa límites administrativos ni las coordenadas exactas del aforo. Las etiquetas compartidas indican una misma celda, no una misma estación. Samaria y San Pedro no aparecen por carecer de celda admisible. Fuente: `16-station-models.json`, apartado `extraction`.
+**Figura 1.** Localización esquemática de las estaciones mediante sus celdas CEMS del experimento 16. No representa límites administrativos ni las coordenadas exactas del aforo. Las etiquetas compartidas indican una misma celda, no una misma estación. Samaria y San Pedro no aparecen por carecer de celda admisible. Fuente: extracción de celdas del experimento 16.
 
-En Boca del Cerro, la cuenca trazada con HydroBASINS comprende 380 subcuencas y 51 457 km². Ese valor reemplaza la aproximación inicial de 49 735 km²: el primero corresponde al trazado finalmente versionado en `data/basins/BDCTB.geojson`. La presencia de regulación por Peñitas limita la interpretación de las estaciones del sistema Grijalva. En los ríos pequeños de la sierra, la respuesta rápida puede estar mal resuelta por GloFAS y por una observación diaria (experimento 16).
+En Boca del Cerro, la cuenca trazada con HydroBASINS comprende 380 subcuencas y 51 457 km². Ese valor reemplaza la aproximación inicial de 49 735 km²: el primero corresponde al trazado final de la cuenca. La presencia de regulación por Peñitas limita la interpretación de las estaciones del sistema Grijalva. En los ríos pequeños de la sierra, la respuesta rápida puede estar mal resuelta por GloFAS y por una observación diaria (experimento 16).
 
 ### 4.2 Datos y funciones de cada fuente
 
 | Fuente | Periodo o disponibilidad documentados | Función y precaución |
 |---|---|---|
 | CONAGUA SIH, nivel y gasto | BDCTB: 1997-01-01 a 2025-09-03 en el análisis de cobertura | Nivel objetivo de entrenamiento y validación; nunca se imputa. El gasto ayuda a seleccionar celda y diagnosticar sesgos |
-| GloFAS v4, reanálisis `consolidated_v4` | BDCTB: hasta 2025-05-31 | Historia para relaciones y entrenamiento; no se supone disponible en tiempo real |
+| GloFAS v4, reanálisis consolidado | BDCTB: hasta 2025-05-31 | Historia para relaciones y entrenamiento; no se supone disponible en tiempo real |
 | GloFAS v4, repronósticos CEMS | Importación BDCTB: emisiones 2004-01-01 a 2023-11-25; 11 miembros | Entrenamiento y prueba iniciales con pronósticos históricos; cobertura desigual por horizonte |
 | GloFAS v4, archivo operativo CEMS | Emisiones 2023-08-01 a 2026-10-13 | Evaluación con pronósticos realmente emitidos; se resumen los mismos 11 miembros que en entrenamiento |
-| Open-Meteo, `forecast_v4` [6] | Archivo diario de día cero y servicio de conjunto | Caudal pasado disponible en operación y fuente viva adoptada tras comparar con CEMS |
+| Open-Meteo, pronóstico GloFAS v4 [6] | Archivo diario de día cero y servicio de conjunto | Caudal pasado disponible en operación y fuente viva adoptada tras comparar con CEMS |
 | IPCET, mapa de semáforo [7] | Muestra 2026 del experimento 05 | Verificación ordinal independiente; no sirve para estimar umbrales con tan pocos estados altos |
 | IPCET, tabla de niveles [7] | Primera tabla localizada: 2021-08-03 | Lectura de las 06:00, ayer/hoy, diferencia, NAMO y estado oficial; entrada viva y objetivo posterior al cierre SIH |
 | IMERG Early V07 [8] y pluviómetro CONAGUA | Lluvia de cuenca completa 1998-01-01 a 2026-10-13 | Variable candidata, comprobada y finalmente excluida del pronóstico |
@@ -104,15 +104,15 @@ En Boca del Cerro, la cuenca trazada con HydroBASINS comprende 380 subcuencas y 
 
 **Lluvia.** El experimento 00 compara 316 meses con al menos 25 días observados: correlación mensual 0.689 y medias de 205 mm en IMERG frente a 191 mm en el pluviómetro. La relación anual varía entre 0.72 y 1.55. Un único pluviómetro en la salida no valida por sí solo la lluvia de toda la cuenca, en buena parte fuera de México (experimento 00). Estas discrepancias se conservan antes de juzgar el valor predictivo.
 
-**Disponibilidad de IPCET.** El censo encontró tablas en el 83, 77, 73, 73, 73 y 61 % de los días de los años disponibles de 2021 a 2026, respectivamente; en los últimos doce meses, 64 %. Los fines de semana y los periodos festivos explican buena parte de los huecos. La columna «ayer» eleva la proporción de días cuyo nivel termina siendo publicado, pero no implica que estuviera disponible al emitir el pronóstico (censo `data/raw/ipcet/levels_census.csv`). De una muestra de 40 tablas, 28 se cargaron el mismo día, entre las 07:18 y las 13:44; las demás llegaron después. `Last-Modified` es indicativo porque puede cambiar por una recarga del archivo.
+**Disponibilidad de IPCET.** El censo encontró tablas en el 83, 77, 73, 73, 73 y 61 % de los días de los años disponibles de 2021 a 2026, respectivamente; en los últimos doce meses, 64 %. Los fines de semana y los periodos festivos explican buena parte de los huecos. La columna «ayer» eleva la proporción de días cuyo nivel termina siendo publicado, pero no implica que estuviera disponible al emitir el pronóstico (censo de disponibilidad de la tabla de niveles del IPCET). De una muestra de 40 tablas, 28 se cargaron el mismo día, entre las 07:18 y las 13:44; las demás llegaron después. La cabecera de fecha de modificación del servidor es indicativa porque puede cambiar por una recarga del archivo.
 
 **Lectura y semáforo.** Se verifican la fecha impresa, la aritmética hoy menos ayer, el NAMO y la continuidad. Las imágenes pueden reutilizarse en páginas de otros años. Un hoy con diferencia impresa cero puede ser una copia del valor anterior y se excluye como lectura actual. Los conflictos y las confirmaciones se resuelven solo con tablas ya visibles al emitir (experimentos 11 y 13).
 
-El semáforo de la tabla no es el del mapa hidrometeorológico. Su vocabulario es NORMAL, A LA BAJA, BAJO, PREVENCION, ALERTA y EMERGENCIA. El levantamiento documentado en `docs/semaforo-states.md` localizó 612 tablas entre 638 imágenes y distinguió 8 568 celdas: 6 454 NORMAL, 290 A LA BAJA, 85 BAJO, 40 PREVENCION, 12 ALERTA y 2 EMERGENCIA por texto confirmado; 1 685 quedaron sin texto reconocido. Los fondos marrón y morado no se agrupan con rojo. Un estado desconocido no se transforma en NORMAL. Estos estados son observados, no calculados desde q50 o NAMO (`docs/semaforo-states.md`).
+El semáforo de la tabla no es el del mapa hidrometeorológico. Su vocabulario es NORMAL, A LA BAJA, BAJO, PREVENCION, ALERTA y EMERGENCIA. El levantamiento de estados de la tabla IPCET localizó 612 tablas entre 638 imágenes y distinguió 8 568 celdas: 6 454 NORMAL, 290 A LA BAJA, 85 BAJO, 40 PREVENCION, 12 ALERTA y 2 EMERGENCIA por texto confirmado; 1 685 quedaron sin texto reconocido. Los fondos marrón y morado no se agrupan con rojo. Un estado desconocido no se transforma en NORMAL. Estos estados son observados, no calculados desde q50 o NAMO.
 
 ### 4.3 Modelo probabilístico: referencia sin nivel y modelo con nivel vivo
 
-Se ajusta un modelo por horizonte de uno, tres y siete días. Cada modelo aprende los cuantiles q10, q50 y q90 mediante `HistGradientBoostingRegressor` de scikit-learn, con pérdida de cuantiles. **No es LightGBM** (experimento 02). Las predicciones se ordenan para impedir cruces. La mediana es el pronóstico puntual; los extremos delimitan una banda nominal del 80 %.
+Se ajusta un modelo por horizonte de uno, tres y siete días. Cada modelo aprende los cuantiles q10, q50 y q90 mediante HistGradientBoostingRegressor de scikit-learn, con pérdida de cuantiles. **No es LightGBM** (experimento 02). Las predicciones se ordenan para impedir cruces. La mediana es el pronóstico puntual; los extremos delimitan una banda nominal del 80 %.
 
 El modelo sin nivel reciente utiliza resúmenes del conjunto de caudal, caudal pasado, cambios respecto del estado inicial y estacionalidad. La calibración conformal calcula un margen a partir de predicciones fuera del ajuste en bloques internos de tres años. Ensancha la banda sin alterar la mediana, siguiendo la idea de regresión conformal por cuantiles [3]. No se recalibra mirando la prueba (experimentos 02, 10 y 15).
 
@@ -122,7 +122,7 @@ En este informe se distinguen:
 - **M1, modelo sin nivel vivo:** misma receta reajustada con objetivos hasta 2022 en la reevaluación posdiagnóstico. También designa el comparador y respaldo sin nivel en las etapas posteriores, con el periodo de ajuste indicado en cada experimento (experimento 08).
 - **Modelo con nivel vivo:** añade el último nivel público utilizable, su edad y el caudal del día de ese nivel. Su entrenamiento simula la disponibilidad de IPCET sobre el SIH; no exige una observación actual en todos los días. Si no hay un nivel dentro de la ventana admitida, usa M1 (experimentos 10 y 12).
 
-Tras la auditoría, todo caudal pasado de entrenamiento se desplaza un día para corresponder al archivo de día cero: `past[d] = reanalysis[d-1]`. En operación, también el caudal del día del último nivel procede del archivo de día cero, no del reanálisis. El corte de disponibilidad se fija a las 11:00, hora de Ciudad de México, y la serie se reconstruye causalmente con las imágenes visibles hasta ese corte (experimento 13). Se admiten edades de cero a siete días, inclusive; a ocho días se usa el respaldo (`docs/forecast-schema.md`).
+Tras la auditoría, todo caudal pasado de entrenamiento se desplaza un día para corresponder al archivo de día cero: a cada fecha se asigna el caudal del reanálisis del día anterior. En operación, también el caudal del día del último nivel procede del archivo de día cero, no del reanálisis. El corte de disponibilidad se fija a las 11:00, hora de Ciudad de México, y la serie se reconstruye causalmente con las imágenes visibles hasta ese corte (experimento 13). Se admiten edades de cero a siete días, inclusive; a ocho días se usa el respaldo (contrato de salida del pronóstico).
 
 ### 4.4 Protocolo temporal, referencias y regla de aceptación
 
@@ -136,9 +136,9 @@ Un valor positivo mejora la persistencia; cero empata; negativo empeora. Se info
 
 Los diseños de verificación de avisos, reevaluación posdiagnóstico, evidencia independiente, valor del nivel vivo, prueba final, correcciones posauditoría y extensión por estación se registraron antes de sus respectivas evaluaciones (experimentos 06, 08–10, 12, 13, 15 y 16). Cuando un periodo ya fue consultado, no vuelve a llamarse «no visto»: las reevaluaciones se presentan junto con el resultado original.
 
-**Regla de aceptación.** Un horizonte de una estación es elegible si, en el periodo de prueba retenido y sobre las mismas filas, el MAE de su mediana es estrictamente menor que el de persistencia del nivel del día de emisión. No se ajusta ningún umbral con la prueba y se informan todas las estaciones, aceptadas o no. La condición original exigía también habilidad positiva del respaldo donde se publicara; en el experimento 16, la aceptación se decidió por el modelo con nivel vivo, sin que M1 decidiera. La publicación posterior mantuvo M1 como respaldo identificado para dar continuidad, no como demostración de que cumpliera aquella condición original (`docs/results/16-station-models.md`; `docs/operations.md`).
+**Regla de aceptación.** Un horizonte de una estación es elegible si, en el periodo de prueba retenido y sobre las mismas filas, el MAE de su mediana es estrictamente menor que el de persistencia del nivel del día de emisión. No se ajusta ningún umbral con la prueba y se informan todas las estaciones, aceptadas o no. La condición original exigía también habilidad positiva del respaldo donde se publicara; en el experimento 16, la aceptación se decidió por el modelo con nivel vivo, sin que M1 decidiera. La publicación posterior mantuvo M1 como respaldo identificado para dar continuidad, no como demostración de que cumpliera aquella condición original (experimento 16 y contrato de operación).
 
-**Regla de publicación.** Después de la evaluación se decidió publicar una estación si era elegible en los tres horizontes por la regla anterior y su habilidad con nivel vivo a un día era al menos 0.10. Es una decisión de producto posterior a conocer el experimento 16, no una condición de aceptación prerregistrada. Se priorizó el horizonte que se consulta diariamente y se evitó añadir estaciones prácticamente empatadas con persistencia o sin lectura pública utilizable. Boca del Cerro, ya operativa, conservó su modelo de producción; los artefactos añadidos conservaron exactamente las filas de entrenamiento y la receta evaluadas, sin reajuste con datos desde 2023 (`docs/operations.md`).
+**Regla de publicación.** Después de la evaluación se decidió publicar una estación si era elegible en los tres horizontes por la regla anterior y su habilidad con nivel vivo a un día era al menos 0.10. Es una decisión de producto posterior a conocer el experimento 16, no una condición de aceptación prerregistrada. Se priorizó el horizonte que se consulta diariamente y se evitó añadir estaciones prácticamente empatadas con persistencia o sin lectura pública utilizable. Boca del Cerro, ya operativa, conservó su modelo de producción; los artefactos añadidos conservaron exactamente las filas de entrenamiento y la receta evaluadas, sin reajuste con datos desde 2023 (contrato de operación).
 
 El **experimento 15** solo estima un techo orientativo en desarrollo con reanálisis como pronóstico perfecto. No acepta ni excluye estaciones para publicación. El **experimento 16** ajusta con objetivos de 1999–2022, usa reanálisis como entrada de pronóstico durante entrenamiento y evalúa una vez con CEMS operativo desde agosto de 2023. El inicio común en 1999 evita el cambio de escala de Teapa. La lectura de emisión SIH está siempre disponible en esa evaluación: simula una tabla diaria perfecta, no los huecos reales de IPCET (experimentos 15 y 16).
 
@@ -224,11 +224,11 @@ R2 detecta cuatro de seis reportes regionales en una ventana de un día antes o 
 
 En el semáforo del mapa de 2026 hay 162 días normales, cuatro bajos y apenas dos de precaución. Los niveles medios pronosticados por M1 a un día son 12.701, 11.253 y 17.820 m, respectivamente. El orden es coherente, pero la clase alta es demasiado pequeña para validar umbrales o alertas.
 
-El resultado Markdown del experimento 09 informa AUC de 0.997 a un día y 0.994 a tres días. La tabla diaria marca R2 activo desde el 11 de octubre. Hay discrepancias con el resumen histórico de decisiones, documentadas en `docs/report/notas-redaccion.md`; no se usa ese AUC para justificar publicación ni se modifica el modelo para resolverlas.
+El informe de resultados del experimento 09 informa AUC de 0.997 a un día y 0.994 a tres días. La tabla diaria marca R2 activo desde el 11 de octubre. Hay discrepancias documentadas entre ese resultado y el resumen histórico de decisiones; no se usa ese AUC para justificar publicación ni se modifica el modelo para resolverlas.
 
 ![Hidrograma de ejemplo en Boca del Cerro](figures/04-hidrograma-bdctb.png)
 
-**Figura 2.** Pronósticos M1 a un día para las fechas con niveles citados de octubre de 2026, tomados de `09-independent.json`, `levels/1`. La banda es q10–q90 y los puntos son citas, no una serie instrumental continua. Las líneas unen las fechas disponibles, sin imputar las intermedias. El 8 y 9 de octubre los niveles citados quedaron fuera de la banda. Es un ejemplo del modelo sin entrada viva anterior al modelo con nivel, no del producto posteriormente publicado.
+**Figura 2.** Pronósticos M1 a un día para las fechas con niveles citados de octubre de 2026, tomados de los resultados a un día del experimento 09. La banda es q10–q90 y los puntos son citas, no una serie instrumental continua. Las líneas unen las fechas disponibles, sin imputar las intermedias. El 8 y 9 de octubre los niveles citados quedaron fuera de la banda. Es un ejemplo del modelo sin entrada viva anterior al modelo con nivel, no del producto posteriormente publicado.
 
 ### 5.7 Valor y calidad de la entrada viva IPCET
 
@@ -270,7 +270,7 @@ El respaldo aparece en el 12.8–13.2 % de las filas del periodo SIH y el 4.0–
 
 El criterio de equivalencia de fuente registrado para el experimento 14 exigía que al menos el 99 % de las parejas miembro–horizonte cumplieran una diferencia absoluta no mayor que el máximo entre 0.5 m³/s y el 0.5 % del valor CEMS. Primero se identificaron la emisión y los miembros por sus trayectorias, sin maximizar la proporción de acuerdo (experimento 14).
 
-Para la emisión del 19 de octubre de 2026 a las 00 UTC, las 357 parejas de 51 miembros por siete horizontes cumplieron: 357/357. La diferencia máxima fue 6.455 m³/s y la relativa máxima, aproximadamente 0.115 %. Se adoptó Open-Meteo. Es evidencia de equivalencia de fuente en **una emisión**, no una nueva prueba de habilidad de nivel. El día anterior no pudo contarse como otra trayectoria completa: `past_days` devuelve valores diarios archivados, no todas las trayectorias pasadas.
+Para la emisión del 19 de octubre de 2026 a las 00 UTC, las 357 parejas de 51 miembros por siete horizontes cumplieron: 357/357. La diferencia máxima fue 6.455 m³/s y la relativa máxima, aproximadamente 0.115 %. Se adoptó Open-Meteo. Es evidencia de equivalencia de fuente en **una emisión**, no una nueva prueba de habilidad de nivel. El día anterior no pudo contarse como otra trayectoria completa: la consulta de días pasados devuelve valores diarios archivados, no todas las trayectorias pasadas.
 
 ### 5.10 Techo por estación: experimento 15
 
@@ -295,7 +295,7 @@ El experimento 15 usa solo desarrollo de 1998–2016 y supone pronóstico perfec
 
 ![Habilidad con pronóstico perfecto por estación](figures/02-habilidad-techo.png)
 
-**Figura 3.** Habilidad con nivel frente a persistencia, por estación y horizonte, con reanálisis perfecto y lectura diaria. Fuente: `15-station-ceiling.json`. Las barras negativas se muestran sin recortar.
+**Figura 3.** Habilidad con nivel frente a persistencia, por estación y horizonte, con reanálisis perfecto y lectura diaria. Fuente: experimento 15. Las barras negativas se muestran sin recortar.
 
 Sin nivel de emisión, M1 tiene habilidad negativa a un día en todas las estaciones salvo Salto de Agua y Oxolotán. El nivel reciente es, por tanto, decisivo. Las coberturas del modelo con nivel son cercanas a 0.80–0.82, salvo San Joaquín (0.73–0.74) y Porvenir (0.94–0.97), según las tablas del experimento 15.
 
@@ -305,7 +305,7 @@ Después de puntuar se detectó un cambio de escala de Teapa: mediana anual de 1
 
 La descarga operativa quedó completa, con 253 de 253 archivos, pero la de repronósticos se detuvo en 13 de 201. Lo disponible para las nuevas estaciones solo cubría enero y febrero de 2003–2023, insuficiente para entrenar un modelo de temporada de crecidas. Se abandonó esa vía dentro del plazo y se registró antes de ajustar una alternativa entrenada con reanálisis de 1999–2022 (experimento 16). No se presentan esos modelos como entrenados con repronósticos representativos.
 
-La extracción produjo 1 170 emisiones por estación. En BDCTB se compararon 179 010 filas y la diferencia máxima con el archivo de referencia fue 0 m³/s. Los objetivos operativos de las estaciones de Tabasco terminan en septiembre de 2025; Salto de Agua y San Joaquín llegan hasta octubre de 2026. Los periodos exactos por horizonte están en la tabla «Observed periods» del experimento 16; no se interpreta una diferencia entre estaciones como si todas hubieran visto las mismas crecidas (experimento 16).
+La extracción produjo 1 170 emisiones por estación. En BDCTB se compararon 179 010 filas y la diferencia máxima con el archivo de referencia fue 0 m³/s. Los objetivos operativos de las estaciones de Tabasco terminan en septiembre de 2025; Salto de Agua y San Joaquín llegan hasta octubre de 2026. Los periodos exactos por horizonte se documentan en los resultados del experimento 16; no se interpreta una diferencia entre estaciones como si todas hubieran visto las mismas crecidas (experimento 16).
 
 | Estación | n h1 / h3 / h7 | MAE con nivel h1 / h3 / h7 (m) | MAE persistencia h1 / h3 / h7 (m) |
 |---|---|---|---|
@@ -343,7 +343,7 @@ La extracción produjo 1 170 emisiones por estación. En BDCTB se compararon 179
 
 ![Habilidad en la evaluación operativa por estación](figures/03-habilidad-operativa.png)
 
-**Figura 4.** Habilidad con nivel y CEMS operativo, por estación y horizonte. Fuente: `16-station-models.json`. No es una evaluación de la disponibilidad real del mensajero ni de los niveles envejecidos.
+**Figura 4.** Habilidad con nivel y CEMS operativo, por estación y horizonte. Fuente: experimento 16. No es una evaluación de la disponibilidad real del mensajero ni de los niveles envejecidos.
 
 Los fallos más claros son Teapa y González, negativos en todos los horizontes. En Oxolotán, el buen techo de desarrollo no se traslada a uno y tres días con pronósticos operativos. Las bandas demasiado estrechas anticipadas en el diseño del experimento 16 no aparecieron de forma general en las estaciones elegibles, pero sí hubo subcobertura marcada en Oxolotán y Teapa. Empezar en 1999 evitó el salto histórico de Teapa; no hizo que su modelo superara la persistencia (experimento 16).
 
@@ -356,7 +356,7 @@ El respaldo M1 pierde frente a persistencia en **todas** las estaciones a un dí
 | PNVTB | 0.771 / 0.775 / 0.829 | −1.563 / −0.271 / 0.071 |
 | TAPTB | 0.866 / 0.826 / 0.809 | −2.839 / −1.536 / −0.732 |
 
-: Experimento 16. La publicación del respaldo mantiene continuidad, no demuestra superioridad sobre persistencia. Las tablas completas de M1 y climatología para todas las estaciones permanecen en el resultado enlazado en reproducibilidad.
+: Experimento 16. La publicación del respaldo mantiene continuidad, no demuestra superioridad sobre persistencia. Las tablas completas de M1 y climatología para todas las estaciones se conservan con los resultados del experimento 16 (sección 9).
 
 ### 5.12 Subconjunto publicado: una decisión posterior a la evaluación
 
@@ -374,7 +374,7 @@ Para la publicación se aplicó el criterio de producto adicional descrito en la
 
 San Joaquín, Gaviotas, Porvenir y Puyacatengo fueron aceptadas experimentalmente, pero su ventaja a un día es pequeña: el experimento 16 informa márgenes de 0.007, 0.005, 0.007 y 0.003 m, respectivamente. No se registró una prueba de significación; son ventajas numéricas, no diferencias estadísticamente demostradas. Gaviotas además carecía de una lectura IPCET válida para uso vivo. Oxolotán solo era elegible a siete días. Teapa y González fallaron; Samaria y San Pedro no tuvieron celda admisible y no reciben métricas inventadas (experimento 16; sección 4.4).
 
-Los artefactos nuevos conservan exactamente la receta y las filas de entrenamiento de 1999–2022 del experimento 16, sin reajustar con datos desde 2023. La publicación conserva la identidad de sus tablas de entrenamiento y su reproducción fuera de línea; la producción de BDCTB no se sustituyó. La integración de las estaciones añadidas mantiene el mismo contrato de consulta de la aplicación (`docs/operations.md`).
+Los artefactos nuevos conservan exactamente la receta y las filas de entrenamiento de 1999–2022 del experimento 16, sin reajustar con datos desde 2023. La publicación conserva la identidad de sus tablas de entrenamiento y su reproducción fuera de línea; la producción de BDCTB no se sustituyó. La integración de las estaciones añadidas mantiene el mismo contrato de consulta de la aplicación (contrato de operación).
 
 ### 5.13 Primeros días de publicación viva en octubre de 2026
 
@@ -390,7 +390,7 @@ La verificación prospectiva acumulada hasta la tabla IPCET del **23 de octubre 
 | h3 | 2 | 5 | 0.64 | −0.64 | 100 % | 2.45 |
 | h7 | 0 | 7 | — | — | — | — |
 
-: Verificación de los archivos publicados `bdctb/history` frente a `inputs/ipcet/levels.csv`, acumulada hasta el 23 de octubre; comando y procedimiento en la sección 9.3. No hay todavía observaciones emparejadas a siete días.
+: Verificación del historial de pronósticos publicados frente a la tabla de niveles del IPCET, acumulada hasta el 23 de octubre; trazabilidad del procedimiento en la sección 9. No hay todavía observaciones emparejadas a siete días.
 
 **22 de octubre**: IPCET observó 19.17 m, en PREVENCION. El pronóstico a un día tenía q50 de 18.61 m, banda de 17.91–18.96 m y error de −0.56 m; la observación quedó por encima de la banda.
 
@@ -406,25 +406,25 @@ El control del 20 al 23 de octubre observó una detección diaria de nueva emisi
 
 ### 6.1 GitHub Actions y modelos congelados
 
-El modelo vive en este repositorio; la computadora de la feria no entrena ni ejecuta inferencia. GitHub Actions consulta cada hora, en el minuto 17 UTC, y también responde al mensajero o a una ejecución manual. Son consultas horarias, no necesariamente nuevos pronósticos horarios: solo se publica cuando cambian entradas o falta una primera publicación (`docs/operations.md`).
+El modelo se ejecuta en la nube, con GitHub Actions; la computadora de la feria no entrena ni ejecuta inferencia. GitHub Actions consulta cada hora, en el minuto 17 UTC, y también responde al mensajero o a una ejecución manual. Son consultas horarias, no necesariamente nuevos pronósticos horarios: solo se publica cuando cambian entradas o falta una primera publicación (contrato de operación).
 
-Los modelos están congelados por estación y horizonte. Para BDCTB se conservan el modelo con nivel y M1 posauditoría; las añadidas usan la receta del experimento 16. No se ajustan parámetros a partir de los errores que aparecen durante la operación. La versión del entorno debe coincidir con la del artefacto (`docs/operations.md`).
+Los modelos están congelados por estación y horizonte. Para BDCTB se conservan el modelo con nivel y M1 posauditoría; las añadidas usan la receta del experimento 16. No se ajustan parámetros a partir de los errores que aparecen durante la operación. La versión del entorno debe coincidir con la del artefacto (contrato de operación).
 
 ### 6.2 Mensajero, causalidad y fallos
 
-El ensayo desde un ejecutor alojado de GitHub no consiguió conectarse al sitio de Tabasco, mientras Open-Meteo sí respondió. Se asignó a la computadora de la aplicación la función de mensajero: envía la página y sus imágenes originales con fechas, hashes y metadatos; no ejecuta OCR ni modelo (`docs/operations.md`).
+El ensayo desde un ejecutor alojado de GitHub no consiguió conectarse al sitio de Tabasco, mientras Open-Meteo sí respondió. Se asignó a la computadora de la aplicación la función de mensajero: envía la página y sus imágenes originales con fechas, hashes y metadatos; no ejecuta OCR ni modelo (contrato de operación).
 
-El envío se inicia en la primera solicitud de pronóstico cuando falta el nivel de hoy y existe una tabla que aún no fue enviada; no bloquea la respuesta. La aplicación muestra el último pronóstico mientras llega la actualización. La autorización del mensajero se limita al contenido de este repositorio. El servidor aplica validación de nombres de archivo, hashes y tamaño, y el lector causal usa solo tablas disponibles antes del corte de las 11:00. Las tablas posteriores pueden actualizar la observación oficial, pero no se retrotraen al pronóstico fijo de esa emisión (`docs/operations.md`).
+El envío se inicia en la primera solicitud de pronóstico cuando falta el nivel de hoy y existe una tabla que aún no fue enviada; no bloquea la respuesta. La aplicación muestra el último pronóstico mientras llega la actualización. La autorización del mensajero se limita al contenido de este repositorio. El servidor aplica validación de nombres de archivo, hashes y tamaño, y el lector causal usa solo tablas disponibles antes del corte de las 11:00. Las tablas posteriores pueden actualizar la observación oficial, pero no se retrotraen al pronóstico fijo de esa emisión (contrato de operación).
 
-Sin lectura reciente válida, se identifica el modo de respaldo. Un rechazo de OCR no obliga a mostrar una observación inventada. Las estaciones añadidas pueden fallar de forma independiente conservando su publicación previa; BDCTB mantiene visible su fallo de ejecución. La consulta multicelda compartida sigue siendo un punto común de fallo. Los retrasos del programador y la caducidad operativa del mensajero requieren vigilancia, no suponer disponibilidad continua (`docs/operations.md`).
+Sin lectura reciente válida, se identifica el modo de respaldo. Un rechazo de OCR no obliga a mostrar una observación inventada. Las estaciones añadidas pueden fallar de forma independiente conservando su publicación previa; BDCTB mantiene visible su fallo de ejecución. La consulta multicelda compartida sigue siendo un punto común de fallo. Los retrasos del programador y la caducidad operativa del mensajero requieren vigilancia, no suponer disponibilidad continua (contrato de operación).
 
-### 6.3 JSON publicado y aplicación
+### 6.3 Pronóstico publicado y aplicación
 
-La rama `forecasts` contiene `<codigo>/latest.json` y `history/<fecha>.json`. El esquema conserva el identificador `bdctb-forecast/v2` también para las estaciones nuevas, con código y nombre propios. Incluye fecha de emisión y generación, versión del modelo, modo `live` o `glofas_only`, lectura usada y su edad, fecha objetivo, q10/q50/q90 y distancia firmada q50 menos NAMO. Los niveles son modelados, no observados (`docs/forecast-schema.md`).
+Se publica un archivo de pronóstico por estación, junto con su historial por fecha. El contrato de salida es común a Boca del Cerro y a las estaciones nuevas, identificadas con su código y nombre propios. Incluye fecha de emisión y generación, versión del modelo, modo con nivel reciente o de respaldo solo con GloFAS, lectura usada y su edad, fecha objetivo, q10/q50/q90 y distancia firmada q50 menos NAMO. Los niveles son modelados, no observados (contrato de salida del pronóstico).
 
 La aplicación consulta esos archivos, mantiene una caché local y puede mostrar el último pronóstico sin conexión, señalando procedencia, antigüedad y actualización. La gráfica sitúa el nivel y la banda respecto del NAMO. Los colores de los marcadores proceden del semáforo oficial, no del pronóstico (sección 4.2). El aviso publicado es: «Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET».
 
-La historia de una misma fecha puede sobrescribirse cuando llega una actualización IPCET o una revisión de la misma emisión. Por ello, esa historia no equivale a un archivo inmutable de todo lo que vio cada usuario; la verificación prospectiva debe conservar las versiones efectivamente emitidas si se desea estudiar también revisiones (`docs/operations.md`).
+La historia de una misma fecha puede sobrescribirse cuando llega una actualización IPCET o una revisión de la misma emisión. Por ello, esa historia no equivale a un archivo inmutable de todo lo que vio cada usuario; la verificación prospectiva debe conservar las versiones efectivamente emitidas si se desea estudiar también revisiones (contrato de operación).
 
 ---
 
@@ -444,12 +444,12 @@ La selección publicada responde a utilidad y continuidad del producto. Su justi
 2. **Huecos y selección por disponibilidad.** No imputar objetivos protege la fidelidad, pero excluye días y puede omitir crecidas, como el hueco de 2011 en BDCTB. Las filas con observaciones y entradas completas no representan necesariamente todos los días operativos (sección 4.2).
 3. **Objetivos no idénticos.** SIH diario e IPCET de las 06:00 concuerdan bien, no exactamente. La simulación SIH del nivel actual puede incorporar información posterior a la hora de lectura. En la prueba posterior al SIH, IPCET es fuente tanto de entradas pasadas como de objetivos futuros: no hay anticipación temporal si se respeta la causalidad, pero sí posible error sistemático compartido (experimentos 11–13).
 4. **Entrenamiento con pronóstico perfecto.** Las nuevas estaciones no tuvieron repronósticos de temporada completos. El reanálisis no reproduce el error del pronóstico operativo ni su dispersión. Las coberturas observadas no garantizan calibración en futuras crecidas (experimento 16).
-5. **Disponibilidad y edad no evaluadas en la extensión.** El experimento 16 supone lectura siempre disponible. La operación permite lecturas envejecidas y respaldo; los modelos nuevos no fueron entrenados con esas edades. No se atribuyen a todos los modos sus métricas de edad cero (`docs/operations.md`).
+5. **Disponibilidad y edad no evaluadas en la extensión.** El experimento 16 supone lectura siempre disponible. La operación permite lecturas envejecidas y respaldo; los modelos nuevos no fueron entrenados con esas edades. No se atribuyen a todos los modos sus métricas de edad cero (contrato de operación).
 6. **Respaldo inferior a persistencia.** M1 falla a un día en todas las estaciones del experimento 16. Publicarlo permite continuidad con una etiqueta clara, no satisface por sí mismo el criterio original para respaldo descrito en la sección 4.4. Se debe verificar separadamente y considerar una alternativa que conserve el nivel cuando resulte más útil.
 7. **Eventos y márgenes escasos.** Hay pocos días de aguas altas en algunas pruebas y pocas temporadas operativas. Las estaciones con ventajas pequeñas no tienen una prueba de significación registrada; su aceptación numérica no prueba superioridad robusta (experimentos 04 y 16).
 8. **Regulación y escala espacial.** No se dispone en esta cadena de liberaciones de Peñitas. Las celdas y la lectura diaria pueden no resolver respuestas rápidas de la sierra. El producto no cubre espacialmente todo Tabasco ni traduce nivel a inundación (experimento 16; sección 2).
-9. **OCR y disponibilidad histórica.** Fechas impresas, nombres reutilizados y cargas tardías obligan a rechazar o demorar datos. `Last-Modified` no prueba siempre la primera publicación. La auditoría redujo anticipación, pero no reconstruye perfectamente qué información vio un usuario histórico (experimentos 11 y 13).
-10. **Fuente viva y archivo de emisiones.** La equivalencia CEMS–Open-Meteo se comprobó en una emisión. La etiqueta de nuevas emisiones se infiere de trayectorias y su control de varios días no garantiza todos los futuros. Además, las revisiones pueden sobrescribir historia (experimento 14; `docs/operations.md`).
+9. **OCR y disponibilidad histórica.** Fechas impresas, nombres reutilizados y cargas tardías obligan a rechazar o demorar datos. La cabecera de fecha de modificación del servidor no prueba siempre la primera publicación. La auditoría redujo anticipación, pero no reconstruye perfectamente qué información vio un usuario histórico (experimentos 11 y 13).
+10. **Fuente viva y archivo de emisiones.** La equivalencia CEMS–Open-Meteo se comprobó en una emisión. La etiqueta de nuevas emisiones se infiere de trayectorias y su control de varios días no garantiza todos los futuros. Además, las revisiones pueden sobrescribir historia (experimento 14 y contrato de operación).
 11. **Prensa y semáforo no son un censo de daños.** Las citas pueden compartir fuente y hora desconocida; el catálogo tiene selección de eventos. La ausencia de noticia no es un negativo. Las discrepancias documentales del experimento 09 se mantienen visibles, sin afinar el modelo con ellas.
 12. **Verificación prospectiva inicial.** La serie acumulada hasta el 23 de octubre contiene solo cuatro pares a un día y dos a tres días; no permite estimar estabilidad ni confirmar superioridad. A un día, la mitad de las observaciones queda fuera de banda. No se cambian modelo ni bandas con esta muestra inicial (sección 5.13).
 
@@ -469,69 +469,9 @@ La prioridad siguiente es prolongar la verificación prospectiva por estación, 
 
 ## 9. Reproducibilidad
 
-### 9.1 Ruta de evidencia
+Todas las fuentes son públicas. El procedimiento de descarga, preparación, evaluación y generación de figuras está automatizado y versionado en un repositorio público: <https://github.com/ElGuill3/tabasco-river-forecast>. Cada experimento cuenta con su propio script y su resultado guardado, y el PDF se genera desde la misma fuente del informe.
 
-Los resultados numéricos se conservan en [`docs/results`](../results/). La historia completa de decisiones, con prerregistros fechados, está en [`odd/tasks/usumacinta-forecast.md`](../../odd/tasks/usumacinta-forecast.md) en el repositorio. Las referencias bibliográficas sustentan métodos y fuentes, no reemplazan la evidencia local de desempeño.
-
-| Experimento y script en `experiments/` | Resultado en `docs/results/` | Qué permite comprobar |
-|---|---|---|
-| `00_rain_check.py` | [00-rain-check.md](../results/00-rain-check.md) | Comparación de lluvia satelital y pluviómetro |
-| `01_baselines.py` | [01-baselines-development.md](../results/01-baselines-development.md) | Climatología y conversión de caudal |
-| `02_glofas_model.py` | [02-glofas-model-development.md](../results/02-glofas-model-development.md) | Modelo y calibración conformal |
-| `03_rain.py` | [03-rain-development.md](../results/03-rain-development.md) | Variable descartada |
-| `04_test.py` | [04-test.md](../results/04-test.md) | Prueba inicial retenida |
-| `05_operational.py` | [05-operational.md](../results/05-operational.md) | Primera evaluación operativa |
-| `06_warning.py` | [06-warning.md](../results/06-warning.md) | Probabilidad, reglas y falsas alarmas |
-| `07_diagnosis.py` | [07-diagnosis.md](../results/07-diagnosis.md) | Mecanismos de sobreestimación |
-| `08_rescore.py` | [08-rescore.md](../results/08-rescore.md) | Reevaluación posdiagnóstico |
-| `09_independent.py` | [09-independent.md](../results/09-independent.md) | Catálogo independiente y tablas diarias |
-| `10_live_value.py` | [10-live-value.md](../results/10-live-value.md) | Valor de la entrada viva en desarrollo |
-| `11_levels_check.py` | [11-levels-check.md](../results/11-levels-check.md) | Fidelidad y lectura IPCET |
-| `12_live_test.py` | [12-live-test.md](../results/12-live-test.md) | Prueba anterior a la auditoría |
-| `13_postaudit.py` | [13-postaudit.md](../results/13-postaudit.md) | Reevaluación con defectos corregidos |
-| `14_live_source.py` | [14-live-source.md](../results/14-live-source.md) | Equivalencia de la fuente viva |
-| `15_station_ceiling.py` | [15-station-ceiling.md](../results/15-station-ceiling.md) | Techo de desarrollo por estación |
-| `16_extract_operational.py`, `16_station_models.py` | [16-station-models.md](../results/16-station-models.md) | Extracción, puntuación y periodos por estación |
-
-Los JSON homónimos conservan precisión y estructura; las tablas de este informe redondean para lectura. No se vuelven a elegir variables ni umbrales al generar las figuras.
-
-### 9.2 Regeneración de figuras y del PDF
-
-Desde la raíz del repositorio, con el entorno ya disponible:
-
-```bash
-timeout 120 uv run python -B experiments/17_report_figures.py
-timeout 120 uv run ruff format experiments/17_report_figures.py
-timeout 120 uv run ruff check experiments/17_report_figures.py
-```
-
-El script solo lee resultados locales y el catálogo existente. Usa Pillow, ya incluido en el proyecto, sin instalar dependencias, descargar mapas ni entrenar modelos. Escribe PNG a 150 dpi en `docs/report/figures/` y un manifiesto `procedencia.json` con hashes de los resultados leídos. El ejemplo de hidrograma usa el M1 histórico del experimento 09, no simula una salida nueva.
-
-El PDF se compone desde este mismo Markdown con pandoc y tectonic:
-
-```bash
-docs/report/latex/build.sh
-```
-
-Para repetir la comprobación de fuente viva con sus insumos guardados:
-
-```bash
-timeout 900 uv run python -B experiments/14_live_source.py
-```
-
-Esa comprobación necesita las respuestas locales identificadas en su resultado. Los experimentos históricos restantes requieren los archivos de `data/raw` y, en algunos casos, cachés que no forman parte de un clon público mínimo. Sus scripts regeneran `docs/results`, por lo que no se ejecutaron para redactar este informe ni deben usarse como una comprobación de solo lectura. El techo por estación tardó más que el límite de ejecución de esta tarea; se reutiliza su resultado conservado, no se afirma una nueva reproducción (experimento 15).
-
-### 9.3 Publicación y verificación acumulada
-
-El contrato de operación está en [operaciones](../operations.md), el de salida en [esquema de pronóstico](../forecast-schema.md) y la separación de estados oficiales en [estados IPCET](../semaforo-states.md). Para reproducir la tabla de la sección 5.13, se ejecuta desde la raíz del proyecto el módulo `python -m riverforecast.verify` sobre una copia de la rama `forecasts` que conserve los archivos de historia y las tablas IPCET hasta el 23 de octubre de 2026:
-
-```bash
-timeout 120 uv run python -B -m riverforecast.verify \
-  --history /tmp/forecasts/bdctb/history \
-  --levels /tmp/forecasts/inputs/ipcet/levels.csv
-```
-
-La ruta es un ejemplo de una copia local ya preparada, no una descarga ejecutada aquí. Para obtener la misma tabla debe usarse aquella instantánea: las lecturas o revisiones posteriores pueden cambiar los conteos y las métricas. La verificación empareja cada fecha objetivo con el hoy válido de IPCET, conserva como pendientes los objetivos sin lectura, compara con persistencia del nivel de emisión y separa modos y horizontes. El procedimiento se fijó antes de calcular las métricas acumuladas y no reajusta el modelo con ellas. La ejecución normal de `operate run` sí consulta la red: no es parte de la regeneración fuera de línea de este borrador.
+Los diseños experimentales se prerregistraron con fechas antes de puntuar los resultados correspondientes. Se conservan las decisiones, los resultados originales y las reevaluaciones identificadas como tales, de modo que las correcciones posteriores no sustituyan la evidencia previa. La reproducción de la verificación prospectiva inicial requiere conservar la instantánea de pronósticos y observaciones disponible hasta el 23 de octubre de 2026; las lecturas o revisiones posteriores pueden cambiar los conteos y las métricas.
 
 ---
 
@@ -553,4 +493,4 @@ La ruta es un ejemplo de una copia local ya preparada, no una descarga ejecutada
 
 [8] NASA Global Precipitation Measurement, “Integrated Multi-satellitE Retrievals for GPM (IMERG)”, documentación oficial. [URL](https://gpm.nasa.gov/data/imerg).
 
-Los DOI y URL de esta lista resolvieron con respuesta final HTTP 200 mediante consultas de cabeceras. El registro de verificación se conserva en `verificacion-referencias.md`. Los portales SIH y datos CONAGUA no pudieron verificarse por un bucle de redirecciones y se excluyen como entradas bibliográficas; ello no elimina los archivos SIH locales ni su papel metodológico descrito en la sección 4.2. No se incluyen referencias cuyo enlace no se haya podido verificar.
+Los DOI y URL de esta lista resolvieron con respuesta final HTTP 200 mediante consultas de cabeceras. Se conserva el registro de verificación de cada referencia. Los portales SIH y datos CONAGUA no pudieron verificarse por un bucle de redirecciones y se excluyen como entradas bibliográficas; ello no elimina los archivos SIH locales ni su papel metodológico descrito en la sección 4.2. No se incluyen referencias cuyo enlace no se haya podido verificar.
