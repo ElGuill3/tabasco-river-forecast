@@ -5,7 +5,7 @@
     "name": "Salto de Agua"
   },
   "issue_time": "2026-10-31T11:00:00-06:00",
-  "generated_at": "2026-10-31T12:38:05.309831+00:00",
+  "generated_at": "2026-10-31T17:46:24.585575+00:00",
   "model_version": "saacp-L65-v1",
   "mode": "live",
   "live_input": {
@@ -33,11 +33,11 @@
       "data_kind": "modeled_not_observed"
     },
     "h7": {
-      "q10": 2.821503546991514,
-      "q50": 3.1938411144380465,
-      "q90": 3.708683890919515,
+      "q10": 2.8229414255838323,
+      "q50": 3.211460162019975,
+      "q90": 3.7726457670660576,
       "target_date": "2026-11-07",
-      "distance_to_namo_m": -7.796158885561954,
+      "distance_to_namo_m": -7.778539837980025,
       "namo_m": 10.99,
       "data_kind": "modeled_not_observed"
     }
