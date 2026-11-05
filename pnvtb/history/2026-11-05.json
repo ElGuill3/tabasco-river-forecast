@@ -1,0 +1,42 @@
+{
+  "schema": "bdctb-forecast/v2",
+  "station": {
+    "code": "PNVTB",
+    "name": "Pueblo Nuevo"
+  },
+  "issue_time": "2026-11-05T11:00:00-06:00",
+  "generated_at": "2026-11-05T15:30:29.195591+00:00",
+  "model_version": "pnvtb-L65-v1",
+  "mode": "glofas_only",
+  "live_input": null,
+  "forecasts": {
+    "h1": {
+      "q10": 2.842580798787391,
+      "q50": 3.5377074739449004,
+      "q90": 4.672347260727575,
+      "target_date": "2026-11-06",
+      "distance_to_namo_m": -3.9522925260551,
+      "namo_m": 7.49,
+      "data_kind": "modeled_not_observed"
+    },
+    "h3": {
+      "q10": 2.663242994592793,
+      "q50": 3.4042891907237918,
+      "q90": 4.606292722223546,
+      "target_date": "2026-11-08",
+      "distance_to_namo_m": -4.085710809276208,
+      "namo_m": 7.49,
+      "data_kind": "modeled_not_observed"
+    },
+    "h7": {
+      "q10": 2.439432057204117,
+      "q50": 3.3679101954826867,
+      "q90": 4.474017695970234,
+      "target_date": "2026-11-12",
+      "distance_to_namo_m": -4.122089804517314,
+      "namo_m": 7.49,
+      "data_kind": "modeled_not_observed"
+    }
+  },
+  "disclaimer": "Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET."
+}

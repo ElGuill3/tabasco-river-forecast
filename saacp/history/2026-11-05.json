@@ -1,0 +1,42 @@
+{
+  "schema": "bdctb-forecast/v2",
+  "station": {
+    "code": "SAACP",
+    "name": "Salto de Agua"
+  },
+  "issue_time": "2026-11-05T11:00:00-06:00",
+  "generated_at": "2026-11-05T15:30:29.195591+00:00",
+  "model_version": "saacp-L65-v1",
+  "mode": "glofas_only",
+  "live_input": null,
+  "forecasts": {
+    "h1": {
+      "q10": 2.6901766461588044,
+      "q50": 3.3405274485382432,
+      "q90": 4.207143670413851,
+      "target_date": "2026-11-06",
+      "distance_to_namo_m": -7.649472551461757,
+      "namo_m": 10.99,
+      "data_kind": "modeled_not_observed"
+    },
+    "h3": {
+      "q10": 2.702570059283614,
+      "q50": 3.273268003794692,
+      "q90": 4.306311781813604,
+      "target_date": "2026-11-08",
+      "distance_to_namo_m": -7.716731996205308,
+      "namo_m": 10.99,
+      "data_kind": "modeled_not_observed"
+    },
+    "h7": {
+      "q10": 2.7180876157626073,
+      "q50": 3.292869334974425,
+      "q90": 4.688057716017726,
+      "target_date": "2026-11-12",
+      "distance_to_namo_m": -7.6971306650255755,
+      "namo_m": 10.99,
+      "data_kind": "modeled_not_observed"
+    }
+  },
+  "disclaimer": "Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET."
+}
