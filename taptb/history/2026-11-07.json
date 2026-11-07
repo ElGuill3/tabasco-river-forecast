@@ -1,0 +1,42 @@
+{
+  "schema": "bdctb-forecast/v2",
+  "station": {
+    "code": "TAPTB",
+    "name": "Tapijulapa"
+  },
+  "issue_time": "2026-11-07T11:00:00-06:00",
+  "generated_at": "2026-11-07T16:32:01.185420+00:00",
+  "model_version": "taptb-L65-v1",
+  "mode": "glofas_only",
+  "live_input": null,
+  "forecasts": {
+    "h1": {
+      "q10": 15.912767383060153,
+      "q50": 16.64211756582527,
+      "q90": 17.826069604572773,
+      "target_date": "2026-11-08",
+      "distance_to_namo_m": -7.987882434174729,
+      "namo_m": 24.63,
+      "data_kind": "modeled_not_observed"
+    },
+    "h3": {
+      "q10": 15.863027618783338,
+      "q50": 16.727805213366963,
+      "q90": 17.84045259787075,
+      "target_date": "2026-11-10",
+      "distance_to_namo_m": -7.902194786633036,
+      "namo_m": 24.63,
+      "data_kind": "modeled_not_observed"
+    },
+    "h7": {
+      "q10": 15.773825069377505,
+      "q50": 16.70546119629161,
+      "q90": 17.886786475570066,
+      "target_date": "2026-11-14",
+      "distance_to_namo_m": -7.924538803708391,
+      "namo_m": 24.63,
+      "data_kind": "modeled_not_observed"
+    }
+  },
+  "disclaimer": "Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET."
+}
