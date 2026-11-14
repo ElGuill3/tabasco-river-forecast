@@ -1,0 +1,42 @@
+{
+  "schema": "bdctb-forecast/v2",
+  "station": {
+    "code": "MACTB",
+    "name": "Macuspana"
+  },
+  "issue_time": "2026-11-14T11:00:00-06:00",
+  "generated_at": "2026-11-14T18:08:19.520546+00:00",
+  "model_version": "mactb-L65-v1",
+  "mode": "glofas_only",
+  "live_input": null,
+  "forecasts": {
+    "h1": {
+      "q10": 1.595848022848471,
+      "q50": 2.6534594066434702,
+      "q90": 4.54190969484208,
+      "target_date": "2026-11-15",
+      "distance_to_namo_m": -7.196540593356529,
+      "namo_m": 9.85,
+      "data_kind": "modeled_not_observed"
+    },
+    "h3": {
+      "q10": 1.5824201403521378,
+      "q50": 2.8113465568719116,
+      "q90": 5.023707929614552,
+      "target_date": "2026-11-17",
+      "distance_to_namo_m": -7.038653443128088,
+      "namo_m": 9.85,
+      "data_kind": "modeled_not_observed"
+    },
+    "h7": {
+      "q10": 1.8209324724409877,
+      "q50": 3.816865915654448,
+      "q90": 7.537253610239192,
+      "target_date": "2026-11-21",
+      "distance_to_namo_m": -6.033134084345551,
+      "namo_m": 9.85,
+      "data_kind": "modeled_not_observed"
+    }
+  },
+  "disclaimer": "Pronóstico modelado, no es una observación ni un aviso oficial. Consulte el semáforo oficial de IPCET."
+}
