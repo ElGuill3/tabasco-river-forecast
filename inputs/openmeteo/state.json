@@ -1,6 +1,7 @@
 {
-  "run_label": "2026-11-21",
-  "fingerprint": "3237f4e8d86a9dff41533ed5fa55d8105f468285194e2351848cc44cb573ae2e",
-  "fetched_at": "2026-11-21T17:59:51.911442+00:00",
-  "revisions": 0
+  "run_label": "2026-11-23",
+  "fingerprint": "ef7dab8e53da0d59e9cff26915d118f4424d19d66d73d318c027c1c13402fdc1",
+  "fetched_at": "2026-11-23T12:52:32.396921+00:00",
+  "revisions": 0,
+  "run_label_inferred": true
 }
